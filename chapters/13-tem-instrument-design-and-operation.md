@@ -1,431 +1,133 @@
 # Chapter 13 — TEM Instrument Design and Operation
 
-## Title options
-
-1. **The TEM Column from Gun to Camera**
-2. **Loading a Grid, Aligning a Beam: TEM Hardware in Practice**
-3. **The Strongest Lens in the Microscope: Why Objective-Lens Design Defines TEM**
-
-## TL;DR
-
-A TEM column stacks an electron gun, two condenser lenses, a strong objective lens around the specimen, intermediate and projector lenses, and a camera or viewing screen — each subsystem with its own engineering trade-off. The objective lens is the central component because it forms the first image and largely determines resolution.
+*The image you see at 50,000 magnifications is the end of a chain of coordinated decisions — and the weakest link is always the objective lens.*
 
 ---
 
-## 1. Chapter Opening
+A graduate student picks up a copper grid with a pair of sharp tweezers. The grid is three millimeters in diameter, thin enough that a breath can flip it across the bench. On it, resting on an amorphous-carbon support film, is a single 70-nanometer-thick section of stained biological tissue — the product of two days of fixation, dehydration, embedding, and ultramicrotome cutting. The student loads the grid into the tip of a long metal rod called a holder, slides the holder into a small side chamber called an airlock, pumps for thirty seconds, then rotates the holder into the column. A click. A green light. An image appears on the screen.
 
-A graduate student transports a copper grid from the lab bench to the TEM holder using sharp tweezers. The grid is 3 mm in diameter and so thin that breath alone can flip it across the bench. On the grid, a single 70-nm-thick section of stained tissue rests on an amorphous-carbon support film. The student loads the grid into the holder, slides the holder into the airlock at the side of the column, pumps for thirty seconds, then rotates the holder into the column. A click. A green ready light. The image appears on the screen.
+Behind that apparently simple sequence sits an instrument running at 200,000 volts, with two condenser lenses to shape and aim the illuminating beam, a strong objective lens that immerses the specimen in its magnetic field, three or four post-specimen lenses that magnify the result by millions, a vacuum system holding the column at $10^{-7}$ pascals from gun to camera, and a detector that converts the electron distribution into pixels thirty times a second. The student needed to know almost none of this to load the grid. To understand the image — to know when the image is trustworthy and when it is an artifact, to know how to make it sharper or how to switch from imaging to diffraction without losing the specimen — the student needs to know all of it.
 
-Behind that simple sequence — load, airlock, image — sits an instrument with a 200 kV gun, two condenser lenses to demagnify the source, a strong objective lens that immerses the specimen in its magnetic field, three or four post-specimen lenses to magnify the image to the camera, a vacuum system that maintains $10^{-7}$ Pa across the column, and a camera that converts the electron image into pixels at 30 frames per second. The student does not have to know all of this to load a grid. But to *interpret* the image, the student does.
+This chapter is that knowledge.
 
-By the end of this chapter you can name every major TEM subsystem, explain what each one does, and identify the operator-control levers that affect the final image. You will be able to load a grid yourself and recognize when alignment has gone wrong.
-
-### Learning objectives
-
-By the end of this chapter you can:
-
-- **Name** the six major subsystems of a TEM column: gun, illumination system (condensers + apertures), specimen-manipulation system, imaging system (objective + intermediate + projector + apertures), observation/camera system, and vacuum system.
-- **Compare** the four electron-source families (W, LaB₆, Schottky FEG, Cold FEG) at TEM operating voltages.
-- **Identify** the three objective-lens architectures (split polepiece, immersion, snorkel) by their performance trade-offs.
-- **Load** a TEM specimen grid and operate the airlock.
-- **Recognize** the eucentric height and adjust to it.
-- **Distinguish** CCD, CMOS, and direct-electron-detection (DED) camera architectures.
-- **Use** Fresnel fringes as a focus diagnostic.
-
-### Prerequisites
-
-Chapter 2 (electron optics, aberrations), Chapter 3 (gun families, vacuum), Chapter 12 (TEM as transmission microscopy). The TEM column borrows heavily from the SEM column physics; the differences are concentrated in the post-specimen optics.
-
-### Why this chapter matters
-
-TEM operation has a higher entry cost than SEM. The instrument is more complex, the specimen prep is harder, the alignment is finicky, and the image content is more interpretation-heavy. This chapter is the operator's foundation for everything in Chapters 14–22.
+<!-- → [IMAGE: annotated cross-section diagram of a full TEM column — labeled subsystems top to bottom: electron gun, accelerating anode, condenser 1 (C1), condenser 2 (C2), condenser aperture, airlock entry point, specimen holder and stage at objective lens center, objective aperture at back focal plane, intermediate lens, SAED aperture, projector lenses, phosphor screen, camera; arrow indicating 200 kV gun voltage at top; inset labeling the back focal plane (diffraction pattern) vs. image plane; student should be able to use this as a reference for the full chapter] -->
 
 ---
 
-## 2. The illumination system: gun and condensers
+The TEM column is, architecturally, an inverted optical microscope with electrons in place of light. The lamp is at the top; the condenser lenses shape the illumination; the specimen sits in the objective lens; post-objective lenses project the magnified image onto a detector at the bottom. Every major component has an optical analog. The differences are in the physics of the electron beam, the engineering required to maintain vacuum, and the fact that the lenses are electromagnets rather than ground glass.
 
-The question this section answers is: how does the TEM produce the wide, coherent illumination that floods the thin specimen?
+Start at the top with the **electron gun**. There are four families, and the differences between them matter enormously for TEM performance. A tungsten thermionic gun heats a hairpin wire to 2,700 K until electrons boil off. It works, it is cheap, it tolerates rough vacuum ($10^{-2}$ Pa), and it lasts about 100 hours before the filament burns through. The source is large — the effective crossover diameter is larger than 100 micrometers — which limits how tightly the beam can be focused and how spatially coherent the illumination is. A lanthanum hexaboride (LaB$_6$) gun operates at 1,700 K on a crystal with a lower work function, giving a brightness roughly 50 times higher and a source size of about 10 micrometers. Most biological TEM for the last few decades ran on LaB$_6$.
 
-### Mechanism — gun, condenser system, condenser aperture
+For high-resolution work, neither thermionic source is adequate. The solution is field emission: apply an enormous electric field at a very sharp tip, pulling electrons out by quantum tunneling rather than thermal agitation. A cold field-emission gun operates at room temperature, has a virtual source size of about 3 nanometers, and produces brightness roughly 1,000 times higher than LaB$_6$ with an energy spread of only 0.3 eV. The energy spread matters because electrons of slightly different energies are focused at slightly different distances by the objective lens — **chromatic aberration** — and a gun with a narrow energy spread produces sharper images. The cost of a cold FEG is demanding vacuum requirements ($10^{-9}$ Pa) and periodic flashing of the tip to remove adsorbed gas. The Schottky FEG splits the difference: a thermally assisted field-emission source at 1,700 K, with a source size of about 15 nanometers, vacuum requirements of $10^{-6}$ Pa, and brightness between cold FEG and LaB$_6$. Essentially all modern high-resolution TEMs use Schottky or cold FEG sources.
 
-The illumination system has three parts (per the week-10 source's component table):
+The gun's job is to produce electrons with a controlled energy and a small, bright source. Everything downstream works with what the gun provides. A weak gun cannot be compensated by better lenses. This is the same lesson as in the SEM column, and it is equally true here.
 
-**Electron gun.** Generates electrons at 60–300 kV. The four families and their TEM-specific characteristics:
-
-| Source | Work function (eV) | Operating temp (K) | Crossover size (nm) | Brightness at 100 kV (A/m²·sr) | ΔE at 100 kV (eV) | Vacuum (Pa) | Lifetime (h) |
-|---|---|---|---|---|---|---|---|
-| Tungsten | 4.5 | 2700 | >10⁵ | 10¹⁰ | 3 | 10⁻² | 100 |
-| LaB₆ | 2.4 | 1700 | 10⁴ | 5×10¹¹ | 1.5 | 10⁻⁴ | 1,000 |
-| Schottky FEG | 3.0 | 1700 | 15 | 5×10¹² | 0.7 | 10⁻⁶ | >5,000 |
-| Cold FEG | 4.5 | 300 | 3 | 10¹³ | 0.3 | 10⁻⁹ | >5,000 |
-
-[Source: week-10 source-table.]
-
-The big jump in brightness from thermionic to field-emission sources is the same physics as in SEM (Chapter 3); the consequences are stronger in TEM because high-resolution work demands the smallest source for the smallest probe. Modern high-resolution TEMs use Schottky or cold-FE sources almost exclusively. Older instruments and routine biological work still use LaB₆.
-
-**Condenser lenses (C1 and C2).** Two stages of demagnification.
-
-- **C1 (also "Spot Size").** The first condenser lens. Determines the smallest illumination spot size achievable at the specimen plane. Stronger excitation → smaller spot.
-- **C2 (also "Brightness").** The second condenser lens. Varies the amount of illumination on the specimen, in combination with C1. Stronger C2 → smaller illumination area at the specimen.
-
-Together, C1 and C2 give the operator independent control over spot size and beam intensity. For high-resolution work (Chapter 17), tightly focused illumination at the specimen point. For wide-field overview, broader illumination across a larger area.
-
-**Condenser aperture.** Reduces spherical aberration and helps control how much illumination reaches the specimen. Operator-selectable; smaller aperture = less aberration but less current.
-
-### Trade-off
-
-The illumination system optimizes for **coherent, controllable illumination at the cost of complexity**. Two stages of condensers give independent control over spot and brightness; this is more flexibility than the SEM's single ganged C1 control, and it is needed because TEM imaging has more variable conditions (spread illumination for survey, tight focus for HRTEM, parallel beam for diffraction).
-
-### What Goes Wrong Here
-
-- **Inhomogeneous illumination across the field.** C1/C2 misaligned; image one side bright, other side dim. Diagnostic: check beam centering at low magnification.
-- **Insufficient brightness for high-resolution work on a thermionic source.** Tungsten at 80 kV may not provide enough current density for HRTEM. Switch to FE-source instrument.
+<!-- → [TABLE: four electron gun families compared — rows: Tungsten, LaB₆, Schottky FEG, Cold FEG; columns: source size (nm), brightness at 100 kV (A/m²·sr), energy spread ΔE (eV), vacuum required (Pa), approximate lifetime (hours); student should see the order-of-magnitude jumps in brightness and the corresponding demands on vacuum and cost as you move from thermionic to field-emission sources] -->
 
 ---
 
-## 3. The specimen-manipulation system: holder, stage, airlock
+The **condenser lenses** — two of them, C1 and C2 — take the source crossover and demagnify it toward the specimen. C1 (often labeled "spot size" on the control panel) sets the minimum illuminated spot. C2 (often labeled "brightness") controls how broadly the beam is spread across the specimen in the final imaging condition. Together they give independent control over spot size and beam intensity, which matters because different TEM modes need different illumination geometries: high-resolution imaging wants tight, coherent illumination on a small region; a survey of a large biological section wants a broad, uniform flood across many micrometers. A condenser aperture intercepts off-axis electrons that would add aberration without contributing useful signal.
 
-The question this section answers is: how do you get a thin specimen into a vacuum column without breaking the vacuum, and how do you move it around in three dimensions?
-
-### Mechanism — holder, airlock, eucentric stage
-
-**Specimen holder.** A long rod (typically 20–30 cm) with a tip that holds a 3-mm diameter TEM grid. The grid sits in a small recess and is held in place by a clip or screw. Many holder types exist:
-
-- **Single-tilt holder.** Tilts in one axis (typically ±60° around the holder's long axis). Standard for most imaging.
-- **Double-tilt holder.** Tilts in two axes. Required for orientation imaging (Chapter 15) where finding the right zone axis matters.
-- **Heating holder.** Built-in resistive heater for in-situ heating experiments.
-- **Cooling holder.** Either liquid-nitrogen or liquid-helium cooled. Cryo-holders for cryo-EM (Chapter 21) and reduced beam damage (Chapter 19).
-- **Straining holder.** Mechanical loading in-situ for materials testing.
-- **Tomography holder.** High-tilt range, often ±70° or more, for tilt-series acquisition (Chapter 19).
-
-**Airlock.** A small chamber connected to the column through a valve. The holder enters the airlock at atmosphere; the airlock pumps to ~10⁻³ Pa; the valve opens; the holder rotates into the column without exposing the column to atmosphere. The pump cycle takes a few minutes.
-
-**Stage.** The holder, once in the column, is supported by a stage that translates in $x$, $y$, and $z$ — typically with sub-micrometer precision. Modern stages use piezoelectric drives for the finest movements (sub-nanometer). Stage drift is the dominant resolution-limit at high magnification at long acquisition times; specimens settle at thermal equilibrium for 5–15 minutes after insertion before publication-quality acquisition is reliable.
-
-**TEM grids.** A grid is a flat 3-mm disc with a mesh of small holes. The mesh allows electrons to pass through; the section sits across the holes on a thin support film (carbon or formvar). Grids come in various materials (Cu, Ni, Au, Mo) and mesh sizes (200, 300, 400 mesh — the number is wires per inch). Appendix B catalogs the grid taxonomy.
-
-### The eucentric position
-
-A specimen at the **eucentric plane** does not move laterally when the stage tilts around the primary tilt axis. Instead, it rotates in place. This is essential for tomography (where you need to image the same region from many angles) and for orientation work (where finding a zone axis requires tilting through several degrees while keeping the feature centered).
-
-The operator adjusts the specimen to the eucentric plane at the start of any session that involves tilting:
-
-```
-PROCEDURE — Adjusting to eucentric height
-
-1. Load grid; bring beam on; find a recognizable feature.
-2. Center the feature.
-3. Tilt the stage by ±10°.
-4. If the feature drifted, raise or lower the stage in z to compensate.
-5. Repeat tilting and adjusting until the feature stays centered through tilt.
-6. Record the eucentric z; use this for the rest of the session.
-```
-
-The eucentric height varies by holder design and grid; it is not a property of the column. Standard practice is to find it explicitly at the start of each session.
-
-### Hazards and Safe Practice
-
-- **High voltage** at the gun (typically 80–300 kV). Modern instruments are interlocked. Service work on the high-voltage section is for trained personnel only.
-- **Vacuum implosion** risk at viewports and chamber walls. Inspect seals; do not lean on the chamber.
-- **Holder handling.** A dropped holder breaks the tip and damages the column polepiece. Two-handed handling for large or cooled holders. Slow insertion and removal.
-- **Cryogen handling** for cooled holders. Liquid nitrogen (cold burn, asphyxiation), liquid helium (extreme cold, expensive). PPE; ventilated rooms; cross-reference Chapter 21 for cryo-specific procedures.
-- **Specimen contamination from finger oils.** Always wear gloves when handling grids or holders.
-
-For comprehensive treatment, see **Appendix A**.
-
-### Trade-off
-
-The specimen-manipulation system optimizes for **vacuum integrity and stage flexibility at the cost of operational complexity**. Each holder type sacrifices some functionality for specialization (heating holders give up tilt range; tomography holders give up some lateral travel; cryo holders give up convenient handling). Operators specialize: a researcher whose work requires cryo-tomography uses a different holder than one doing routine biological imaging.
-
-### What Goes Wrong Here
-
-- **Eucentric height not set before tomography.** The tilt series fails to align because the specimen translates as it tilts. Diagnostic: re-set eucentric, restart the tilt series.
-- **Contamination from holder handling.** Hydrocarbon fingerprints on the holder cause beam-induced contamination during imaging. Recognition: dark squares develop where you imaged. Fix: clean the holder; better gloves.
-- **Holder mis-seating in airlock.** Beam doesn't reach the specimen, or the image is dim/distorted. Fix: re-seat the holder; check the indicator lights on the airlock.
+The illumination system is relatively straightforward compared to what comes after the specimen. Its job is to deliver electrons to the specimen in a controlled way. The complexity lives in the objective lens.
 
 ---
 
-## 4. The imaging system: objective lens and post-specimen optics
+The **objective lens** is the most important component in the TEM. It is the lens that forms the first image of the specimen — everything else downstream is magnification of that first image — and it is where the dominant resolution-limiting aberrations live. The objective lens determines what the TEM can see.
 
-The question this section answers is: how does the TEM convert the post-specimen electron distribution into a magnified image on the screen?
+The lens is a solenoid wound around a gap in a soft-iron polepiece. The gap is narrow — a few millimeters — and the specimen sits inside it, immersed in the strong magnetic field. The field focuses the transmitted electrons into an image at the objective image plane. Simultaneously, in the back focal plane of the objective, the transmitted electrons organize into a **diffraction pattern** — the Fourier transform of the specimen's scattering. One lens, two planes, two different kinds of information: images in the image plane, diffraction patterns in the back focal plane. Which of these the operator sees on the screen is controlled by the intermediate lenses below.
 
-### Mechanism — objective forms the image, projector cascade magnifies it
+The central engineering challenge of the objective lens is spherical aberration, introduced in Chapter 2. In any rotationally symmetric electromagnetic lens, electrons traveling off-axis are focused too strongly; the focal "point" becomes a disk of confusion whose radius scales as $C_s \alpha^3$, where $C_s$ is the spherical aberration coefficient and $\alpha$ is the beam half-angle. Reducing $C_s$ requires a very short focal length, which requires a very strong lens field, which requires a very narrow polepiece gap — and a narrow gap leaves little room for the specimen and its holder. The objective lens design is one long negotiation between resolution and specimen access.
 
-The imaging system is where TEM differs most sharply from SEM. There are five components (per the source's table):
+Three architectures exist for this negotiation. In the **split polepiece** design, the upper and lower polepiece are separated with a gap large enough for the specimen holder to tilt ±60° and for various holder types — heating, cooling, straining, tomography — to be inserted. The gap is also large enough for an energy-dispersive X-ray detector to have line-of-sight to the specimen for analytical work. Resolution is good: $C_s$ of roughly 1 millimeter on a modern uncorrected instrument. This is the versatile choice, and most general-purpose TEMs use it.
 
-**Objective lens.** The most important lens in the TEM. It sits immediately above the specimen (or surrounds it, in immersion designs) and forms the *first image* of the specimen. This is also where electron-beam scattering reorganizes into a diffraction pattern at the back focal plane. Three architectures (per the source):
+In the **immersion** design, the specimen drops into the center of the lens field through a very narrow bore. The gap is minimized, the focal length is short, $C_s$ is low, and resolution is pushed toward the fundamental limit. The cost is severe: few holder geometries can fit; X-ray detectors cannot get close; tilt range is restricted. Immersion objectives appear in specialized high-resolution instruments where analytical flexibility is explicitly sacrificed for image resolution.
 
-- **Split polepiece (the most common).** Upper and lower polepieces are separated. The specimen sits between them, with room for the objective aperture. Versatile: holders for tilting, rotating, heating, cooling, straining all fit. Resolution is good but not record-setting.
-- **Immersion (top-entry).** The specimen drops into the center of the lens field. The polepiece surrounds it. This gives the strongest field at the specimen and the shortest focal length, hence highest resolution. Cost: limited holder geometries, no good way to insert X-ray detectors close to the specimen, less analytical capability.
-- **Snorkel.** Single polepiece with a small bore. Strong lens with more flexibility than full immersion. A compromise between the other two.
+The **snorkel** design is a single polepiece with an asymmetric field. It captures more of the benefit of immersion while recovering some of the holder access of the split polepiece. Modern aberration-corrected TEMs — where hardware correctors in the post-objective optics compensate $C_s$ in software — use snorkel or modified-immersion geometries because the aberration corrector removes the resolution penalty of a longer focal length, and the operator regains specimen flexibility.
 
-The choice of objective lens is one of the manufacturer's central design decisions. Modern aberration-corrected TEMs use specialized objective lenses with corrector elements (Chapter 17) to reduce $C_s$ to ~1 μm or below.
+<!-- → [IMAGE: side-by-side cross-section schematic of the three objective lens architectures — left: split polepiece (upper/lower polepieces separated, specimen between, wide gap, EDS detector angle shown); center: immersion (specimen inside narrow bore, surrounding polepiece, minimal gap); right: snorkel (single asymmetric polepiece); label on each: Cs value (approximate), tilt range, holder flexibility (high/medium/low), resolution (good/best/intermediate); student should see the three as three points on a gap-width vs. performance trade-off continuum] -->
 
-**Objective aperture.** Sits at the back focal plane of the objective lens, where the diffraction pattern forms. The aperture selects which electrons contribute to the image:
-
-- **Aperture around the direct beam only:** bright-field image (Chapter 14).
-- **Aperture around a single scattered beam:** dark-field image.
-- **Aperture removed or very large:** lattice imaging / phase contrast (Chapter 16).
-
-The objective aperture also controls contrast (Chapter 16) and adds modest spherical-aberration suppression.
-
-**Intermediate lens (also "diffraction lens").** Between the objective and the projector lenses. Normally helps magnify the image from the objective. When configured for diffraction mode, the intermediate lens projects the back focal plane of the objective onto the screen — that is, the diffraction pattern itself rather than the image (Chapter 15).
-
-**Intermediate (selected-area) aperture.** Sits at an intermediate image plane and selects a small area of the specimen to contribute to a diffraction pattern. The aperture's shadow defines the *selected area* for SAED (Chapter 15).
-
-**Projector lenses (P1 and P2).** Cascade the image to higher magnification, projecting onto the viewing screen or camera. Modern instruments may have one or two projector lenses; older designs have more.
-
-### What changes when the operator switches modes
-
-The operator's "imaging mode" switch is, internally, a change in lens excitation that switches whether the intermediate lens projects the image plane or the diffraction plane. Imaging mode and diffraction mode use the same hardware but different electromagnetic settings.
-
-```
-PROCEDURE — Switching to diffraction mode
-
-1. Confirm specimen is at eucentric height; feature centered.
-2. Insert the selected-area aperture; this defines what region
-   contributes to the diffraction pattern.
-3. Switch lens excitation to diffraction mode (typically a button
-   labeled "Diffraction" or "SAED").
-4. Adjust intermediate-lens current to focus the diffraction pattern.
-5. Acquire the pattern; record camera length (the effective scale
-   from camera-plane spots to specimen reciprocal lattice).
-6. To return to imaging, reverse the mode switch.
-```
-
-Camera length is calibrated by imaging a known specimen (often a polycrystalline gold film, whose ring pattern has well-known d-spacings).
-
-### Trade-off
-
-The imaging system optimizes for **flexible mode switching at the cost of optical complexity**. The same lens stack does both imaging and diffraction; the cost is that the operator must explicitly switch modes and recalibrate. Modern instruments hide some of this behind software, but the underlying physics remains.
-
-### What Goes Wrong Here
-
-- **Objective aperture mis-positioned.** Image dim or asymmetric; one half of the field of view dark. Recognition: shadow of the aperture visible at low magnification. Fix: re-center the aperture mechanically.
-- **Mode confusion.** Operator believes they are in imaging mode but the screen shows a diffraction pattern (or vice versa). Recognition: imaging mode shows specimen features; diffraction mode shows discrete spots or rings. Always confirm.
+The **objective aperture** sits at the back focal plane, where the diffraction pattern forms. Its position in the diffraction plane means it selects which scattered beams contribute to the image. Place the aperture around only the direct (unscattered) beam and you get a **bright-field** image, where scattered regions appear dark. Move the aperture to surround a single off-axis diffracted beam and you get a **dark-field** image, where only the planes that produced that reflection appear bright. Remove the aperture entirely — or use a very large one — and many diffracted beams interfere at the image plane to produce **phase contrast**: lattice fringes and ultimately atomic-resolution images. Chapter 14 develops bright-field and dark-field in detail; Chapter 16 develops phase contrast. For now: the objective aperture is the switch between modes, and its physical position in the column is the back focal plane of the objective lens.
 
 ---
 
-## 5. The observation and camera system
+Below the objective, the **post-specimen optics** — intermediate lens and one or two projector lenses — cascade the image to higher magnification and project it onto the camera or viewing screen.
 
-The question this section answers is: how do you record a TEM image, and how have the recording technologies evolved?
+The intermediate lens has a mode-switching function. In imaging mode, it is excited to project the objective's image plane onto the next stage. In diffraction mode, its excitation is changed so that it projects the objective's back focal plane instead — the diffraction pattern rather than the image. The hardware is the same; the lens current is different. This is why switching between imaging and diffraction requires only a button press: the button changes the intermediate lens current.
 
-### Mechanism — phosphor screen, then CCD/CMOS, now direct-detection
+For diffraction on a specific region — a single grain in a polycrystalline sample, a specific organelle in a cell — the operator inserts a **selected-area aperture** at an intermediate image plane. The aperture casts a shadow that restricts which part of the specimen contributes to the diffraction pattern. This is **selected-area electron diffraction** (SAED), covered in Chapter 15.
 
-**Fluorescent (phosphor) viewing screen.** A circular screen at the bottom of the column, coated with a phosphor (typically zinc sulfide doped with a small amount of activator like copper) that emits visible light when struck by 60–300 keV electrons. The operator views the image on this screen through binoculars or a binocular microscope mounted at a viewing window. Used for beam alignment, navigation, and survey-level imaging. Cannot record digitally.
-
-**CCD camera.** A two-stage device: a scintillator (typically a yttrium aluminum garnet — YAG — single crystal) that converts incoming electrons to photons; a fiber-optic plate that couples the photons to a charge-coupled-device sensor; the CCD reads out the photon-induced charge and digitizes the image. Standard for digital TEM acquisition for two decades. Acquisition rate: 1–10 frames per second. Resolution limited by the scintillator's spread function (typically 5–10 μm pixel-to-pixel blur).
-
-**CMOS camera.** Same scintillator-fiber-optic-sensor architecture but with a complementary metal-oxide-semiconductor sensor instead of a CCD. CMOS advantages over CCD: less spreading of charge from saturated pixels into nearby pixels, faster readout. Now standard in many modern instruments.
-
-**Direct electron detector (DED).** The new generation. Instead of scintillator-to-photons-to-sensor, the incoming electrons are detected directly in a thin sensor layer. Advantages:
-- **Improved resolution.** Thin sensing layer minimizes lateral charge spread.
-- **Better signal-to-noise.** Fewer conversion stages, less noise added.
-- **Faster readout.** Useful for low-dose imaging where many short exposures are summed.
-- **No image distortions** from scintillator or fiber optics.
-
-DEDs revolutionized cryo-EM single-particle reconstruction (Chapter 21) — the resolution improvements achievable with DEDs versus CCDs are large enough that many cryo-EM structures previously stuck near 1 nm resolution are now solved at <0.3 nm.
-
-### Trade-off
-
-Camera evolution traces the path: phosphor screen (eye-only) → CCD (digital, slow) → CMOS (digital, fast) → DED (direct, fastest, best resolution). The newer cameras cost more and require more computational infrastructure for handling the high data rates (a single DED at high frame rate can produce TB/hour of data).
-
-### What Goes Wrong Here
-
-- **Saturation in CCD/CMOS bleeding into adjacent pixels.** Recognition: dark spot surrounded by uniform bright halo at the pixel scale. Fix: lower exposure or use shutter-control bracketing.
-- **Direct-detection beam damage of sensor.** DEDs can be damaged by sustained high-current illumination; modern instruments have safety interlocks but operator awareness matters.
+The projector lenses complete the cascade. Older instruments had three projectors; modern ones typically have two. Their excitations are ganged to the magnification control: turning the magnification knob re-excites the projectors to change the final magnification on the camera.
 
 ---
 
-## 6. Operator basics: focus, alignment, Fresnel fringes
+The specimen enters the column through the **airlock**. The column lives at $10^{-7}$ pascals; the laboratory lives at $10^5$ pascals. Exposing the column to atmosphere — to pump down from $10^5$ to $10^{-7}$ — would take hours and would contaminate the column with water vapor and hydrocarbons that are extremely difficult to remove at TEM operating pressures. The airlock is a small side chamber that bridges the pressure gap. The holder enters the airlock at atmosphere; the airlock pumps to approximately $10^{-3}$ pascals in thirty to sixty seconds using a scroll or rotary pump; a valve opens to the column; the holder slides in. The main column vacuum is only momentarily exposed to $10^{-3}$ pascals, not atmosphere. The pressure ratio across the main valve is a factor of $10^4$ rather than $10^{12}$.
 
-The question this section answers is: how do you actually focus a TEM image, given the column physics from Sections 2–5?
+The specimen inside the holder is a three-millimeter grid. The grid is a metal mesh — copper, nickel, gold — that holds a thin support film (amorphous carbon or formvar) across its holes. The specimen section or nanoparticles or whatever is being imaged rests on the support film. The electron beam passes through the holes in the grid and through the support film and specimen; the solid metal of the grid bars is opaque to the beam and simply blocks those areas of the image. Grid mesh density (expressed as the number of wires per inch — 200 mesh, 300 mesh, 400 mesh) sets the trade-off between how much specimen is viewable per grid square versus how well the support film is held flat.
 
-### Focus mechanism
-
-In SEM, focus is set by adjusting the objective lens current to bring the focused probe to the specimen surface. In TEM, focus is set by adjusting the objective lens current so that the *image* is sharp at the camera/screen. The two are related but operationally distinct.
-
-The operator turns a focus knob (mechanically, a current control on the objective lens). At each setting, the image at the camera plane is more or less sharp; sharpest setting is "in focus."
-
-### Fresnel fringes as a focus diagnostic
-
-When a thin specimen has a clean edge — a hole in a carbon film, the boundary between specimen and substrate — interference between the wave passing through the edge and the wave bypassing it produces **Fresnel fringes**: a series of light and dark stripes parallel to the edge.
-
-Fresnel fringes are useful because their appearance depends on focus:
-
-- **Underfocus** (objective lens current too weak; image plane below the camera): inner fringe appears bright.
-- **Overfocus** (objective lens current too strong; image plane above the camera): outer fringe appears bright.
-- **In focus**: minimum visible fringe.
-
-Operators use the through-focus appearance of Fresnel fringes to dial in focus at high precision. Standard practice: defocus deliberately, then bring the fringes through their sequence to find the symmetric in-focus point.
-
-```
-PROCEDURE — Focusing a TEM image
-
-1. Insert specimen, set magnification 50,000×.
-2. Find a feature with a sharp edge (a hole, a boundary).
-3. Defocus by turning the focus knob. Watch the fringe pattern.
-4. Identify under- and over-focus extremes.
-5. Adjust to the symmetric minimum-fringe point (in focus).
-6. Repeat at higher magnification for high-resolution work.
-```
-
-Phase contrast (Chapter 16) extends this principle: Fresnel fringes are the simplest example of phase-contrast effects, and the same focus discipline applies to lattice imaging at much higher precision.
-
-### What Goes Wrong Here
-
-- **Focus drift during long exposure.** Image was sharp at the start, soft at the end. Cause: thermal drift of the column or specimen. Fix: refocus periodically; settle the system before publication acquisition.
-- **Confusing Fresnel fringes with real specimen features.** Fringes look like real edges or particles. Recognition: defocus through; if the feature changes character (moves toward/away), it's a fringe. If it stays put with mild softening, it's specimen.
-- **Astigmatism showing up as direction-dependent focus.** Recognition: image sharper in one direction than the perpendicular. Fix: stigmator alignment cycle (Chapter 2 — same procedure as SEM).
+The holder positions the grid at the **eucentric plane** of the stage: the specific height at which tilting the stage rotates the specimen in place rather than translating it laterally. If the specimen is not at eucentric height and the operator tilts the stage, the field of view shifts — the feature being examined walks off-screen. For tomography (Chapter 19), where dozens of images are taken at systematically varied tilt angles around the same region, the specimen must be at eucentric height precisely and consistently. The operator finds eucentric height by tilting the stage back and forth by a few degrees while adjusting the z-height until the feature stops drifting laterally with tilt. It is a step that experienced operators do automatically and new operators often forget, and forgetting it ruins tilt series.
 
 ---
 
-## 7. Synthesis: the TEM session in twenty minutes
+At the bottom of the column is the **detection system**. For decades, TEM images were recorded on photographic film, then on film with fluorescent scintillators, then on **charge-coupled device** cameras. A CCD camera converts incoming electrons to light in a scintillator (typically a YAG crystal), couples the light to the CCD sensor via a fiber-optic plate, and reads out the charge. The CCD architecture gives good dynamic range and has been the standard for digital TEM for twenty years. Its limitation is the scintillator: light spreads laterally in the crystal before reaching the sensor, blurring fine detail at the pixel level, and the multi-step conversion (electron to photon to charge) adds noise at each stage.
 
-A typical operator session, with each subsystem visible:
+**Direct-electron-detection cameras** eliminate the scintillator. Electrons hit a thin silicon sensor directly, generating charge that is read out without the intermediate photon conversion. The result is less lateral spread, less added noise, and faster readout rates — modern DEDs run at hundreds of frames per second, fast enough to record movies of specimens and then computationally correct for beam-induced motion during exposure. This last capability is what transformed cryo-EM single-particle reconstruction: specimens move slightly during the electron beam's exposure, and that motion blurs the image. A DED fast enough to record many frames per exposure allows post-hoc alignment that corrects the motion before summing the frames. The resolution improvements achievable by DED over CCD for cryo-EM single-particle work are so large that essentially all modern cryo-EM targeting sub-nanometer resolution uses DEDs. Chapter 21 covers this in detail.
 
-1. **Specimen prep.** Section, grid, support film. (Chapter 20 or 22.)
-2. **Load grid.** Holder, then airlock, then column. ~3 min for the airlock cycle.
-3. **Stage and beam.** Eucentric height set; beam on at chosen kV.
-4. **Find feature.** Low-magnification stage navigation.
-5. **Magnify.** Step up through 5,000×, 25,000×, 50,000×, etc., to the question's magnification.
-6. **Focus and stigmator.** Through-focus Fresnel-fringe alignment; stigmator cycle if needed.
-7. **Acquire image.** Camera at chosen exposure.
-8. **Switch modes.** Imaging → diffraction or vice versa, with selected-area aperture if needed.
-9. **Acquire pattern or second image.** Repeat as needed.
-10. **Eject specimen.** Return holder; airlock at atmosphere.
+For routine biological imaging at moderate resolution, CCD or CMOS cameras are still standard. For high-resolution work where every fraction of a nanometer matters, a DED is no longer a luxury.
 
-Three to ten images per session, plus possibly a tilt series or several diffraction patterns. Between 30 minutes and several hours depending on goals.
-
-The wonder. Behind every TEM image is a 200 kV gun firing electrons through a 100-nm specimen, a strong objective lens immersing the specimen in its magnetic field, three or four stages of post-specimen magnification, a camera converting the result into pixels — all coordinated to within nanoseconds of stability. The image you see at 50,000× is a thirty-million-fold magnification of features 1–10 nm in size onto a 30-cm screen. Every photon on that screen comes from a chain of conversions: electron → scintillator photon → fiber-optic to CCD → digital pixel. The image you call up on your laptop the next day is the operator's choice from twenty acquisitions, each one a moment when the entire instrument was in one stable configuration. The TEM is a coordination problem; the operator's job is to coordinate.
+<!-- → [INFOGRAPHIC: camera technology evolution — four panels in sequence: (1) phosphor screen (eye only, no digital); (2) CCD (scintillator → fiber optic → CCD sensor, annotation showing lateral spread and noise steps); (3) CMOS (same architecture, annotation showing faster readout, reduced pixel bleeding); (4) Direct electron detector (electron → thin Si sensor directly, annotation showing eliminated spread, lowest noise, high frame rate enabling motion correction); arrow timeline from left to right; each panel labels approximate resolution limit and frame rate; student should see the signal path simplification as the technology progresses] -->
 
 ---
 
-## 8. Pre-lab Checklist (Lab 13 — TEM operation)
+The operator's most immediate task at the instrument is focus. In an optical microscope, you focus by moving the objective lens or the stage until the image is sharp to the eye. In a TEM, focus is set by adjusting the current to the objective lens: a stronger current brings the image plane higher in the column, a weaker current lowers it, and at the right current the image plane coincides with the detector surface.
 
-**By the end of this chapter, you should be able to:**
+The diagnostic for focus is **Fresnel fringes**. At any sharp edge in the specimen — the boundary of a hole in the support film, the edge of a nanoparticle — diffraction between the electron wave passing through the edge and the wave bypassing it produces interference fringes: alternating light and dark stripes parallel to the edge. These fringes are exquisitely sensitive to focus. When the objective is underfocused (current too weak), the bright fringe is inside the edge, toward the specimen. When overfocused (current too strong), the bright fringe is outside, away from the specimen. At exact focus, the fringes minimize. An experienced TEM operator focuses by watching the Fresnel fringes at a clean edge — defocusing deliberately in both directions to establish orientation, then converging on the minimum-fringe in-focus condition. It is faster and more reliable than trying to judge sharpness of the specimen features themselves, which can be ambiguous at the spatial frequencies of interest for high-resolution work.
 
-- Identify each major TEM subsystem on the column.
-- Load a grid through the airlock under supervision.
-- Set eucentric height.
-- Focus a TEM image using Fresnel fringes.
+Astigmatism — differential focus in perpendicular directions, caused by non-circular symmetry of the lens field — shows up as Fresnel fringes that are focused in one orientation but not the perpendicular one. The correction is the stigmator: a set of small octupole coils that add a compensating asymmetry to the lens field to restore circular symmetry. The focus-stigmator alignment cycle is the same procedure as in the SEM (Chapter 2), adapted to the TEM's through-focus diagnostic.
 
-**Bring to lab:**
-
-- This chapter, especially Sections 3–6.
-- A prepared TEM grid with known specimen (provided by the lab manager).
-- Closed-toe shoes; nitrile gloves at the door.
-
-**Expect on the floor:**
-
-- A guided grid-loading sequence on the lab TEM (the JEOL JEM 1010 at BEMC).
-- A first focus-and-stigmator alignment on a real specimen.
-- Eucentric-height adjustment by tilting.
-- A first attempt at switching to diffraction mode and back.
+<!-- → [IMAGE: three-panel Fresnel fringe sequence at a hole edge in a carbon support film — left panel: underfocus, bright fringe inside edge toward specimen; center panel: in focus, fringes minimized; right panel: overfocus, bright fringe outside edge away from specimen; captions name the focus condition and the diagnostic cue for each; student should be able to use this directly as a reference when at the instrument] -->
 
 ---
 
-## 9. Quick-Reference Table
+It is worth standing back and appreciating what the TEM is doing. The specimen is a 70-nanometer slab of biological tissue, thin enough to be partially transparent to 200 keV electrons. The electron beam passes through it, is scattered differently by different parts of the specimen — more scattered by dense stained regions, less by the surrounding resin — and the objective lens reorganizes those scattered electrons into a real image at the objective image plane. The intermediate and projector lenses then magnify that image by a factor of thousands onto the camera. A final image at 50,000 magnifications represents a spot on the specimen roughly 300 nanometers across expanded to fill a camera sensor that is centimeters wide: a factor of 30 million in linear dimension. Every nanometer of detail in the original specimen has been enlarged to 30 micrometers on the sensor — large enough for the camera pixels to record it faithfully.
 
-| Subsystem | Function | Key parameter |
-|---|---|---|
-| Gun | generates electrons | type (W, LaB₆, Schottky, CFE) |
-| Condenser 1 (C1) | spot size | excitation |
-| Condenser 2 (C2) | brightness | excitation |
-| Condenser aperture | aberration / current | physical diameter |
-| Specimen holder | holds grid in column | type (single-tilt, cryo, etc.) |
-| Stage | translates specimen | x, y, z, tilt |
-| Objective lens | forms first image | $C_s$ |
-| Objective aperture | mode select (BF/DF/HRTEM) | physical position |
-| Intermediate lens | image vs. diffraction | excitation |
-| SAED aperture | selected-area diffraction | physical diameter |
-| Projector lenses | magnify final image | excitation |
-| Phosphor screen | view image visually | ZnS:Cu |
-| CCD/CMOS camera | digital image acquisition | scintillator + sensor |
-| Direct-detection camera | high-DQE acquisition | thin Si sensor |
+For this to work, the entire column must hold its alignment to within nanometers while the image is being acquired. Thermal drift of the column distorts that alignment; mechanical vibration in the building does the same. Modern TEM facilities spend enormous effort isolating the instruments from vibration and thermal gradients. The operator's contribution is patience: after inserting a new specimen, the system needs time — five to fifteen minutes — to reach thermal equilibrium before the drift settles to a level low enough for publication-quality acquisition.
 
-| Beam energy | Wavelength (rel.) | Notes |
-|---|---|---|
-| 60 kV | 4.87 pm | bio routine |
-| 100 kV | 3.70 pm | older standard |
-| 200 kV | 2.51 pm | high-resolution standard |
-| 300 kV | 1.97 pm | aberration-corrected, atomic resolution |
+Chapter 14 now takes the column you have just learned and asks: what exactly does a bright-field image show, and why do some regions appear dark and others light? The objective aperture, the diffraction pattern it intercepts, and the physics of electron scattering in the specimen are the machinery that answers that question.
 
 ---
 
-## 10. Exercises
+## Exercises
 
 ### Warm-up
 
-**Exercise 13.1 (LO: name subsystems).**
-List the six major TEM subsystems and give one sentence per subsystem describing its job. Difficulty: easy.
+**13.1** — List the six major subsystems of a TEM column in top-to-bottom order and give one sentence per subsystem describing its function. *(Tests: column architecture recall. Difficulty: easy.)*
 
-**Exercise 13.2 (LO: identify objective lens type).**
-Match each architecture to its trade-off: (a) split polepiece, (b) immersion, (c) snorkel. Trade-offs: highest resolution but limited specimen handling; most flexible holder geometry; compromise between the other two. Difficulty: easy.
+**13.2** — Explain in two sentences why a cold field-emission gun produces sharper TEM images than a tungsten thermionic gun, without using the words "brightness" or "coherence." *(Tests: source size, energy spread, and their image consequences. Difficulty: easy.)*
 
-**Exercise 13.3 (LO: explain Fresnel fringe).**
-Why do Fresnel fringes appear at the edge of a hole in the support film, and why do they disappear at perfect focus? Difficulty: easy.
+**13.3** — You are looking at a hole in the support film of a TEM specimen. The bright Fresnel fringe is outside the edge, away from the specimen. Is the objective lens over- or underfocused? What knob adjustment corrects it? *(Tests: Fresnel fringe focus diagnostic. Difficulty: easy.)*
 
 ### Application
 
-**Exercise 13.4 (LO: choose objective lens type).**
-A graduate student needs HRTEM lattice imaging of silicon nanocrystals at sub-Å resolution. Which objective-lens architecture, and what is the trade-off accepted? Difficulty: medium.
+**13.4** — A researcher is designing a TEM experiment that requires (a) atomic-resolution HRTEM imaging of a silicon crystal, and (b) simultaneous EDS elemental mapping of a precipitate within the crystal. She must choose between an immersion objective lens and a split-polepiece objective lens. Which architecture serves each goal, and which would you recommend for the combined experiment? Justify in terms of $C_s$, polepiece gap, and detector geometry. *(Tests: objective lens architecture trade-offs applied to a real experimental constraint. Difficulty: medium.)*
 
-**Exercise 13.5 (LO: design eucentric protocol).**
-Walk through the five-step procedure to set eucentric height. What goes wrong if you skip any step? Difficulty: medium.
+**13.5** — A TEM operator needs to acquire a selected-area electron diffraction pattern from a single 500 nm grain in a polycrystalline ceramic. Walk through the mode-switching procedure step by step, naming which lens excitation changes, which aperture is inserted, and what the operator sees on the screen at each step. *(Tests: SAED mode-switching mechanics and hardware mapping. Difficulty: medium.)*
 
-**Exercise 13.6 (LO: choose camera).**
-For each scenario, choose the appropriate camera: (a) routine biological TEM at 1 nm resolution, (b) cryo-EM single-particle work targeting <0.3 nm, (c) low-dose imaging of a beam-sensitive polymer. Difficulty: medium.
+**13.6** — A new TEM holder is inserted through the airlock. The airlock pumps for 45 seconds and the green indicator lights. Two minutes into the session, the image at 100,000× shows a feature that drifts steadily across the screen. Name the most likely cause, explain the physics behind it, and state how long the operator should wait before acquisition. *(Tests: thermal drift, equilibration time, and vacuum/contamination awareness. Difficulty: medium.)*
 
-**Exercise 13.7 (LO: identify TEM mode by hardware).**
-A TEM operator inserts the SAED aperture and switches the intermediate-lens excitation. The image on the screen changes from a textured biological field to a regular pattern of bright dots. What mode is the operator now in, and what does the bright-dot pattern represent? Difficulty: medium.
+**13.7** — A TEM image of a 70 nm biological section is acquired at 50,000× on a camera with a 25 mm sensor edge. What area of the specimen does the image cover? If the camera has 4096 pixels along that edge, what is the pixel sampling in nanometers per pixel at the specimen? Is this sufficient to resolve 1 nm features according to the Nyquist criterion? *(Tests: magnification arithmetic and sampling calculation. Difficulty: medium.)*
 
 ### Synthesis
 
-**Exercise 13.8 (LO: integrate session steps).**
-Walk through a complete TEM session for a graduate student who needs (a) bright-field imaging of cardiac mitochondria, (b) a diffraction pattern of one mitochondrion's storage granule (suspected ferritin-iron mineralization). List each step from grid load through image acquisition, naming the subsystem and parameter changes at each step. Difficulty: hard.
+**13.8** — A cryo-EM facility is deciding between upgrading from a CCD camera to a direct-electron-detection camera for single-particle reconstruction work. The target resolution is 0.3 nm. Write a two-paragraph argument for the upgrade that addresses: (a) why the CCD's scintillator-based architecture limits resolution at this target, and (b) why the DED's frame-rate capability specifically enables the motion-correction step that makes 0.3 nm resolution achievable. *(Tests: camera architecture physics integrated with cryo-EM methodology. Difficulty: hard.)*
+
+**13.9** — A graduate student is beginning a tomography experiment (Chapter 19 preview). They need to acquire 61 images of the same region at tilt angles from −60° to +60° in 2° increments. (a) Explain why eucentric height is essential for this experiment and what goes wrong if it is not set. (b) After setting eucentric height, the student tilts to +30° and finds the feature has drifted slightly off-center. Describe what this indicates and how to correct it. (c) Between each tilt, the stage needs time to settle before acquisition. What physical process requires this settling time? *(Tests: eucentric height mechanics, tilt-series discipline, and drift physics integrated across the specimen-manipulation system. Difficulty: hard.)*
 
 ### Challenge
 
-**Exercise 13.9 (open-ended).**
-Find a published HRTEM paper that explicitly identifies the objective-lens architecture and the camera type. Comment on whether the choices match the resolution claimed. List one parameter the authors did not report that you would want to know. Difficulty: open-ended.
+**13.10** — Find a published TEM paper in your field that reports the gun type, accelerating voltage, objective lens type, and camera used. For each of the four reported parameters, identify one specific consequence for image quality that follows from this chapter's physics. Then identify one parameter that the authors did not report but that would affect your ability to judge whether the instrument was properly configured for their claimed resolution. *(Difficulty: open-ended.)*
 
 ---
 
-## 11. Summary
+ evidence that direct-electron-detection cameras can be replaced by scintillator-based architectures without sacrificing the resolution improvements that made cryo-EM single-particle reconstruction transformative. Current evidence consistently shows DEDs are decisive for sub-half-nanometer cryo-EM work; the motion-correction capability alone is not replicable with a slow-readout camera.
 
-You walked into this chapter knowing that a TEM is a column with several lenses. You walk out knowing the column from gun to camera, the role of each subsystem, the operator's discipline (eucentric, focus, mode switching), and the camera generations from phosphor screen through DED. You can load a grid yourself, focus an image with Fresnel fringes, and switch from imaging to diffraction mode.
-
-The one idea that matters most: the objective lens is the central component of a TEM. It immerses the specimen in its field, forms the first image, and largely determines resolution. Manufacturer's design choices for the objective set what the instrument can and cannot do.
-
-The common mistake to watch for is forgetting the eucentric height before tomography. The tilt series fails to align if the specimen translates as it tilts; the operator wastes the session.
-
-The Feynman test: explain to a labmate, without using the word "lens," why focusing a TEM image is operationally different from focusing a light microscope.
-
----
-
-## 12. Connections Forward
-
-Chapter 14 takes the imaging system you now know and unpacks bright-field and dark-field imaging — the most-used modes — and the role of the objective aperture. Chapter 15 covers diffraction in detail: how the SAED aperture and intermediate lens together produce single-crystal patterns. Chapter 16 covers the contrast mechanisms (mass-thickness, diffraction, phase) that decide what image content you actually see. Chapters 17–19 cover advanced modes (HRTEM, STEM, HAADF, EELS, tomography, low-dose).
-
-The question this chapter raised but did not answer: *exactly* how does the objective aperture turn the post-specimen wave into different image modes? Chapter 14 begins.
-
----
-
-**What would change my mind:** evidence that direct-electron-detection cameras can be replaced by simpler scintillator-CCD architectures without sacrificing the resolution improvements they enabled. Current evidence consistently shows DEDs are decisive for cryo-EM single-particle work; conventional CCDs may suffice for routine biological imaging.
-
-**Still puzzling:** the trade-off between immersion and split-polepiece objective lenses is genuinely difficult to optimize across all use cases. Specialized aberration-corrected designs are expensive and instrument-specific; most labs choose one architecture and commit.
-
-**Tags:** `TEM-instrument`, `objective-lens`, `eucentric`, `airlock`, `camera-types`
-
----
-
-### Note to the professor
-
-`[verify]` markers in this chapter:
-- Specific source-table values from week-10 (kept verbatim).
-- DED resolution figures vs CCD — recent technology, evolving rapidly.
-- Specific lifetime figures for the source families.
-- Camera frame-rate ranges (instrument-dependent).
-
-Voice anchoring: anchored. Grad-student-grid-loading chapter opening. Capability ending. Wonder grounded in numbers (200 kV gun, 100 nm specimen, 30-million-fold magnification, TB/hour data rates). Length ~6300 words.
+**Still puzzling:** the trade-off between immersion and split-polepiece objective lens designs is genuinely hard to optimize across all use cases, and the introduction of aberration correctors changes the trade-off without eliminating it. Most labs choose an objective-lens architecture once, when they buy the instrument, and commit to it for fifteen years. Whether that match between instrument design and evolving science stays optimal over the instrument's lifetime is a question almost no one asks explicitly before writing the purchase order.
