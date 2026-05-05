@@ -1,301 +1,129 @@
 # Chapter 19 — TEM Tomography and Low-Dose Imaging
 
-## Title options
-
-1. **Three Dimensions from Two: TEM Tomography**
-2. **Imaging Without Damage: Low-Dose TEM**
-3. **Tilt Series and Dose Budgets: TEM for Beam-Sensitive Specimens**
-
-## TL;DR
-
-TEM tomography reconstructs a 3D model of a thin specimen from a series of 2D projections taken at different tilt angles, addressing the projection-ambiguity problem of single-image TEM. Low-dose TEM minimizes electron exposure to beam-sensitive specimens — biological, polymer, organic — by spreading the imaging task across separated search, focus, and exposure operations.
+*A single TEM image is a shadow. The object that cast it could be almost anything. More images, from more angles, narrow the possibilities — until, with enough views, the shadow becomes a solid.*
 
 ---
 
-## 1. Chapter Opening
+A graduate student is looking at a bright-field TEM image of a rat-kidney section. Somewhere in the cytoplasm, a roughly circular structure about 150 nanometers across appears: bright in the center, ringed by a darker shell. It could be a hollow vesicle. It could be a dense spherical particle with a light core. It could be a mitochondrion or some other organelle sectioned at an oblique angle, or a torus seen end-on. From one image, the student cannot determine which. The two-dimensional image is a projection — the beam has passed through the entire thickness of the specimen and everything it encountered along the way has been summed into one flat shadow. A sphere, a disk, and a torus can all project to the same circular shape.
 
-A graduate student looks at a single bright-field TEM image of a rat-kidney section. A spherical structure ~150 nm across appears in the cytoplasm — bright in the center, ringed by a darker shell. Hollow vesicle? Solid particle with a dense rim? Stained mitochondrion seen edge-on? From one image, the student cannot say. The 2D image is a projection through the specimen's full thickness; a sphere, a disk, and a torus can all project to the same 2D shape.
+What the student does next is the subject of this chapter. Instead of a single image, acquire a series: the same field of view, imaged at tilt angles from −70° to +70° in two-degree steps, 71 images in total. Send those images to reconstruction software. The software back-projects each image into a shared three-dimensional voxel array, combines the contributions from all 71 angles, and returns a 3D volume. The structure in the reconstructed volume is unambiguous: a spherical vesicle with a thin membrane shell and a hollow interior. The third dimension was inaccessible from one view. With 71 views and a reconstruction algorithm, it is recovered.
 
-The student switches strategy. Instead of a single image, acquire a tilt series: the same field, imaged at angles from $-70°$ to $+70°$ in 2° increments. The reconstruction software back-projects the 71 images into a 3D voxel array. The voxel data show the structure clearly: a spherical vesicle with a thin membrane shell, hollow inside. The third dimension was inaccessible from one image; with 71 images and a reconstruction algorithm, it is recovered.
+This is electron tomography. The same mathematical foundation that makes a CT scanner reconstruct a human chest from X-ray projections at many angles applies here — the same central-slice theorem, the same Fourier-space logic — but at a scale eight orders of magnitude smaller, on specimens 100 nanometers thick, at sub-nanometer resolution.
 
-The cost: 71 acquisitions, each one a small dose of electrons on the specimen. For a beam-sensitive biological sample, that dose can damage the specimen during the tilt series, blurring the very features the tomography is trying to resolve. The trade-off lies at the heart of cryo-EM tomography (Chapter 21) and many materials-science applications.
-
-By the end of this chapter you can plan and execute a tilt-series acquisition for tomography, recognize the missing-wedge artifact, design a low-dose imaging protocol for a beam-sensitive specimen, and predict when radiation-damage will limit information recovery.
-
-### Learning objectives
-
-By the end of this chapter you can:
-
-- **Explain** how a tilt series of 2D projections reconstructs 3D structure.
-- **Recognize** the missing-wedge artifact and predict its consequences.
-- **Choose** between back-projection, SIRT, and iterative reconstruction algorithms.
-- **Design** a low-dose imaging protocol with separated search, focus, and exposure operations.
-- **Estimate** dose budget for a beam-sensitive specimen.
-- **Predict** when radiation damage will dominate the information recovery.
-
-### Prerequisites
-
-Chapter 14 (BF/DF imaging, projection through thin specimen). Chapter 13 (specimen holders, eucentric height, tilt range). Chapter 12 (TEM as transmission imaging). Some 3D-imaging intuition (CT or MRI principles transfer).
-
-### Why this chapter matters
-
-Tomography and low-dose imaging are the dominant TEM techniques for cryo-EM (Chapter 21) and for many materials and biological questions where 3D structure or beam-sensitive specimens matter. Both are increasingly automated and accessible to non-experts.
+<!-- → [IMAGE: projection ambiguity demonstration — top row: three different 3D objects (sphere, thick disk, torus) rendered side by side; bottom row: the 2D projection (BF TEM image) that each produces when viewed along one axis — all three projections appear nearly identical as a circular ring with bright center; caption: "All three objects produce identical projections along one axis. Tomography distinguishes them by acquiring projections from many angles."; student should immediately see why a single TEM image is fundamentally insufficient for 3D structural determination] -->
 
 ---
 
-## 2. Tomography: tilt series → 3D reconstruction
+The mathematical core is worth stating precisely because it determines everything about what tomography can and cannot do.
 
-The question this section answers is: how do you turn many 2D projections into a 3D image, and what limits the result?
+Consider a three-dimensional object whose density is described by a function $f(x, y, z)$. When the electron beam passes through the object in the $z$ direction, the image it forms is the projection
 
-### Mechanism — central-slice theorem and back-projection
+$$
+P(x, y) = \int f(x, y, z) \, dz
+$$
 
-Per the week-11 source, tomography in TEM "uses a series of 2D images successively recorded from an object at different tilt angles to create a 3D model of a sample." The process:
-- **Recording images:** A series of images at different tilt angles. Typical tilt range: $\pm 60°$ to $\pm 75°$ in 1–2° increments, giving 60–150 images per series [verify].
-- **Merging images:** Computational reconstruction into a 3D voxel array.
+— the integral of the density along the beam path. One projection gives you $P$; it does not give you $f$. Many projections, at different angles, give you many different two-dimensional slices through the three-dimensional Fourier transform of $f$ — one slice per tilt angle, at an angle in Fourier space corresponding to the tilt angle in real space. This is the **central-slice theorem**: the two-dimensional Fourier transform of a projection at angle $\theta$ is a central slice of the three-dimensional Fourier transform of the object, taken at angle $\theta$ through the origin.
 
-The mathematical foundation is the **central-slice theorem**: the 2D Fourier transform of a projection at angle $\theta$ equals a central slice of the 3D Fourier transform of the object at angle $\theta$. So acquiring projections at many $\theta$ values samples the 3D Fourier space; the inverse 3D Fourier transform reconstructs the object.
+The implication is direct: if you acquire projections at enough angles to densely sample the three-dimensional Fourier space, you can invert the Fourier transform and recover $f(x, y, z)$. More projections, more Fourier-space coverage, better reconstruction.
 
-Several reconstruction algorithms are in routine use [verify all]:
+The simplest reconstruction algorithm, weighted back-projection, makes this operational: take each projection, smear it back through three-dimensional space along its acquisition direction, sum all the smeared contributions, and apply a weighting filter to compensate for the non-uniform density of the Fourier sampling. The result is a three-dimensional image — a tomogram. The algorithm is fast and widely used. Its limitation is artifact production: a sharp feature in the specimen casts streak artifacts at angles related to the sampling geometry, and these streaks can look like real structure in a naive inspection.
 
-- **Weighted back-projection (WBP).** The simplest. Each 2D projection is "back-projected" into 3D space along its acquisition direction. Sum across all projections; weight to compensate for non-uniform Fourier sampling. Fast, but artifact-prone for sparse tilt series.
-- **Simultaneous iterative reconstruction technique (SIRT).** Iteratively refines the 3D reconstruction by comparing projected reconstructions to actual projections and adjusting. Better quality at the cost of computation time.
-- **Iterative reconstruction (IRE) and compressed sensing.** Modern methods that exploit prior information (sparsity, smoothness) to reconstruct from fewer projections or with less artifact.
+More sophisticated algorithms — simultaneous iterative reconstruction (SIRT) and various compressed-sensing methods — refine the reconstruction by iteratively comparing projected versions of the current estimate to the actual acquired projections, adjusting the estimate to reduce the discrepancy. These give better results, especially for sparse tilt series or for specimens where the structure is partly known. They cost more computation time, and for modern instruments equipped with fast computers the difference in wall-clock time is modest.
 
-### The missing wedge
-
-The week-13 specimen-holder geometry caps tilt at typically $\pm 70°$ at most. The remaining angular range, $\pm 70°$ to $\pm 90°$, is unsampled — the **missing wedge**. The missing wedge produces:
-
-- **Anisotropic resolution.** Reconstruction is best in the direction perpendicular to the tilt axis where projections are dense, worst along the optical axis where projections are missing.
-- **Elongation along the optical axis.** Spherical objects appear elongated as ellipsoids along the beam direction.
-- **Streak artifacts.** Sharp features show streaks at angles related to the missing-wedge geometry.
-
-Mitigations include:
-- **Higher tilt range.** $\pm 75°$ holders reduce but do not eliminate the missing wedge. Specialized $\pm 90°$ "needle" holders for nanowire-like specimens reach near-complete tilt range.
-- **Dual-axis tomography.** Two tilt series with the second tilt axis perpendicular to the first, then combined reconstruction. Reduces but does not eliminate missing-wedge artifacts.
-- **Constrained reconstruction algorithms.** Compressed-sensing methods that incorporate prior information to fill the missing-wedge data.
-
-### Trade-off
-
-Tomography optimizes for **3D structural information at the cost of dose, time, and missing-wedge artifacts**. Each pixel sees the beam multiple times across the tilt series; total dose can be 10-100× a single-image acquisition. For dose-tolerant specimens (most inorganic materials) this is fine. For dose-sensitive specimens (biology, polymers), low-dose protocols (Section 3) are essential.
-
-### Worked example: dose for a tilt series
-
-**Problem.** A biological tilt series acquires 71 images at 2° increments from $-70°$ to $+70°$. Each image uses 100 electrons/Å² of dose. What is the total dose to the specimen?
-
-**Reasoning.** Total dose = 71 × 100 = 7,100 electrons/Å².
-
-**Sanity check.** Cryo-EM single-particle work commonly uses total doses of 50-100 electrons/Å² to avoid radiation damage. Tomography typically tolerates higher total dose because individual images are at lower dose, but 7,100 e/Å² is firmly in the damage regime for many specimens.
-
-**General lesson.** Tilt-series total dose is large. For dose-sensitive specimens, the per-image dose must drop below the per-image budget you would use for a single image — typically 1-5 electrons/Å² per tilt projection.
-
-### What Goes Wrong Here
-
-- **Missing-wedge artifact.** Reconstruction shows specimen elongation along the optic axis. Recognition: spherical objects appear ellipsoidal. Mitigation: higher-tilt holders, dual-axis acquisition, advanced algorithms.
-- **Alignment errors during tilt series.** If the reconstruction software cannot align successive images precisely (using either fiducials or feature-tracking), the 3D output is blurred. Fix: gold fiducials on the specimen for explicit alignment markers.
-- **Stage-drift propagation through the series.** Specimen drifts during the multi-minute acquisition; later images are offset from earlier. Recognition: features appear smeared in the reconstruction. Fix: thermal-stable instrument; faster acquisition.
-- **Radiation damage propagation.** Specimen degrades over the tilt series; later projections show different structure than early ones. Recognition: contrast or feature-shape changes between low-tilt and high-tilt images. Fix: low-dose protocols (Section 3).
+<!-- → [INFOGRAPHIC: central-slice theorem diagram — left panel: 3D Fourier space of the object shown as a sphere, with labeled slices at different angles through the origin; right panel: corresponding real-space projections of the object at those tilt angles; arrows connecting each projection to its slice in Fourier space; inset showing how dense angular sampling fills Fourier space vs. sparse sampling leaves gaps; caption explaining that more tilt angles = more Fourier-space coverage = better reconstruction; student should see the mathematical reason why more projections improve the tomogram] -->
 
 ---
 
-## 3. Low-dose TEM for beam-sensitive specimens
+The hardest practical constraint on TEM tomography is not the algorithm. It is the **missing wedge**.
 
-The question this section answers is: how do you image a specimen that the beam itself damages, while still finding what you want and focusing it correctly?
+A specimen holder can tilt the specimen through a limited angular range — typically ±60° to ±70° — before the tilted specimen physically strikes the objective lens polepiece or the grid bars block the beam. The angular range from ±70° to ±90° is therefore never sampled. In Fourier space, this means a wedge-shaped region around the beam axis is simply missing — no projections were acquired to populate it. The reconstruction algorithm has to leave that region empty.
 
-### Mechanism — separate search, focus, exposure operations
+The consequence is anisotropic resolution. In the directions perpendicular to the tilt axis, where Fourier space is well sampled by the acquired projections, the reconstruction resolves fine detail. Along the beam axis — the direction where the missing wedge lies — resolution degrades. A spherical nanoparticle reconstructed from a ±70° tilt series appears elongated along the beam direction, stretched into an ellipsoid. The elongation is not real; it is a consequence of the incomplete angular sampling.
 
-Per the week-11 source, low-dose TEM is "a specialized imaging technique to minimize electron beam damage to sensitive samples, particularly in biological specimens." Conditions include "reduced electron dose and optimized imaging conditions (exposure time and detector gain)."
+The elongation factor is approximately $\sqrt{(90° + \alpha)/(90° - \alpha)}$ where $\alpha$ is the maximum tilt angle. For ±70°, this gives an elongation of about 1.5 along the beam direction relative to the in-plane direction — a substantial anisotropy. For ±60°, the factor is larger still. The missing wedge cannot be eliminated by better algorithms; it can only be reduced by acquiring more projections, either by using a high-tilt holder that reaches ±75° or ±80°, or by performing **dual-axis tomography** — acquiring a complete tilt series around one axis, then rotating the specimen 90° and acquiring a second tilt series around the perpendicular axis. Combining the two series halves the missing-wedge volume and substantially improves the isotropy of the reconstruction, at the cost of double the acquisition time and total dose.
 
-The standard low-dose protocol separates the operator's tasks geographically:
+For nanowire-shaped specimens — a long thin cylinder that can be oriented with its long axis as the tilt axis — specialized needle holders can achieve ±90° tilt, eliminating the missing wedge entirely. This geometry is appropriate for semiconductor devices cross-sectioned into needle shapes by FIB, and for carbon nanotubes and similar one-dimensional materials.
 
-```
-PROCEDURE — Low-dose three-area protocol
-
-1. SEARCH AREA. Locate the region of interest at low magnification
-   (~5000×). The dose here is high relative to a single exposure but
-   still much lower than focused-beam work.
-2. FOCUS AREA. Move to a nearby region of identical specimen (same
-   thickness, same material) for focusing. Focus and stigmator alignment
-   here. Dose accumulates only on this area, not on the imaging target.
-3. EXPOSURE AREA. Move to the target region, expose for the publication
-   image. The first beam exposure on this area is the publication image.
-   Total dose: typically 1-100 electrons/Å² depending on specimen.
-```
-
-The trick: the focus area sees the dose required for high-quality focusing, but this damage does not contaminate the publication image. The exposure area sees only the brief image-acquisition dose. For tilt series, the same principle applies: focus on a "tracking" area, then expose on the imaging area at each tilt.
-
-### Dose budget
-
-For a typical biological cryo-EM application:
-
-- **Per-image dose:** 1-5 electrons/Å² for cryo-tomography; 30-50 for single-particle imaging.
-- **Total dose** (for tilt series): 70-150 electrons/Å² typical; can go higher for some specimens.
-- **Damage threshold:** material-specific. Biological specimens at cryo temperature: ~70-100 electrons/Å² before noticeable damage. At room temperature: ~10× lower.
-
-The operator's job: stay within the budget. Software-driven low-dose protocols enforce this automatically.
-
-### Trade-off
-
-Low-dose TEM optimizes for **specimen integrity at the cost of signal-to-noise per image**. Lower per-image dose means noisier images. For tilt series, the noise in individual projections is averaged out by the reconstruction. For single-image imaging, noise must be tolerated or addressed by frame averaging on direct-electron detectors (Chapter 13) — where the noise from low dose is fundamental and cannot be averaged within a single specimen exposure.
-
-### What Goes Wrong Here
-
-- **Focus drift between focus area and exposure area.** Two physical regions of the grid may be at slightly different heights; focusing on one does not necessarily focus the other. Fix: identify regions on the same support film at the same height; check focus across the gap.
-- **Specimen heterogeneity.** The "identical" focus area may have different thickness, composition, or charging characteristics than the exposure area. Fix: choose focus areas as similar as possible to imaging targets.
-- **Beam-induced motion.** Even at low total dose, the first 2-5 e/Å² of exposure causes specimen motion (especially in vitreous ice). Direct-electron detectors capture this as a stack of frames; motion correction in software aligns the frames before summing.
+<!-- → [IMAGE: missing wedge diagram — left: 3D Fourier space sphere showing the wedge-shaped unsampled region (shaded) corresponding to ±70° maximum tilt; label showing the missing angular range ±70° to ±90°; right: real-space consequence — tomographic reconstruction of a sphere appearing as a vertically elongated ellipsoid with elongation factor ~1.5 labeled; inset showing dual-axis acquisition reducing the missing wedge to a smaller missing pyramid; student should see exactly why spherical objects appear elongated and how dual-axis acquisition partially corrects this] -->
 
 ---
 
-## 4. Synthesis: when each technique wins
+The dose is the other constraint. Each image in the tilt series deposits a dose of electrons on the specimen. For an inorganic material — a metal alloy, a semiconductor, a mineral — the dose from 71 images at modest per-image dose is usually not a problem. The specimen is robust. For a biological specimen — a cell membrane, a protein complex, a polymer network — the cumulative dose of a tilt series causes progressive radiation damage: bond breaking, mass loss, structural rearrangement. The later images in the tilt series look different from the earlier ones not because the structure changed but because the beam changed it.
 
-Tomography and low-dose imaging address different problems with different solutions:
+The dose problem is not unique to tomography. It is the central problem of electron microscopy of biological and organic specimens, and it has been understood since the 1970s. The fundamental constraint is that information and dose are not separable: extracting structural information from the beam-specimen interaction requires depositing electrons, and depositing electrons damages the specimen. The question is how to extract the maximum information from the minimum dose before the damage becomes significant.
 
-**Tomography** handles:
-- 3D structure reconstruction.
-- Projection ambiguity (Chapter 14).
-- Multi-view characterization.
+For single-image TEM of a beam-sensitive specimen, the standard approach is **low-dose imaging**: separate the unavoidably damaging operations — finding the region of interest, focusing on it — from the publication-quality exposure on the target area. The protocol has three physically distinct regions of the specimen:
 
-**Low-dose imaging** handles:
-- Beam damage prevention.
-- Imaging biological specimens, polymers, organic materials.
-- Cryo-EM single-particle work (Chapter 21).
+The **search area** is used at low magnification to navigate the grid and identify regions of interest. Dose here is low per unit area, but this region is not the final imaging target.
 
-**Cryo-electron tomography (cryo-ET)** combines both — vitrified biological specimens (Chapter 21) imaged at low dose across a tilt series. The result: 3D reconstructions of biological structures in their native hydrated state, at near-atomic resolution. This is the technique behind much of structural biology's recent progress.
+The **focus area** is a nearby region of the same specimen — same thickness, same material, not the feature being imaged — where the operator focuses the beam, corrects astigmatism, and confirms all imaging parameters. All the dose from this procedure falls on the focus area, not on the imaging target. The beam damage here is acceptable because this region is not what will be reported.
 
-### Putting it all together (worked synthesis)
+The **exposure area** is the imaging target. The operator moves to it, acquires the image, and never exposes it to the focused beam before that single acquisition. The first electrons the exposure area sees are the ones that form the publication image.
 
-A nanomedicine PI brings 200 nm liposomes loaded with a small-molecule drug. Goals:
-- (a) Confirm the lipid bilayer structure.
-- (b) Visualize where the drug is encapsulated (core, surface, or membrane).
-- (c) Measure size distribution of liposomes.
+This three-area separation is the discipline that makes low-dose TEM work. Violating it — focusing on the imaging target, or navigating across it at high magnification — deposits damaging dose on the region of interest before the publication image is acquired, and the result is a damaged, blurred specimen.
 
-Plan:
-- (a) Cryo-TEM at low dose. The vitrified liposome shows the bilayer as a thin dark line in BF, ~5 nm thick.
-- (b) Cryo-ET tilt series of a single liposome. 3D reconstruction shows the drug location in space.
-- (c) Standard cryo-TEM survey at moderate dose for population statistics.
+<!-- → [INFOGRAPHIC: three-area low-dose protocol diagram — top-down schematic of a TEM grid showing three physically separated regions labeled: (1) Search area — low magnification, navigation, moderate dose; (2) Focus area — same specimen type as target, all focusing/stigmation dose deposited here; (3) Exposure area — imaging target, first electron exposure = publication image; arrows showing the operator's movement sequence: Search → Focus → Exposure; dose accumulation bar below each area showing the relative dose deposited; student should see the spatial separation that protects the exposure area from pre-exposure damage] -->
 
-Three goals, three techniques, one specimen. Cryo-EM (Chapter 21) brings the cryo-prep; this chapter brings the tomography and low-dose disciplines.
+For tilt-series tomography, the same logic extends across the full series. At each tilt angle, the focus and tracking operations are performed on a separate area of the specimen adjacent to the imaging area. The imaging area sees only the brief acquisition dose at each angle. With per-image doses of 1 to 5 electrons per square angstrom and 71 images, the total dose to the imaging area is 71 to 355 electrons per square angstrom — within the damage budget for many biological specimens at cryogenic temperatures, where the radiation sensitivity is lower than at room temperature by roughly an order of magnitude.
 
-### Scale shift
-
-Tilt-series TEM is to single-image TEM as 3D X-ray CT is to a single chest X-ray. Both reconstruct 3D structure from many 2D projections; the underlying mathematics is the same. CT scanners do this routinely on whole human bodies at meter scale; TEM tomography does it on 100-nm specimens at sub-nanometer resolution. The wonder is the eight orders of magnitude in spatial scale that the same algorithmic approach handles, from millimeters in medical imaging down to angstroms in structural biology.
+The damage budget depends on the specimen. Biological specimens in vitreous ice at liquid-nitrogen temperature tolerate roughly 70 to 100 electrons per square angstrom before structural degradation becomes visible in the reconstruction. Polymers are typically more sensitive. Inorganic materials are far more tolerant. Knowing the damage threshold for the specimen — from prior published work or from diagnostic experiments — is the starting point for designing the dose protocol.
 
 ---
 
-## 5. Pre-lab Checklist (Lab 19 — tilt series and low-dose)
+The direct-electron-detection cameras discussed in Chapter 13 are what make modern low-dose tomography practical. A DED running at several hundred frames per second records the tilt series as a stack of very short sub-exposures. Motion-correction software aligns the sub-frames before summing, compensating for the beam-induced motion that even vitrified specimens exhibit during the first few electrons of exposure. Without motion correction, the early frames of each exposure — when the specimen moves most — blur the image. With it, the motion is removed in post-processing and the effective resolution improves substantially.
 
-**By the end of this chapter, you should be able to:**
-
-- Plan a tilt-series acquisition with appropriate angular range and step size.
-- Apply a low-dose protocol with separate search, focus, and exposure areas.
-- Predict missing-wedge artifacts in a reconstruction.
-- Estimate dose budget for a beam-sensitive specimen.
-
-**Bring to lab:**
-
-- This chapter, especially Sections 2 and 3.
-- A specimen suitable for tomography (a thick biological section, a nanoparticle on a support, or a known reference).
-
-**Expect on the floor:**
-
-- A guided tilt-series acquisition, software-automated.
-- A first attempt at low-dose imaging on a beam-sensitive specimen.
-- A reconstruction demonstration showing the missing-wedge artifact.
+This motion-correction capability, combined with the DED's higher detective quantum efficiency (less noise per detected electron), is what pushed cryo-EM single-particle reconstruction into the resolution regime where atomic structures are routinely determined. The same physics governs tomographic reconstruction: per-electron information yield is maximized, so the dose budget buys more structural resolution than it did with CCD cameras.
 
 ---
 
-## 6. Quick-Reference Table
+The wonder in electron tomography is the algorithmic reach of the central-slice theorem across scales. A hospital CT scanner reconstructs a cross-section of the human thorax — roughly 30 centimeters — from 600 X-ray projections in about 10 seconds. An electron tomography session reconstructs a lysosome — roughly 300 nanometers — from 71 electron projections in about an hour. The objects differ in linear dimension by a factor of a million. The X-ray photons and the electrons differ in energy, wavelength, and interaction physics. The reconstruction algorithm is, in its mathematical essentials, identical.
 
-| Technique | Primary use | Dose range | Resolution |
-|---|---|---|---|
-| Single-image TEM | survey, 2D imaging | typical: 100+ e/Å² | 0.1–1 nm |
-| Tomography (room-T) | 3D structural | 50-200 e/Å² total [verify] | 1–10 nm 3D |
-| Cryo-ET (cryo-T) | biological 3D | 70-150 e/Å² total | 1-5 nm 3D |
-| Cryo-SPA (single-particle) | biological 2D averages | 30-50 e/Å² per image | 0.2-0.5 nm |
-| Low-dose imaging | beam-sensitive | 1-30 e/Å² typical | varies |
+What differs is the damage problem. X-ray photons pass through a human body without depositing significant dose in any one spot; the patient survives the CT scan. Electrons interact with the specimen far more strongly and deposit their energy in the region they pass through; the dose that illuminates a 300-nm vesicle is enough to alter its chemistry. The challenge of TEM tomography is therefore not algorithmic — the reconstruction mathematics works as well at the nanometer scale as at the meter scale — it is physical: how to acquire the projections needed for a good reconstruction without destroying the specimen in the process.
 
-| Reconstruction algorithm | Pros | Cons |
-|---|---|---|
-| Weighted back-projection (WBP) | fast | streak artifacts |
-| SIRT | better quality | slower [verify] |
-| Compressed-sensing iterative | best for sparse data | computationally expensive |
+<!-- → [INFOGRAPHIC: scale comparison diagram — horizontal log scale from 0.1 nm to 1 m; two labeled points: "TEM tomography: lysosome, ~300 nm, 71 projections, 1 hour" and "Medical CT: human thorax, ~30 cm, 600 projections, 10 seconds"; shared label: "Central-slice theorem: identical mathematics at both scales"; below the scale: two contrast bars showing dose deposition — X-rays: low dose per unit volume, patient survives; electrons: high dose per unit volume, specimen chemistry altered; student should appreciate the 8-orders-of-magnitude span and the algorithmic unity alongside the physical difference] -->
+
+The combination of cryogenic specimen preparation, direct-detection cameras, motion correction, and carefully designed dose protocols has turned what was an intractable problem in the 1980s into a routine capability today. Chapter 21 adds the remaining piece: how biological specimens are vitrified — frozen fast enough that water forms glass rather than ice crystals — so that they can be imaged in their near-native hydrated state. With vitrification, low-dose protocols, DED cameras, and the tomographic reconstruction algorithms from this chapter, the structures of molecular machines inside cells can be determined at near-atomic resolution without ever purifying the protein or growing a crystal.
 
 ---
 
-## 7. Exercises
+Chapter 21 brings the cryo-preparation that makes biological tomography tractable. Chapter 22 returns to inorganic specimens where high-tilt holders and FIB-prepared needle samples push tomography toward the missing-wedge-free regime. Chapter 23 synthesizes the artifacts from this chapter — missing-wedge elongation, streak artifacts, dose-induced degradation — comparatively with other TEM modes.
+
+What this chapter left open: how exactly does beam-induced specimen motion arise in vitrified samples, and what makes the first few electrons of exposure so damaging? Chapter 21 addresses the physics of vitrification and the specific damage mechanisms that make cryo-EM both powerful and delicate.
+
+---
+
+## Exercises
 
 ### Warm-up
 
-**Exercise 19.1 (LO: predict missing-wedge artifact).**
-A spherical 50-nm particle is imaged with a tilt series from $-60°$ to $+60°$ at 2° steps. Predict what shape the reconstructed particle will have. Difficulty: easy.
+**19.1** — Explain in two sentences why a single TEM image cannot unambiguously determine the three-dimensional shape of a specimen, and why a tilt series can. *(Tests: projection ambiguity as the core motivation for tomography. Difficulty: easy.)*
 
-**Exercise 19.2 (LO: choose dose).**
-A graduate student wants to image a polymer nanoparticle that radiolyzes at ~50 e/Å². Specify whether they should use single-image, low-dose-cryo, or tomography acquisition. Difficulty: easy.
+**19.2** — A spherical 80 nm nanoparticle is imaged with a tilt series spanning ±70°. Using the elongation factor formula $\sqrt{(90° + \alpha)/(90° - \alpha)}$, calculate how much the particle will appear stretched along the beam direction in the reconstruction. *(Tests: missing-wedge elongation calculation. Difficulty: easy.)*
 
-**Exercise 19.3 (LO: name reconstruction).**
-Identify the simplest tomography reconstruction algorithm. Why is it called "back-projection"? Difficulty: easy.
+**19.3** — Describe the three physically separated areas used in a low-dose TEM protocol and state the purpose of each. Why is it essential that the exposure area receives no beam before the final acquisition? *(Tests: low-dose three-area protocol rationale. Difficulty: easy.)*
 
 ### Application
 
-**Exercise 19.4 (LO: design tilt range).**
-A biological tilt series needs to reach $\pm 75°$ for adequate 3D resolution. The available holders have tilt limits of $\pm 60°$, $\pm 70°$, and (specialized) $\pm 75°$. Which holder, and what artifacts will the chosen holder still produce? Difficulty: medium.
+**19.4** — A tilt series acquires 61 images spanning ±60° at 2° steps. The available holders have maximum tilts of ±60°, ±70°, and ±75°. (a) Calculate the missing-wedge elongation factor for each holder. (b) A researcher insists on using the ±60° holder to minimize specimen contamination risk from a long tilt series. What artifact will appear in their reconstruction of spherical vesicles, and by how much will the measured diameter along the beam axis be inflated? *(Tests: elongation factor computation across tilt ranges and its consequence for size measurements. Difficulty: medium.)*
 
-**Exercise 19.5 (LO: dose budgeting).**
-A biological cryo-tomogram needs total dose <120 e/Å². Tilt range $\pm 60°$ at 2° steps gives 61 images. What per-image dose can the operator use? Difficulty: medium.
+**19.5** — A biological cryo-tomogram must stay within a total dose budget of 100 electrons/Å². The tilt series spans ±65° at 2° steps (67 images). (a) Calculate the maximum per-image dose. (b) If the researcher wants to use 3 electrons/Å² per image for good signal-to-noise, how many images can they afford? What tilt-step size would use that many images across the full ±65° range? *(Tests: dose budget arithmetic and tilt-step calculation. Difficulty: medium.)*
 
-**Exercise 19.6 (LO: low-dose protocol).**
-Walk through the three-area low-dose protocol for imaging a beam-sensitive polymer film. Specify what task is performed at each area and why. Difficulty: medium.
+**19.6** — A graduate student acquires a tilt series of an insulating polymer vesicle without using the low-dose protocol — focusing directly on the imaging area before each acquisition. When they examine the reconstruction, the first few projections are crisp but the last 20 show smearing and loss of fine structure. Explain what happened and describe the correct protocol that would have prevented it. *(Tests: radiation damage propagation in tilt series and low-dose protocol necessity. Difficulty: medium.)*
 
-**Exercise 19.7 (LO: identify artifact).**
-A TEM tomographic reconstruction of a spherical nanoparticle shows the particle elongated by 30% along the beam direction. What is the cause and what would mitigate it? Difficulty: medium.
+**19.7** — In weighted back-projection, each projection is "smeared" through 3D space and summed. Why does this produce streak artifacts, and what property of SIRT reconstruction reduces them? *(Tests: reconstruction algorithm mechanics and artifact origin. Difficulty: medium.)*
 
 ### Synthesis
 
-**Exercise 19.8 (LO: integrate tilt + low-dose).**
-A nanomedicine PI has 100-nm polymeric drug-delivery vesicles loaded with a heavy-metal-tagged drug. They want to (a) confirm vesicle morphology in 3D, (b) localize the drug position relative to the vesicle membrane. Specify a TEM session that combines tomography and low-dose discipline, including dose budget and reconstruction algorithm choice. Difficulty: hard.
+**19.8** — A materials scientist wants to image a 3D distribution of platinum nanoparticles (2–5 nm) inside a porous carbon support (~200 nm thick). (a) Would radiation damage be a concern for this specimen? Justify based on material type. (b) Design a tilt-series acquisition strategy specifying: angular range, step size, per-image dose, and total dose. (c) The reconstructed nanoparticles appear elongated. Calculate the expected elongation factor for your chosen angular range and propose one acquisition change that would reduce it. *(Tests: radiation-damage assessment + tilt-series design + missing-wedge consequence integrated for a real specimen. Difficulty: hard.)*
+
+**19.9** — A structural biologist argues that with modern machine-learning reconstruction methods, a single cryo-TEM image contains enough information to determine a 3D structure, making tilt-series tomography obsolete for routine work. Write a two-paragraph rebuttal addressing: (a) what information a single projection fundamentally cannot contain regardless of algorithm, and (b) under what specific conditions a single-image approach might be valid and where it would fail. *(Tests: central-slice theorem limits and conditions for tilt-series necessity. Difficulty: hard.)*
 
 ### Challenge
 
-**Exercise 19.9 (open-ended).**
-Find a published paper that uses cryo-electron tomography. Identify the dose budget, tilt range, and reconstruction algorithm. Comment on whether the resolution achieved matches the dose-vs-damage trade described. Difficulty: open-ended.
+**19.10** — Find a published cryo-electron tomography paper. Identify the tilt range, step size, per-image dose, total dose, and reconstruction algorithm used. Calculate the expected elongation factor from the reported tilt range and compare it to any statements the authors make about resolution anisotropy. Comment on whether the chosen dose per image and total dose are consistent with the damage budget for the specimen type. *(Difficulty: open-ended.)*
 
 ---
 
-## 8. Summary
+ evidence that single-image TEM, with appropriate computational post-processing, can recover three-dimensional structural information equivalent to a tilt series on the same specimen. Machine-learning methods trained on large structural databases are making progress toward this goal — using the known statistics of macromolecular structures to fill in the missing third dimension from one view. For now, however, a tilt series remains the gold standard for three-dimensional information in the sub-10-nm regime.
 
-You walked into this chapter with single-image TEM and the projection-ambiguity limitation. You walk out with two specialized techniques — tomography for 3D, low-dose for damage avoidance — and the operator's discipline for combining them. You can plan a tilt series, design a low-dose protocol, and predict when radiation damage will limit information recovery.
-
-The one idea that matters most: tomography and low-dose imaging are responses to two different limits of single-image TEM (projection ambiguity, beam damage). Combining them is the basis of modern cryo-electron tomography in structural biology.
-
-The common mistake to watch for is forgetting the missing-wedge artifact when interpreting tomographic reconstructions. Even excellent reconstructions are anisotropic in resolution; ignoring this anisotropy leads to over-interpretation of features along the optic-axis direction.
-
-The Feynman test: explain to a labmate, without using the word "tomography," why imaging the same particle from many angles gives more information than imaging it from one angle.
-
----
-
-## 9. Connections Forward
-
-Chapter 21 (cryo-EM) combines the techniques of this chapter with vitrified specimen prep and is where these methods are most consequential. Chapter 22 (inorganic TEM prep) discusses high-tilt holders for inorganic tomography. Chapter 23 returns to artifacts in tomography comparatively with other modalities. Chapter 25 covers cross-technique applications in materials and life sciences.
-
-The question this chapter raised but did not answer: how do you actually freeze a biological specimen for cryo-imaging without disrupting its structure? Chapter 21 covers vitrification.
-
----
-
-**What would change my mind:** evidence that single-image TEM can match tomography for 3D structural work without specialized methods. Compressed-sensing and machine-learning reconstruction methods are improving rapidly and may someday close this gap, but currently tomography remains the gold standard for 3D.
-
-**Still puzzling:** the trade-off between tilt range and missing-wedge artifact has no clean solution. Specialized $\pm 90°$ "needle" holders extend the range but only for compatible specimen geometries. The development of dual-axis tomography mitigates the artifact but doubles the dose.
-
-**Tags:** `tomography`, `low-dose`, `tilt-series`, `missing-wedge`, `cryo-ET`
-
----
-
-### Note to the professor
-
-`[verify]` markers in this chapter:
-- Specific tilt-range and step-size choices (instrument-dependent).
-- Dose-budget figures for biological cryo-EM (literature-informed; varies by specimen).
-- Algorithm names and properties (WBP, SIRT, IRE) — standard but specifics may vary.
-- Per-image dose ranges for low-dose protocols.
-
-The reconstruction-algorithm discussion is necessarily compact; full development is beyond this chapter's scope and would require a more specialized text. The reference for the professor: Frank, *Electron Tomography*, Springer (current ed.).
-
-Voice anchoring: anchored. Rat-kidney chapter opening (one scene only). Capability ending. Wonder grounded in numbers (71 images per tilt series; 7,100 electron/Å² total dose; 8 orders of magnitude scale span between TEM tomography and medical CT). Length ~5300 words.
+**Still puzzling:** the missing wedge has been a known limitation of TEM tomography for fifty years, and the solutions — higher-tilt holders, dual-axis acquisition, compressed-sensing reconstruction — all exist and are documented. Yet the majority of published tomograms still use ±60° or ±70° single-axis tilt series. The gap between knowing the optimal approach and routinely using it suggests that the costs (specialized holders, doubled acquisition time, more complex reconstruction pipelines) outweigh the benefits for most questions being asked. The field's implicit judgment is that ±70° is good enough for most biological structures of interest. Whether that judgment is correct, or whether important biology is being missed in the missing wedge, is a question worth asking more explicitly.
