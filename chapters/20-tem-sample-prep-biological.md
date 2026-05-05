@@ -62,11 +62,21 @@ The first cuts through a freshly trimmed block face are thick — one to two mic
 
 Section thickness is read by color. This is one of the stranger practical skills in electron microscopy: the sections are so thin that they diffract visible light and produce interference colors the way a soap film does, with the color corresponding to thickness. Silver sections are roughly 50–70 nm — the standard range for conventional TEM. Gold sections are 70–90 nm, still usable but slightly thick. Gray sections are below 50 nm, suitable for HRTEM when available. Purple sections are above 100 nm, thick enough to produce good low-magnification contrast but too thick for high-resolution work.
 
-<!-- → [TABLE: section thickness vs. interference color — columns: color, approximate thickness range (nm), TEM use; rows: gray (<50 nm, HRTEM/high resolution), silver (50–70 nm, standard TEM), gold (70–90 nm, usable but thicker), purple (>100 nm, low-magnification survey only); student should use as a chairside reference during microtomy sessions to assess sections without a thickness gauge] -->
+| Color | Approximate thickness | TEM use |
+|---|---|---|
+| **Gray** | < 50 nm | HRTEM, high-resolution work; thin enough that beam transmission is excellent |
+| **Silver** | 50–70 nm | Standard TEM imaging — the workhorse range |
+| **Gold** | 70–90 nm | Usable but thicker; resolution begins to suffer; staining contrast may help |
+| **Purple** | > 100 nm | Low-magnification survey only; loss of resolution from chromatic spread |
+
+*Useful chairside reference during microtomy sessions to assess sections without a thickness gauge.*
 
 Ultramicrotomy produces a characteristic set of artifacts when something goes wrong. Chatter — parallel ridges crossing the section perpendicular to the cutting direction — comes from vibration in the knife or specimen arm, often from a dull knife or from loose components. Knife marks are parallel scratches parallel to the cutting direction, from a defect in the knife edge. Compression along the cutting direction causes sections to be shorter than the corresponding block dimension; the compression ratio depends on resin hardness and knife angle and is partially relieved by floating the sections on a water surface with slight warming. Wrinkles form when sections pick up unevenly from the water surface, especially when humidity is low or the grid is not positioned properly.
 
-<!-- → [IMAGE: annotated TEM image of a biological section showing the four main ultramicrotomy artifacts labeled — chatter ridges (periodic parallel bands perpendicular to cutting direction), knife marks (fine parallel lines parallel to cutting direction), compression distortion (cells shorter in one axis than histology predicts), and wrinkle folds (irregular dark creases); student should use as a visual reference when diagnosing artifact sources during a session] -->
+![Ultramicrotomy artifacts — diagnostic visual reference. (1) chatter, (2) knife marks, (3) compression, (4) wrinkle fold.](../images/20-tem-sample-prep-biological-fig-01.png)
+
+*Figure 1.* Ultramicrotomy artifacts — diagnostic visual reference. (1) chatter, (2) knife marks, (3) compression, (4) wrinkle fold.
+
 
 ---
 
@@ -90,7 +100,10 @@ The constraint is specimen size: effective vitrification requires the freezing f
 
 After high-pressure freezing, the water is removed by freeze substitution: the vitrified specimen is placed in a cold solvent — typically acetone or methanol at around -90°C — which dissolves the water slowly while the specimen remains solid. Fixatives dissolved in the substitution solvent then chemically fix the now-dehydrated tissue during the slow warm-up to room temperature. The result is a specimen that has been fixed without the artifacts of aqueous chemical fixation, ready for resin embedding and conventional ultramicrotomy.
 
-<!-- → [DIAGRAM: side-by-side comparison of conventional chemical fixation vs. high-pressure freezing timelines — x-axis: time from fixation initiation; y-axis: fraction of specimen fixed; chemical fixation shown as a slow wave penetrating inward from the surface over seconds-to-minutes, leaving an unfixed interior that continues dynamic changes; HPF shown as an instantaneous vertical line at t=0 fixing the entire volume simultaneously; student should see why HPF eliminates the fixation-front artifact for dynamic studies] -->
+![Fixation timeline — chemical fixation (slow wave) vs. high-pressure freezing (instantaneous step). HPF eliminates the fixation-front artifact.](../images/20-tem-sample-prep-biological-fig-02.png)
+
+*Figure 2.* Fixation timeline — chemical fixation (slow wave) vs. high-pressure freezing (instantaneous step). HPF eliminates the fixation-front artifact.
+
 
 ---
 
@@ -137,3 +150,4 @@ Both are necessary. Neither, alone, is sufficient.
 ### Challenge
 
 **20.10** Find a published paper that uses conventional biological TEM to study a dynamic cellular process (membrane fusion, organelle fission, cytoskeletal reorganization, or similar). Read the methods section. Given the timescale of the process being studied, evaluate whether conventional fixation is adequate or whether high-pressure freezing would have been more appropriate. If the authors used HPF, assess whether they justify the choice. Write a paragraph-length critical commentary. *(Tests: independent methods evaluation, fixation-timescale reasoning, and critical reading of published biological TEM.)*
+

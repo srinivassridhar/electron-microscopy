@@ -277,3 +277,4 @@ This appendix is reference material drawn from the per-chapter Hazards callouts 
 Length ~2,400 words. Within the 1,500–3,000 word emma appendix range.
 
 Voice anchoring: anchored, but appendix-style: section-and-table-heavy rather than narrative. Cross-references to per-chapter Hazards callouts are explicit per book.md authoring rules.
+

@@ -18,13 +18,23 @@ In conventional bright-field TEM, the objective aperture sits at the back focal 
 
 The key word is *interference*. HRTEM is not imaging the atoms the way a camera images a scene. It is recording the interference pattern of electron waves that passed near and around the atomic columns. The intensity at each pixel depends on how the waves from different diffracted beams combined at that point: constructively, producing a bright spot, or destructively, producing a dark one. Whether a bright spot corresponds to an atomic column or to the channel between columns depends on the focus, the specimen thickness, and the particular diffraction conditions — and getting this mapping right requires either careful control of those conditions or comparison with simulated images computed from a known structural model.
 
-<!-- → [DIAGRAM: ray diagram showing HRTEM imaging — incident beam entering specimen, direct beam and two symmetric diffracted beams exiting; no objective aperture; all three beams entering the objective lens and converging at the image plane; interference fringes shown at the image plane with spacing matching the lattice d-spacing; contrast with a second panel showing conventional BF with aperture blocking the diffracted beams; student should see that HRTEM is precisely the case where the aperture is removed and interference is allowed] -->
+![HRTEM is precisely the case where the aperture is removed and interference between direct and diffracted beams is allowed.](../images/17-advanced-tem-imaging-modes-fig-01.png)
+
+*Figure 1.* HRTEM is precisely the case where the aperture is removed and interference between direct and diffracted beams is allowed.
+
 
 This is what makes HRTEM simultaneously powerful and treacherous. The spatial resolution is extraordinary — sub-angstrom in aberration-corrected instruments — but the relationship between the image and the atomic structure is not straightforward in the way that, say, a photograph is straightforward. The image is a coherent superposition of waves, and the interpretation requires knowing the physics of that superposition.
 
 For a silicon specimen oriented at the [011] zone axis, the relevant reflections are the (111) planes at 0.314 nm spacing, the (200) planes at 0.272 nm, and the (220) planes at 0.192 nm. An uncorrected 200 kV instrument, limited by spherical aberration to an information limit around 0.15–0.2 nm, will show the first two spacings cleanly and struggle with the third. An aberration-corrected instrument, where $C_s$ has been reduced to roughly one micrometer by multipole correctors, pushes that limit to 0.05–0.1 nm — sub-angstrom, where individual atomic columns are resolved and light elements like oxygen and carbon become visible.
 
-<!-- → [TABLE: silicon lattice spacings accessible at different operating conditions — columns: reflection, d-spacing (nm), visible at 200 kV uncorrected (yes/no), visible at 200 kV aberration-corrected (yes/no); rows: (111) 0.314, (200) 0.272, (220) 0.192, (311) 0.164; student should use as a checklist before tilting to zone axis on a known instrument] -->
+| Reflection | d-spacing (nm) | Visible at 200 kV (uncorrected)? | Visible at 200 kV (aberration-corrected)? |
+|---|---|---|---|
+| (111) | 0.314 | **Yes** | **Yes** |
+| (200) | 0.272 | **Yes** | **Yes** |
+| (220) | 0.192 | **Yes** | **Yes** |
+| (311) | 0.164 | Marginal | **Yes** |
+
+*Reflections at d > 0.20 nm are routine on a clean uncorrected 200 kV instrument. Reflections below 0.20 nm require alignment discipline; aberration correction makes them routine.*
 
 The resolution limit of HRTEM is therefore not the electron wavelength, which at 200 kV is about 2.5 pm — far below any atomic spacing. The limit is spherical aberration of the objective lens, exactly as Chapter 2 established for SEM. The difference is that in TEM the objective lens is the strongest in the column and the specimen sits inside its field, which makes aberration correction harder but also more impactful. When Haider and colleagues demonstrated the first practical spherical-aberration corrector for TEM in 1998, they were solving a problem that Otto Scherzer had proved to be fundamental for round magnetic lenses in 1936 — and solving it by adding non-round multipole elements that violate Scherzer's rotationally symmetric constraint. The result is instruments that can show, routinely, lattice fringes at spacings that would have seemed physically impossible to earlier generations of microscopists.
 
@@ -38,7 +48,10 @@ This architecture change has consequences that go well beyond the cosmetic simil
 
 Because there are no imaging lenses below the specimen in STEM, there are no post-specimen projector lenses to introduce aberrations. The objective lens governs the probe size; after that, detectors simply collect whatever electrons arrive. And because the probe is scanned, different detectors at different angular ranges can collect different signals simultaneously from the same scan. Each detector produces a different image of the same specimen.
 
-<!-- → [DIAGRAM: STEM column cross-section showing focused probe entering specimen from above; below the specimen, three concentric detector zones labeled: BF disk (on-axis), ADF annulus (moderate angles), HAADF annulus (high angles, >50 mrad); arrows showing which scattered electrons reach each detector; student should see how one scan simultaneously produces three distinct images from three different angular windows] -->
+![STEM — three concentric detector zones below the specimen. One scan, three images, three contrast mechanisms.](../images/17-advanced-tem-imaging-modes-fig-02.png)
+
+*Figure 2.* STEM — three concentric detector zones below the specimen. One scan, three images, three contrast mechanisms.
+
 
 The detector on the optic axis, within the cone of the direct beam, produces a bright-field STEM image — conceptually analogous to BF in conventional TEM, though the details of contrast formation are not identical. Surrounding that central detector is a ring: the annular dark-field detector, collecting scattered electrons at moderate angles. This produces an ADF image where strongly scattering regions appear bright. Move to larger angular range — a bigger ring, farther from the axis, collecting only electrons scattered beyond about 50 milliradians — and you have the high-angle annular dark-field detector: HAADF.
 
@@ -64,7 +77,12 @@ HAADF gives compositional information: which columns are heavier, which lighter.
 
 There are also cases where HRTEM sees what HAADF misses. Light atoms — oxygen, carbon, nitrogen — scatter electrons so weakly that their HAADF signal can be lost in the noise, especially on thicker specimens. But light atoms do shift the phases of passing electron waves, which means they can appear in HRTEM phase contrast with adequate signal. Aberration-corrected HRTEM has been used to image oxygen columns in complex oxides and individual carbon atoms in graphene — specimens where HAADF would show almost nothing.
 
-<!-- → [TABLE: HRTEM vs. HAADF complementarity — columns: specimen type or question, HRTEM shows, HAADF shows, which to use or why use both; rows: Si-Ge interface (strain vs. composition), Pt on carbon (invisible vs. bright dots), oxygen in complex oxide (visible vs. weak), unknown crystal phase (structure yes / chemistry no vs. Z yes / structure limited); student should use as a decision guide when planning a session] -->
+| Specimen / question | HRTEM shows | HAADF shows | Which to use (or why use both) |
+|---|---|---|---|
+| **Si-Ge interface** | Lattice fringes — strain visible | Z-contrast — composition step visible | **Both** — HRTEM for strain, HAADF for composition gradient |
+| **Pt nanoparticles on amorphous carbon support** | Pt particles invisible against amorphous C in phase contrast | Bright dots on dark background (Z⁴ scaling) | **HAADF** — single-atom sensitivity for heavy on light |
+| **Oxygen sublattice in a complex oxide (e.g., perovskite)** | Visible in phase contrast under correct conditions | Weak (Z = 8 contrast against heavy cations) | **HRTEM** (or annular-bright-field, ABF) — HAADF underweights low-Z |
+| **Unknown crystal phase** | Lattice planes resolved → identify by FFT | Z-contrast yes; structure indirectly | **HRTEM** for structure ID, then HAADF for composition mapping |
 
 ---
 
@@ -119,3 +137,4 @@ The atoms in the image are real. The image of those atoms is a carefully constru
 ### Challenge
 
 **17.10** Find a published paper that uses both HRTEM and HAADF-STEM on the same specimen. In two paragraphs, explain what structural information the HRTEM image provided that HAADF could not, and what compositional information the HAADF image provided that HRTEM could not. Assess whether the authors used the complementarity deliberately or whether one mode appears to have been the afterthought. *(Tests: critical literature reading, HRTEM/HAADF complementarity, and methods evaluation.)*
+

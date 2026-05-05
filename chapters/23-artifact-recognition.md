@@ -34,7 +34,11 @@ Unlike preparation artifacts, imaging artifacts can sometimes be eliminated with
 
 Detector and analytical artifacts are a third category. The Everhart-Thornley detector in SEM, being an electrostatic collector of low-energy secondary electrons, produces an image where thin edges and protrusions facing the detector appear disproportionately bright — not because they contain more signal, but because they are geometrically positioned to emit secondary electrons more efficiently in the detector's direction. In EDS, sum peaks appear at energies that are exactly twice the energy of a strong characteristic peak: they result from two photons arriving at the detector simultaneously and being recorded as one event with combined energy. Escape peaks appear below strong peaks by 1.74 keV, the silicon fluorescence energy of the Si(Li) or SDD detector itself. Neither sum peaks nor escape peaks represent elements in the specimen.
 
-<!-- → [TABLE: artifact taxonomy reference — three columns: artifact category (preparation / imaging / detector-analytical), example artifacts in each category, corrective action (re-prepare / change operating conditions / adjust acquisition parameters); student should use this as the first triage tool when an unusual feature appears in an image, to determine which category of investigation to pursue] -->
+| Category | Example artifacts | Corrective action |
+|---|---|---|
+| **Preparation** | Knife marks, charging from incomplete coating, fixation artifacts (extraction, shrinkage), beam damage during cryo-section thinning, contamination layers | **Re-prepare** the specimen — adjust the protocol upstream; the artifact is built in before the microscope |
+| **Imaging** | Drift smear, astigmatism, defocus, aperture-misalignment asymmetry, charging during scan, mass loss under beam, tilt-series misalignment | **Change operating conditions** at the microscope — the specimen is fine, the parameters are wrong |
+| **Detector / analytical** | Beam-damage artifacts in EDS line scans, EELS quantification errors from plural scattering, count-rate saturation, spectral-overlap misassignment, detector geometry effects | **Adjust acquisition parameters** — count rate, dwell time, deconvolution, calibration |
 
 ---
 
@@ -54,7 +58,15 @@ EDS at a suspected feature tells you whether a composition difference exists. A 
 
 Re-imaging after time tests for instability. Beam-induced features grow: carbon contamination deposits accumulate, ice in cryo-EM melts or builds, damaged polymer features evolve. Stable real features remain constant. If you return to the same field after an hour and the feature has changed, it is not a stable structural property of the specimen.
 
-<!-- → [TABLE: comparative cross-check reference — columns: cross-check pair, what each technique is sensitive to, artifact diagnosis if they disagree, real feature signature if they agree; rows: SE vs BSE (surface/charge vs Z-contrast), BF vs DF in TEM (scattering absence vs presence), kV variation (charging vs intrinsic morphology), tilt series (beam-path vs structural), defocus series (Fresnel vs real interface), EDS at feature (no composition vs elemental signal), re-image after time (unstable vs stable); student should use this as the standard checklist before concluding a feature is real] -->
+| Cross-check pair | What each technique is sensitive to | Artifact diagnosis if they disagree | Real-feature signature if they agree |
+|---|---|---|---|
+| **SE vs. BSE** | SE: surface topography + charging; BSE: average atomic number (Z) | Bright in SE only — likely charging artifact, not real Z-contrast | Both consistent — feature is morphologically *and* compositionally distinct |
+| **BF vs. DF in TEM** | BF: amplitude/absorption + diffraction-out; DF: scattered intensity at a chosen angle | Visible in BF only — likely Fresnel/contamination contrast | Visible in both with reciprocal contrast — real diffracting feature |
+| **kV variation** | Charging behavior changes with kV; intrinsic morphology does not | Feature appearance changes with kV — charging | Feature stable across 5/10/20 kV — real morphology |
+| **Tilt series (TEM/SEM)** | Beam-path artifacts vary with tilt; structural features persist | Feature changes shape or disappears with tilt — likely projection artifact | Feature persists across tilts — real 3D structure |
+| **Defocus series** | Fresnel fringes and contrast-transfer artifacts oscillate; real interfaces stay put | Edge brightness reverses through focus — Fresnel fringe, not interface | Edge contrast stable through focus — real material boundary |
+| **EDS at the feature** | Composition-specific spectral signatures | No characteristic peaks at feature location — likely topographic shadow, not phase | Characteristic peaks → real elemental signal |
+| **Re-image after time** | Stable specimens persist; beam-damaged specimens decay | Feature changes between first and second image — beam-damage artifact | Feature unchanged after 5–10 min — stable specimen |
 
 ---
 
@@ -68,7 +80,10 @@ The comparative check is most powerful when the techniques in question are sensi
 
 EDS provides elemental specificity that morphological imaging cannot. EELS provides bonding-state information that EDS cannot. Crystallographic information from selected-area electron diffraction is orthogonal to the intensity information in a bright-field image. Each technique constrains the interpretation from a different direction. The more constraints that agree, the more confident the conclusion.
 
-<!-- → [DIAGRAM: triangulation network showing a central "feature" node connected by labeled edges to surrounding technique nodes (SEM-SE, SEM-BSE, TEM-BF, TEM-DF, HAADF, HRTEM, EDS, EELS, SAED, tilt series); each edge labeled with what the comparison between that technique and the adjacent one can distinguish (e.g., SE↔BSE: charging vs Z-contrast; BF↔DF: scattering presence; HAADF↔HRTEM: composition vs structure); student should see that a central feature can be constrained by multiple independent measurements, each sensitive to a different physical signal] -->
+![Constraining a feature by independent measurements. Each technique is sensitive to a different physical signal; consistency across N of them is stronger evidence than consistency across one.](../images/23-artifact-recognition-fig-01.png)
+
+*Figure 1.* Constraining a feature by independent measurements. Each technique is sensitive to a different physical signal; consistency across N of them is stronger evidence than consistency across one.
+
 
 There is a failure mode worth naming explicitly: confirmation bias. Once a researcher has decided that a feature is real — especially if the feature supports an interesting scientific hypothesis — evidence of artifact-hood becomes easy to overlook. The bright SE spots were called gold particles because the paper's hypothesis required gold particles to be present. The BSE panel, which contradicted the interpretation, was included in the figure anyway but not discussed. The authors saw what they expected to see.
 
@@ -133,3 +148,4 @@ The student who spotted the BSE/SE inconsistency in the retracted paper did not 
 ### Challenge
 
 **23.10** Find a published electron microscopy paper in your research field where the main claim depends substantially on a single imaging mode or technique. Evaluate whether the authors applied sufficient cross-checks to rule out the most common artifacts for that technique and specimen type. If cross-checks are absent, propose the specific measurements that would have been most informative. Write a paragraph-length critical commentary. *(Tests: independent artifact evaluation, critical literature reading, and scientific communication.)*
+

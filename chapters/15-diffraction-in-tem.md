@@ -12,7 +12,10 @@ What you see when you do this is not the real-space image you had before. The sc
 
 That is the capability this chapter is about.
 
-<!-- → [IMAGE: side-by-side TEM images — left: bright-field image of the polycrystalline TiO₂ film at 50,000× (featureless gray field); right: the SAED ring pattern from the same region with ring radii annotated in mm and corresponding d-spacings labeled — shows the student exactly what the "screen transforms" moment looks like and anchors the opening narrative before any physics] -->
+![Polycrystalline TiO₂ — featureless gray BF image (left) and the SAED ring fingerprint of the same area (right).](../images/15-diffraction-in-tem-fig-01.png)
+
+*Figure 1.* Polycrystalline TiO₂ — featureless gray BF image (left) and the SAED ring fingerprint of the same area (right).
+
 
 ## Why electrons diffract from crystals
 
@@ -119,3 +122,4 @@ The spatial selectivity of the selected-area aperture is typically 50–500 nm e
 *What would change my mind:* evidence that SAED can routinely identify trace phases below 5 volume percent in a thin specimen without convergent-beam or energy-filtered methods. Current practice requires roughly 10 volume percent or more before the secondary diffraction signal is reliably distinguishable from background in a conventional SAED pattern.
 
 *Still puzzling:* the transition from SAED pattern recognition to confident phase identification remains more art than algorithm in difficult cases — overlapping phases, strong texture, beam-sensitive specimens that change under the dose required to acquire a clean pattern. Software-based pattern matching helps but does not replace the operator's judgment about which candidate phases are chemically plausible.
+

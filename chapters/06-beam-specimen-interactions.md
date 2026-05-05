@@ -12,7 +12,10 @@ What you are looking at is the **interaction volume** — the three-dimensional 
 
 Every signal you collect from an SEM detector comes from somewhere inside that teardrop. Secondary electrons, backscattered electrons, characteristic X-rays: each one originates at a specific depth range within the volume, and the image you read from each signal is not a picture of the beam impact point. It is a depth-averaged, lateral-averaged sample from a cloud whose size depends on the voltage you set, the elements in your specimen, and the angle at which the beam meets the surface. Understanding this is understanding what the SEM is actually measuring.
 
-<!-- → [IMAGE: optical micrograph of an etched PMMA teardrop crater alongside a Monte Carlo simulation of electron trajectories in the same material at 20 keV — the two images side by side make concrete that the physical experiment and the simulation are two independent measurements of the same physics] -->
+![Etched PMMA crater (left) and a Monte Carlo simulation of trajectories at 20 keV in PMMA (right). Two independent measurements of the same physics.](../images/06-beam-specimen-interactions-fig-01.png)
+
+*Figure 1.* Etched PMMA crater (left) and a Monte Carlo simulation of trajectories at 20 keV in PMMA (right). Two independent measurements of the same physics.
+
 
 ## What happens when the beam enters the solid
 
@@ -139,3 +142,4 @@ The interaction volume is not a complication or an artifact. It is the physics. 
 *What would change my mind:* evidence that the Kanaya–Okayama scaling significantly overestimates or underestimates interaction volume depth for common SEM materials across the 5–30 keV operating range. Modified parameterizations exist and differ by tens of percent in specific cases; a systematic deviation across the full range would revise the mental model here.
 
 *Still puzzling:* the 50 eV cutoff between SE and BSE is operationally useful but physically arbitrary. The energy distribution of inelastically scattered electrons is continuous; the line is a calibration convention, not a physical break. Whether a 48 eV electron is "secondary" or "backscattered" is a matter of definition, not physics.
+

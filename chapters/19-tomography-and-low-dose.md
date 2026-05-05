@@ -10,7 +10,10 @@ What the student does next is the subject of this chapter. Instead of a single i
 
 This is electron tomography. The same mathematical foundation that makes a CT scanner reconstruct a human chest from X-ray projections at many angles applies here — the same central-slice theorem, the same Fourier-space logic — but at a scale eight orders of magnitude smaller, on specimens 100 nanometers thick, at sub-nanometer resolution.
 
-<!-- → [IMAGE: projection ambiguity demonstration — top row: three different 3D objects (sphere, thick disk, torus) rendered side by side; bottom row: the 2D projection (BF TEM image) that each produces when viewed along one axis — all three projections appear nearly identical as a circular ring with bright center; caption: "All three objects produce identical projections along one axis. Tomography distinguishes them by acquiring projections from many angles."; student should immediately see why a single TEM image is fundamentally insufficient for 3D structural determination] -->
+![All three different 3D objects produce identical projections along one axis. Tomography distinguishes them by acquiring projections from many angles.](../images/19-tomography-and-low-dose-fig-01.png)
+
+*Figure 1.* All three different 3D objects produce identical projections along one axis. Tomography distinguishes them by acquiring projections from many angles.
+
 
 ---
 
@@ -44,7 +47,10 @@ The elongation factor is approximately $\sqrt{(90° + \alpha)/(90° - \alpha)}$ 
 
 For nanowire-shaped specimens — a long thin cylinder that can be oriented with its long axis as the tilt axis — specialized needle holders can achieve ±90° tilt, eliminating the missing wedge entirely. This geometry is appropriate for semiconductor devices cross-sectioned into needle shapes by FIB, and for carbon nanotubes and similar one-dimensional materials.
 
-<!-- → [IMAGE: missing wedge diagram — left: 3D Fourier space sphere showing the wedge-shaped unsampled region (shaded) corresponding to ±70° maximum tilt; label showing the missing angular range ±70° to ±90°; right: real-space consequence — tomographic reconstruction of a sphere appearing as a vertically elongated ellipsoid with elongation factor ~1.5 labeled; inset showing dual-axis acquisition reducing the missing wedge to a smaller missing pyramid; student should see exactly why spherical objects appear elongated and how dual-axis acquisition partially corrects this] -->
+![Missing wedge in 3D Fourier space at ±70° tilt. Real-space consequence: spherical objects appear elongated ~1.5× along the missing-wedge axis.](../images/19-tomography-and-low-dose-fig-02.png)
+
+*Figure 2.* Missing wedge in 3D Fourier space at ±70° tilt. Real-space consequence: spherical objects appear elongated ~1.5× along the missing-wedge axis.
+
 
 ---
 
@@ -127,3 +133,4 @@ What this chapter left open: how exactly does beam-induced specimen motion arise
  evidence that single-image TEM, with appropriate computational post-processing, can recover three-dimensional structural information equivalent to a tilt series on the same specimen. Machine-learning methods trained on large structural databases are making progress toward this goal — using the known statistics of macromolecular structures to fill in the missing third dimension from one view. For now, however, a tilt series remains the gold standard for three-dimensional information in the sub-10-nm regime.
 
 **Still puzzling:** the missing wedge has been a known limitation of TEM tomography for fifty years, and the solutions — higher-tilt holders, dual-axis acquisition, compressed-sensing reconstruction — all exist and are documented. Yet the majority of published tomograms still use ±60° or ±70° single-axis tilt series. The gap between knowing the optimal approach and routinely using it suggests that the costs (specialized holders, doubled acquisition time, more complex reconstruction pipelines) outweigh the benefits for most questions being asked. The field's implicit judgment is that ±70° is good enough for most biological structures of interest. Whether that judgment is correct, or whether important biology is being missed in the missing wedge, is a question worth asking more explicitly.
+

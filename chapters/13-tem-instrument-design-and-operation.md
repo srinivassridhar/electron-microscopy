@@ -10,7 +10,10 @@ Behind that apparently simple sequence sits an instrument running at 200,000 vol
 
 This chapter is that knowledge.
 
-<!-- → [IMAGE: annotated cross-section diagram of a full TEM column — labeled subsystems top to bottom: electron gun, accelerating anode, condenser 1 (C1), condenser 2 (C2), condenser aperture, airlock entry point, specimen holder and stage at objective lens center, objective aperture at back focal plane, intermediate lens, SAED aperture, projector lenses, phosphor screen, camera; arrow indicating 200 kV gun voltage at top; inset labeling the back focal plane (diffraction pattern) vs. image plane; student should be able to use this as a reference for the full chapter] -->
+![TEM column — annotated cross-section. Two outputs of the objective lens: a diffraction pattern at the back focal plane and an image at the image plane.](../images/13-tem-instrument-design-and-operation-fig-01.png)
+
+*Figure 1.* TEM column — annotated cross-section. Two outputs of the objective lens: a diffraction pattern at the back focal plane and an image at the image plane.
+
 
 ---
 
@@ -22,7 +25,14 @@ For high-resolution work, neither thermionic source is adequate. The solution is
 
 The gun's job is to produce electrons with a controlled energy and a small, bright source. Everything downstream works with what the gun provides. A weak gun cannot be compensated by better lenses. This is the same lesson as in the SEM column, and it is equally true here.
 
-<!-- → [TABLE: four electron gun families compared — rows: Tungsten, LaB₆, Schottky FEG, Cold FEG; columns: source size (nm), brightness at 100 kV (A/m²·sr), energy spread ΔE (eV), vacuum required (Pa), approximate lifetime (hours); student should see the order-of-magnitude jumps in brightness and the corresponding demands on vacuum and cost as you move from thermionic to field-emission sources] -->
+| Source | Source size | Brightness at 100 kV (A/m²·sr) | Energy spread ΔE | Vacuum required | Lifetime |
+|---|---|---|---|---|---|
+| **Tungsten (W)** | ~50 μm | ~10⁹ | 2–3 eV | 10⁻³ Pa | 50–100 hours |
+| **LaB₆** | ~10 μm | ~10¹⁰ | 1–2 eV | 10⁻⁵ Pa | 500–1000 hours |
+| **Schottky FEG** | ~30 nm (virtual) | ~10¹² | 0.6–1.0 eV | 10⁻⁷ Pa | ~5,000 hours |
+| **Cold FEG** | ~5 nm (virtual) | ~10¹³ | 0.2–0.4 eV | 10⁻⁹ Pa (UHV) | ~10,000 hours (with periodic flashing) |
+
+*Order-of-magnitude jumps in brightness as you move from thermionic to field-emission, paid for in vacuum demand and cost.*
 
 ---
 
@@ -44,7 +54,10 @@ In the **immersion** design, the specimen drops into the center of the lens fiel
 
 The **snorkel** design is a single polepiece with an asymmetric field. It captures more of the benefit of immersion while recovering some of the holder access of the split polepiece. Modern aberration-corrected TEMs — where hardware correctors in the post-objective optics compensate $C_s$ in software — use snorkel or modified-immersion geometries because the aberration corrector removes the resolution penalty of a longer focal length, and the operator regains specimen flexibility.
 
-<!-- → [IMAGE: side-by-side cross-section schematic of the three objective lens architectures — left: split polepiece (upper/lower polepieces separated, specimen between, wide gap, EDS detector angle shown); center: immersion (specimen inside narrow bore, surrounding polepiece, minimal gap); right: snorkel (single asymmetric polepiece); label on each: Cs value (approximate), tilt range, holder flexibility (high/medium/low), resolution (good/best/intermediate); student should see the three as three points on a gap-width vs. performance trade-off continuum] -->
+![Three TEM objective architectures — three points on a gap-width vs. resolution trade-off continuum.](../images/13-tem-instrument-design-and-operation-fig-02.png)
+
+*Figure 2.* Three TEM objective architectures — three points on a gap-width vs. resolution trade-off continuum.
+
 
 The **objective aperture** sits at the back focal plane, where the diffraction pattern forms. Its position in the diffraction plane means it selects which scattered beams contribute to the image. Place the aperture around only the direct (unscattered) beam and you get a **bright-field** image, where scattered regions appear dark. Move the aperture to surround a single off-axis diffracted beam and you get a **dark-field** image, where only the planes that produced that reflection appear bright. Remove the aperture entirely — or use a very large one — and many diffracted beams interfere at the image plane to produce **phase contrast**: lattice fringes and ultimately atomic-resolution images. Chapter 14 develops bright-field and dark-field in detail; Chapter 16 develops phase contrast. For now: the objective aperture is the switch between modes, and its physical position in the column is the back focal plane of the objective lens.
 
@@ -84,7 +97,10 @@ The diagnostic for focus is **Fresnel fringes**. At any sharp edge in the specim
 
 Astigmatism — differential focus in perpendicular directions, caused by non-circular symmetry of the lens field — shows up as Fresnel fringes that are focused in one orientation but not the perpendicular one. The correction is the stigmator: a set of small octupole coils that add a compensating asymmetry to the lens field to restore circular symmetry. The focus-stigmator alignment cycle is the same procedure as in the SEM (Chapter 2), adapted to the TEM's through-focus diagnostic.
 
-<!-- → [IMAGE: three-panel Fresnel fringe sequence at a hole edge in a carbon support film — left panel: underfocus, bright fringe inside edge toward specimen; center panel: in focus, fringes minimized; right panel: overfocus, bright fringe outside edge away from specimen; captions name the focus condition and the diagnostic cue for each; student should be able to use this directly as a reference when at the instrument] -->
+![Fresnel fringes at a hole edge — through-focus diagnostic. Which side of the edge does the fringe sit on?](../images/13-tem-instrument-design-and-operation-fig-03.png)
+
+*Figure 3.* Fresnel fringes at a hole edge — through-focus diagnostic. Which side of the edge does the fringe sit on?
+
 
 ---
 
@@ -131,3 +147,4 @@ Chapter 14 now takes the column you have just learned and asks: what exactly doe
  evidence that direct-electron-detection cameras can be replaced by scintillator-based architectures without sacrificing the resolution improvements that made cryo-EM single-particle reconstruction transformative. Current evidence consistently shows DEDs are decisive for sub-half-nanometer cryo-EM work; the motion-correction capability alone is not replicable with a slow-readout camera.
 
 **Still puzzling:** the trade-off between immersion and split-polepiece objective lens designs is genuinely hard to optimize across all use cases, and the introduction of aberration correctors changes the trade-off without eliminating it. Most labs choose an objective-lens architecture once, when they buy the instrument, and commit to it for fifteen years. Whether that match between instrument design and evolving science stays optimal over the instrument's lifetime is a question almost no one asks explicitly before writing the purchase order.
+

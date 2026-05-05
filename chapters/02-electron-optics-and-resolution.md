@@ -30,7 +30,14 @@ Plug in the constants and you get a formula simple enough to remember:
 
 $$\lambda \approx \frac{1.226}{\sqrt{V}} \text{ nm}, \quad V \text{ in volts.}$$
 
-<!-- → [TABLE: electron wavelength vs. accelerating voltage — columns: voltage (kV), non-relativistic λ (pm), relativistic λ (pm), ratio λ/d_atom — rows spanning 1 kV to 300 kV; student should see the diminishing returns at high voltage and where the relativistic correction becomes non-negligible] -->
+| Accelerating voltage | Electron wavelength | Theoretical resolution at α = 0.6° | Practical SEM/TEM resolution |
+|---|---|---|---|
+| **1 kV** | 38.8 pm (0.0388 nm) | 1.85 Å | ~5 nm (SEM, low-kV imaging) |
+| **10 kV** | 12.2 pm | 0.58 Å | ~2 nm (SEM standard) |
+| **100 kV** | 3.70 pm | 0.18 Å | ~2 Å (TEM, conventional) |
+| **300 kV** | 1.97 pm (relativistic) | 0.094 Å | <1 Å (aberration-corrected TEM) |
+
+*Wavelength shrinks non-linearly with voltage. Practical resolution is far worse than theoretical because spherical and chromatic aberration, not the wavelength, are the binding constraints.*
 
 At 30,000 volts, $\sqrt{30000} \approx 173$, so $\lambda \approx 7.1 \times 10^{-3}$ nm = 7.1 pm. At 5 kV, it is about 17 pm. At 200 kV — a typical transmission electron microscope — it is closer to 2.5 pm, and there you need a relativistic correction:
 
@@ -50,7 +57,10 @@ $$\mathbf{F} = e(\mathbf{v} \times \mathbf{B}).$$
 
 An electron moving along the optical axis of the microscope — call it the $z$-direction — doesn't feel much force from a field pointing along $z$. But if the field has radial and azimuthal components, and if the field is symmetric around the axis, something interesting happens. The radial component of $B$ kicks the electron into a circular orbit around the axis; the azimuthal velocity that creates in combination with the axial field component pulls the electron back toward the axis. The net result, for an electron that starts slightly off-axis, is that it spirals in toward the axis and crosses it at some point downstream. That crossing point is the focus.
 
-<!-- → [DIAGRAM: cross-section of a magnetic lens showing coil, iron yoke, pole-piece gap, and three electron trajectories — one paraxial, one at moderate angle, one at steep angle — converging at different axial positions; student should see that steeper trajectories cross the axis closer to the lens, which is the geometric origin of spherical aberration] -->
+![Magnetic lens cross-section. Three trajectories — paraxial, moderate, steep — cross the axis at different focal points: the geometric origin of spherical aberration.](../images/02-electron-optics-and-resolution-fig-01.png)
+
+*Figure 1.* Magnetic lens cross-section. Three trajectories — paraxial, moderate, steep — cross the axis at different focal points: the geometric origin of spherical aberration.
+
 
 The thing that makes this useful is that for electrons traveling close to the axis — *paraxial* electrons — the focal length is predictable from the field profile:
 
@@ -62,7 +72,10 @@ The hardware that produces this field is an electromagnetic coil wrapped in soft
 
 A real microscope column has multiple lenses. In an SEM there are typically two condenser lenses and one objective lens. The condensers form a demagnified image of the electron source — the *crossover* — and relay it toward the specimen. The objective lens is the final lens in the chain, the one that determines the probe size and hence the resolution. In a TEM the geometry is different: the objective lens is strong, immersing the specimen in its field, and a series of projector lenses below the specimen magnify the transmitted image onto a detector. But in both cases the optical logic is the same: lenses focus by bending electrons toward the axis, and the bending is produced by a controlled magnetic field.
 
-<!-- → [DIAGRAM: side-by-side schematic of SEM column vs. TEM column — gun at top, condenser(s), objective, specimen position, and detector(s) labeled; student should see how specimen position relative to objective differs between the two instruments and why that matters for lens design] -->
+![SEM places the specimen below the objective lens; TEM places it inside. The geometry decides how much aperture angle, working distance, and aberration the system has to live with.](../images/02-electron-optics-and-resolution-fig-02.png)
+
+*Figure 2.* SEM places the specimen below the objective lens; TEM places it inside. The geometry decides how much aperture angle, working distance, and aberration the system has to live with.
+
 
 ---
 
@@ -84,7 +97,10 @@ where $C_c$ is the chromatic aberration coefficient and $\Delta E/E_0$ is the fr
 
 **Astigmatism.** A perfect lens has perfect cylindrical symmetry around the optical axis. Real lenses don't. Pole pieces aren't machined to atomic perfection; the iron isn't perfectly uniform; a speck of contamination in the bore changes the field locally. The consequence is that electrons in one plane focus at a slightly different distance than electrons in a perpendicular plane. A point object produces two line foci, orthogonal to each other, at slightly different distances along the axis. Between the two focal planes the image of a point is an ellipse that rotates 90° as you change focus. You have surely seen this if you've ever defocused an electron microscope: the soft-focus image of a round particle elongates in one direction, then appears round briefly near focus, then elongates in the perpendicular direction on the other side. That rotation is astigmatism.
 
-<!-- → [IMAGE: through-focus series of a spherical nanoparticle showing three frames — underfocus (horizontal streak), focus (round), overfocus (vertical streak) — with 90° rotation labeled; student should be able to recognize this signature in the lab and diagnose astigmatism on sight] -->
+![Astigmatism diagnostic — the same nanoparticle through three focus settings. The 90° rotation between underfocus and overfocus is the signature.](../images/02-electron-optics-and-resolution-fig-03.png)
+
+*Figure 3.* Astigmatism diagnostic — the same nanoparticle through three focus settings. The 90° rotation between underfocus and overfocus is the signature.
+
 
 Unlike spherical and chromatic aberration, astigmatism can be corrected. An *octupole stigmator* — a ring of eight small electromagnets around the beam — applies a controlled astigmatic field that cancels the lens's intrinsic astigmatism. The stigmator needs retuning whenever you change operating voltage, aperture, or working distance, because all of those shift the electron trajectories that encounter the lens's imperfections. Forgetting to retune the stigmator after a parameter change is one of the commonest ways an experienced operator loses an afternoon.
 
@@ -154,7 +170,14 @@ But the design philosophy of aberration correction is one for a more advanced co
 
 The gap between the wavelength and the image is not an accident. It is the physics of bending charged particles with a field that must, by its symmetry, bend them imperfectly. Understanding that gap is what makes the rest of the decisions in this book legible.
 
-<!-- → [TABLE: summary of the four aberrations — columns: name, physical cause, blur diameter formula, scales with aperture how, correctable? — rows: spherical, chromatic, astigmatism, diffraction; student should use this as a diagnostic reference when troubleshooting soft images in the lab] -->
+| Aberration | Physical cause | Blur diameter (approx.) | Scales with aperture | Correctable? |
+|---|---|---|---|---|
+| **Spherical (Cs)** | Off-axis rays focus closer than paraxial rays — the lens lacks a single focal point | $d_s = \frac{1}{2} C_s \alpha^3$ | Cubic in α — large aperture *amplifies* it | Yes — multipole correctors (Cs-corrected TEM/STEM) |
+| **Chromatic (Cc)** | Energy spread in the beam → different focal lengths for different energies | $d_c = C_c \alpha (\Delta E / E)$ | Linear in α | Partially — Cc correctors exist but are rare; cold-FEG / monochromator reduces ΔE |
+| **Astigmatism** | Lens fields non-rotationally symmetric (ovalized) | Direction-dependent; image elongates along one axis | Roughly linear in α | **Yes** — operator-correctable in real time using the stigmator |
+| **Diffraction** | Wave nature of electrons; Airy disk at the aperture stop | $d_d = 0.61 \lambda / \alpha$ | *Inverse* — small aperture *amplifies* it | Not correctable — fundamental limit |
+
+*Optimal aperture balances spherical (grows with α³) against diffraction (grows with 1/α). The Scherzer condition is the resulting sweet spot.*
 
 ---
 
@@ -193,3 +216,4 @@ The gap between the wavelength and the image is not an accident. It is the physi
 ### Challenge
 
 **2.10** Look up the $C_s$ value of an aberration-corrected TEM objective (any commercial instrument) and compare it to an uncorrected objective at the same nominal voltage. Using $d_{\min} \approx 0.91\,(C_s \lambda^3)^{1/4}$, predict the resolution improvement factor. Then find the manufacturer's quoted point resolution for both instruments and compute the actual improvement factor. If the two factors disagree, propose a physical reason — what does the formula leave out that matters more at very small $C_s$? *(Tests: aberration-correction payoff, limits of the scaling formula, and independent literature search.)* Difficulty: open-ended.
+

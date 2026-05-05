@@ -76,7 +76,15 @@ What you can see at a given resolution: at 12 Å, you have the overall shape, no
 
 The 2020 Nobel Prize in Chemistry `[verify]` recognized the cryo-EM revolution — specifically the contributions of Jacques Dubochet (vitrification), Joachim Frank (image processing and SPA reconstruction), and Richard Henderson (high-resolution protein structure by electron microscopy). The prize was awarded in 2017 `[verify]`. Ribosome structures, membrane protein structures, and entire viral capsids are now routinely solved at 2–4 Å by groups with standard access to modern instruments. Structures that spent decades resisting crystallization for X-ray diffraction are yielding to cryo-EM.
 
-<!-- → [TABLE: resolution-to-information table — rows: 12+ Å (overall shape only), 7–12 Å (secondary structure: helices as cylinders, sheets as planes), 4–7 Å (protein backbone trace visible), 2.5–4 Å (side chains visible, atomic model can be fit), <2.5 Å (individual atoms resolved); right column shows a representative cryo-EM density map excerpt at each level — gives the student a concrete visual calibration for what resolution numbers mean in terms of visible structural features] -->
+| Resolution | What is visible in the density map |
+|---|---|
+| **12+ Å** | Overall molecular shape only — envelope of the particle |
+| **7–12 Å** | Secondary structure: α-helices visible as cylinders, β-sheets as planes |
+| **4–7 Å** | Protein backbone trace visible; can begin docking known structures |
+| **2.5–4 Å** | Side chains visible; an atomic model can be fit and refined |
+| **< 2.5 Å** | Individual atoms resolved; near-X-ray-quality model — bound waters, ion coordination, alternate side-chain rotamers |
+
+*The resolution number is meaningless without this calibration. A 4 Å map and an 8 Å map answer different questions.*
 
 ## The limitations you carry honestly
 
@@ -137,3 +145,4 @@ The wonder, stated plainly: by cooling a thin buffer film from room temperature 
 *What would change my mind:* evidence that chemical fixation can reliably preserve membrane-protein conformations with the same fidelity as cryo-EM. The empirical record consistently favors cryo-EM for native-state preservation. The resolution gap, since direct-detection cameras became standard, is also large enough that cryo-EM is the obvious choice for high-resolution structural work on biological macromolecules.
 
 *Still puzzling:* the factors that predict whether a cryo-EM project will succeed — good particle distribution, no preferred orientation, adequate ice thickness — are largely empirical and project-specific. The optimization loop from "first grid" to "usable data" varies from days to years and is not well-predicted by biochemical characterization of the specimen. A theory of grid-prep optimization would be valuable.
+

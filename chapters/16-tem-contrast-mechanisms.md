@@ -10,7 +10,10 @@ Three different things are happening in that one image. The mitochondria are dar
 
 Understanding TEM images means understanding which mechanism produced the gray level you are looking at. Getting this wrong is not a minor interpretive error. A diffraction-induced dark band mistaken for a mass-thickness gradient leads to wrong conclusions about composition; a Fresnel fringe at an edge mistaken for a thin film changes the scientific story. The contrast mechanism is the physics behind every pixel.
 
-<!-- → [IMAGE: annotated BF TEM image of a stained biological section (hepatocytes or similar) — three regions labeled: (1) dark mitochondria with annotation "mass-thickness contrast: osmium-stained membranes, high Z"; (2) bright lipid droplets with annotation "mass-thickness contrast: low Z, thin"; (3) thin dark lines inside one organelle with annotation "diffraction contrast: ferritin nanocrystal at Bragg condition"; inset showing a second panel of the same field after 5° tilt with the diffraction-contrast lines now prominent; captions should explicitly name which mechanism produced which gray level] -->
+![Three contrast mechanisms in one stained section. Tilt is the test: contrast that changes with orientation is diffraction; contrast that doesn't is mass-thickness.](../images/16-tem-contrast-mechanisms-fig-01.png)
+
+*Figure 1.* Three contrast mechanisms in one stained section. Tilt is the test: contrast that changes with orientation is diffraction; contrast that doesn't is mass-thickness.
+
 
 ---
 
@@ -50,7 +53,10 @@ To maximize this visibility, the operator uses a **two-beam condition**: tilt th
 
 A related phenomenon is **bend contours**: dark bands that sweep across a bright-field image when the specimen is slightly bent. A real thin foil is never perfectly flat; different regions have slightly different orientations because of the bending. Where the local orientation satisfies a Bragg condition, that region goes dark. As the operator tilts the stage, the contours move across the field, tracing out the locus of the Bragg condition across the curved specimen. Bend contours are a signature of crystallinity and are a useful diagnostic: an image full of moving dark bands on tilting is telling you the specimen is crystalline and that diffraction contrast is the dominant mechanism.
 
-<!-- → [IMAGE: side-by-side pair on a polycrystalline metal thin foil — left: BF image showing grain mosaic of different gray levels (diffraction contrast from orientation variation) with two grains labeled "bright" and "dark" to indicate orientation relative to Bragg condition; right: same field after 5° tilt showing reversal of contrast in some grains and appearance of a bend contour moving across the field; annotation pointing to the bend contour and distinguishing it from a grain boundary; student should see concretely how diffraction contrast is orientation-dependent and how tilting tests this] -->
+![Polycrystalline thin foil — diffraction contrast tested by tilt. Contrast reverses; a bend contour appears.](../images/16-tem-contrast-mechanisms-fig-02.png)
+
+*Figure 2.* Polycrystalline thin foil — diffraction contrast tested by tilt. Contrast reverses; a bend contour appears.
+
 
 ---
 
@@ -64,7 +70,10 @@ The resolution that phase contrast can achieve is set not by the aperture but by
 
 The price is interpretive complexity. The appearance of a phase-contrast HRTEM image depends sensitively on specimen thickness, defocus, beam orientation, and objective-lens aberrations. Bright spots can be at atomic columns in one imaging condition and between them in another. Two images of the same specimen at slightly different thicknesses can look quite different even though the atomic structure has not changed. For known crystal structures, the interpretation can often be done by eye with experience. For novel structures or sub-angstrom resolution claims, image simulation — computing the expected image from a proposed structural model and comparing with the experimental image — is required.
 
-<!-- → [IMAGE: HRTEM phase contrast panel — left: schematic of atom column positions in a crystal unit cell (e.g., silicon [110] zone axis); center: simulated HRTEM image showing bright spots at atom column positions under one set of defocus/thickness conditions; right: simulated HRTEM image of the same structure at slightly different defocus showing contrast reversal (bright spots now at interstitial channels); captions explicitly state the defocus value and thickness for each simulation; student should see why phase-contrast images require simulation rather than direct interpretation] -->
+![HRTEM phase contrast — the same Si [110] structure at two defocus values. Bright spots at atom columns or between them, depending on Δf and t.](../images/16-tem-contrast-mechanisms-fig-03.png)
+
+*Figure 3.* HRTEM phase contrast — the same Si [110] structure at two defocus values. Bright spots at atom columns or between them, depending on Δf and t.
+
 
 The simplest phase-contrast effect — accessible without any special equipment or extreme operating conditions — is **Fresnel fringes** at edges. At the boundary between an empty hole in the support film and the film itself, the electron wave passing through the hole has a different phase than the wave passing through the carbon. They interfere at the edge, producing alternating bright and dark stripes parallel to the boundary. These fringes are sensitive to focus in a specific and useful way: underfocused images show a bright fringe on the specimen side of the edge; overfocused images show a bright fringe on the vacuum side; exactly at focus the fringes minimize. This is the operator's most reliable focus diagnostic, usable on any specimen with a clean edge and any modern TEM. The physics is identical to lattice-fringe formation; the scale is just much larger.
 
@@ -123,3 +132,4 @@ The question this chapter raised but did not answer is: how exactly does the rel
  evidence that any single TEM contrast mechanism can substitute for the others in routine materials characterization. The empirical practice of combining BF survey imaging, dark-field or two-beam diffraction imaging for defect analysis, and HRTEM phase contrast for atomic structure suggests that the three mechanisms are genuinely complementary, not redundant. A technique that collapsed all three into one measurement would be transformative; nothing currently available comes close.
 
 **Still puzzling:** the practical boundary between HRTEM images that can be interpreted by inspection — by an experienced microscopist who recognizes familiar crystal structures — and those that require full image simulation remains largely tacit. The field has not produced a clean criterion for when simulation is necessary, and the result is that some published HRTEM interpretations rest on more evidence than they acknowledge and others rest on less. This is an epistemological gap that deserves more attention than it gets.
+

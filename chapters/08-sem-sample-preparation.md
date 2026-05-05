@@ -16,7 +16,14 @@ That is the central principle of sample preparation: every preparation step alte
 
 The decision tree that drives preparation is simple. A specimen has three properties that determine almost everything: water content, electrical conductivity, and beam sensitivity. The SEM requires specimens that are vacuum-stable, conductive, and radiation-tolerant. Preparation is the process of converting a specimen that may fail all three requirements into one that meets all of them.
 
-<!-- → [TABLE: specimen-class decision matrix — rows: dry particle/powder, suspension, bulk metal, insulating ceramic, polymer, biological tissue; columns: water content (none/low/high), conductivity (yes/no), beam sensitivity (low/medium/high), preparation path (one phrase each); student should use as a first-pass triage tool before designing a prep protocol] -->
+| Specimen class | Water content | Conductivity | Beam sensitivity | Preparation path |
+|---|---|---|---|---|
+| **Dry particle / powder** | None | Variable | Low–medium | Disperse on stub; coat if non-conductive |
+| **Suspension** | High | Variable | Medium | Drop-cast or critical-point dry; coat |
+| **Bulk metal** | None | Yes | Low | Polish, etch, mount; usually no coating |
+| **Insulating ceramic** | None | No | Low | Polish; sputter-coat (Au/Pt) or carbon-coat for EDS |
+| **Polymer** | None–low | No | High | Cryo-cleave or microtome; sputter-coat (thin Pt) |
+| **Biological tissue** | High | No | Very high | Fix → dehydrate → critical-point-dry → mount → coat (Pt) |
 
 A fractured piece of aluminum alloy from a failed turbine blade passes all three tests without preparation. It has no water. It is conductive. It can tolerate the electron beam without significant damage. Mounting it on a stub with conductive tape and putting it in the chamber takes ten minutes, and the image you get is reasonably close to the true fracture surface.
 
@@ -30,7 +37,10 @@ Water cannot exist in the SEM vacuum. The chamber operates at pressures below $1
 
 The solution to this is to remove water without allowing liquid water and vapor to coexist at the specimen surface — that is, to eliminate the liquid-vapor phase boundary. Critical-point drying does this by exploiting the fact that above a critical temperature and pressure, the distinction between liquid and gas disappears. For carbon dioxide, the critical point is at 31.1 °C and 73.8 bar. A specimen that has been exchanged into liquid CO₂ in a pressure vessel can be brought above the critical point and then vented — the CO₂ leaves as a supercritical fluid rather than boiling off as a gas. There is no surface tension, because there is no phase boundary. The cell that emerges from a well-run critical-point dryer retains its three-dimensional architecture in a way that air-drying never can.
 
-<!-- → [DIAGRAM: CO₂ phase diagram with pressure on y-axis and temperature on x-axis — liquid, gas, and supercritical regions labeled; CPD path drawn as an arrow going from liquid CO₂ up through the critical point and across into the supercritical region before venting; contrast with a second arrow showing the liquid-to-gas path that crosses the liquid-vapor boundary and pulls on the specimen with surface tension; student should see why the CPD path avoids the phase boundary entirely] -->
+![CO₂ phase diagram. The CPD path goes around the critical point — past the liquid-vapor boundary entirely. Direct evaporation crosses it and shreds the specimen.](../images/08-sem-sample-preparation-fig-01.png)
+
+*Figure 1.* CO₂ phase diagram. The CPD path goes around the critical point — past the liquid-vapor boundary entirely. Direct evaporation crosses it and shreds the specimen.
+
 
 The alternative — hexamethyldisilazane drying, known as HMDS — works by a cruder logic. HMDS has very low surface tension and high volatility. If the specimen is exchanged into HMDS and then allowed to evaporate in a fume hood, the forces that pull on membrane surfaces during evaporation are much smaller than those of water or even ethanol. For many specimens this is sufficient, and HMDS drying is faster, cheaper, and requires no specialized pressure equipment. For delicate structures, the small but nonzero surface tension of HMDS is still enough to cause problems, and critical-point drying remains the more reliable choice.
 
@@ -56,7 +66,10 @@ For EDS analysis — measuring elemental composition by detecting characteristic
 
 The polishing sequence is hierarchical: each step removes the damage left by the previous one. You start with coarser abrasive papers — 240 grit, 320, 400, 600 silicon carbide — which remove material quickly and flatten the surface. Then you move to diamond suspension, working from 9 μm down to 1 μm, which refines the surface while removing the subsurface deformation from grinding. The final colloidal silica polish is almost purely chemical-mechanical — the silica particles are chemically reactive with metal oxide surfaces and produce extremely gentle material removal that leaves a nearly damage-free surface. The sequence cannot be shortcut. A specimen polished only to 3 μm diamond looks flat to the eye but has a deformation layer hundreds of nanometers deep that will affect both SE images and EDS spectra.
 
-<!-- → [DIAGRAM: cross-section schematic of a polished surface showing subsurface deformation depth at each stage of the polishing sequence — 600 grit, 9 μm diamond, 1 μm diamond, 0.05 μm colloidal silica — with approximate deformation depth labeled at each stage; student should see why the sequence cannot be shortcut and what "flat to the eye" hides] -->
+![Subsurface deformation depth at each polishing stage. Each stage removes the damage left by the previous one — you cannot skip steps.](../images/08-sem-sample-preparation-fig-02.png)
+
+*Figure 2.* Subsurface deformation depth at each polishing stage. Each stage removes the damage left by the previous one — you cannot skip steps.
+
 
 Electropolishing is an alternative that avoids mechanical damage entirely. The specimen is the anode in an electrochemical cell, and an applied current preferentially dissolves the high points on the surface — because current density is higher at surface asperities — leaving a flat, pristine surface with no subsurface deformation. The result is often a better surface for EDS work than mechanical polishing, because there is no smearing of preparation residue across phase boundaries and no subsurface stress that could affect measurements. The trade-off is chemical: the electrolytes used for electropolishing are often hazardous. Perchloric acid solutions are common for steel and aluminum alloys, and perchloric acid mixed with organic solvents is potentially explosive. The electropolishing protocol must be followed exactly and never improvised.
 
@@ -70,7 +83,13 @@ Sputter coating works by bombardment. The specimen is placed in a small vacuum c
 
 The critical parameter is film thickness, and it involves a genuine trade-off. Too thin, and the film is discontinuous — it grows as isolated islands rather than a connected layer, and charge still accumulates in the gaps. Too thick, and the film buries the surface features the microscopist wants to image. A five-nanometer platinum coating that prevents charging on an insulating polymer also makes any feature smaller than five nanometers invisible. The coating has its own surface texture from the grain structure of the deposited metal, and that texture appears in the image superimposed on the specimen's real surface. For general-purpose imaging at 5–20 kV, 5–15 nm of gold-palladium is a reasonable starting point. For the highest-resolution low-kV work where the finest surface detail matters, chromium or platinum at 2–3 nm gives finer grain size. For EDS analysis, the coating must be carbon rather than metal — a carbon film is effectively transparent to the characteristic X-rays of most elements of interest, while a gold or platinum coating would add its own characteristic peaks to the spectrum and complicate the analysis.
 
-<!-- → [TABLE: coating selection guide — rows: general-purpose SE imaging at 5–20 kV, high-resolution low-kV imaging, EDS analysis, heavily charging insulator, high-voltage imaging; columns: recommended material, thickness range, method (sputter vs. carbon evaporation), primary trade-off; student should use as a first-pass coating decision reference] -->
+| Imaging condition | Recommended coating | Thickness range | Method | Primary trade-off |
+|---|---|---|---|---|
+| **General-purpose SE at 5–20 kV** | Au / Au-Pd | 5–15 nm | Sputter | Granular at high resolution; obscures fine surface detail |
+| **High-resolution low-kV imaging** | Pt / Cr / Ir | 1–3 nm | Sputter (or e-beam) | Very fine grain; thinner coatings charge more easily |
+| **EDS analysis** | Carbon | 5–20 nm | Carbon evaporation | Low-Z, transparent in EDS spectra; weaker conductivity than metals |
+| **Heavily charging insulator** | Au-Pd then carbon | 10 nm Au-Pd + 10 nm C | Sputter + evaporation | Best charge dissipation; thicker layer obscures fine detail |
+| **High-voltage imaging (≥ 20 kV)** | Carbon (with Au-Pd if non-conductive) | 10–20 nm | Carbon evaporation | Maintains EDS transparency; sufficient for stable charging behavior |
 
 ---
 
@@ -121,3 +140,4 @@ The three-day biological preparation that opened this chapter produces a specime
 ### Challenge
 
 **8.10** Find a published SEM paper in your research area. Read the methods section carefully. Identify each preparation step. For one step you would expect to introduce a detectable artifact, examine the figures and assess whether evidence of that artifact is visible in the published images. Does the paper discuss it? Write a paragraph-length critical commentary on the preparation as reported. *(Tests: independent methods evaluation, artifact recognition in published images, and scientific communication.)*
+

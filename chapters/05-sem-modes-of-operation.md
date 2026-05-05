@@ -18,7 +18,10 @@ The argument for higher voltage seems airtight. Chapter 2 established that elect
 
 A 30 kV electron carries thirty kiloelectronvolts of kinetic energy into the specimen. The electron doesn't stop at the surface. It penetrates, loses energy gradually through inelastic scattering events, and ultimately comes to rest inside the material. The depth and shape of this interaction volume — the region inside the specimen where the beam deposits its energy — scales roughly as $V^{1.7}$ by the Kanaya-Okayama relation that Chapter 6 will derive properly. At 30 kV, in a material of moderate density, the interaction volume extends several micrometers below the surface. At 5 kV, a few hundred nanometers. At 1 kV, a few tens of nanometers.
 
-<!-- → [DIAGRAM: cross-section schematic showing interaction volume pear-shapes at three voltages (1 kV, 5 kV, 30 kV) inside a generic specimen — volumes drawn to scale relative to a 5 nm surface feature; student should see how at 30 kV the interaction volume dwarfs the surface nanoparticle, while at 1–5 kV it is comparable] -->
+![Interaction volume scales steeply with accelerating voltage. At 30 kV the volume dwarfs a 5 nm surface feature; at 1–5 kV they are comparable.](../images/05-sem-modes-of-operation-fig-01.png)
+
+*Figure 1.* Interaction volume scales steeply with accelerating voltage. At 30 kV the volume dwarfs a 5 nm surface feature; at 1–5 kV they are comparable.
+
 
 Secondary electrons, the signal that forms most SEM images, escape only from the top few nanometers of the specimen regardless of what voltage the beam carries in. They are low-energy electrons knocked loose by the beam, and they cannot travel far through matter before being reabsorbed. This means that at 30 kV, the secondary electron signal comes from a surface layer of fixed depth — a few nanometers — but it is excited by a beam whose energy is being deposited across several micrometers. The bulk of the beam's interaction is invisible to the SE detector. The only thing that changes is that more energy is going into the specimen, more into the substrate below your feature of interest, and the interaction volume extends well past the boundaries of a 5 nm nanoparticle into the carbon film below and the silicon substrate below that.
 
@@ -28,7 +31,14 @@ The right mental model for choosing kV is this: put the interaction volume where
 
 The kV decision, then, is not a resolution decision. It is an information-depth decision. Resolution follows from it, but resolution is not the primary axis.
 
-<!-- → [TABLE: kV selection guide — columns: specimen type, feature of interest, recommended kV range, primary constraint; rows covering: bulk metal surface, nanoparticle on thin support, insulating polymer (coated), insulating polymer (uncoated), biological tissue (Pt-coated), EDS mapping — student should use as first-pass heuristic before consulting interaction-volume calculations] -->
+| Specimen type | Feature of interest | Recommended kV range | Primary constraint |
+|---|---|---|---|
+| **Bulk metal surface** | Topography, grain structure | 10–20 kV | Beam-specimen interaction volume; signal-to-noise |
+| **Nanoparticle on thin support** | Particle size, shape, dispersion | 5–10 kV | Penetration depth — too high penetrates substrate and washes out particle contrast |
+| **Insulating polymer (Pt-coated)** | Surface morphology | 5–15 kV | Charging through the coating layer |
+| **Insulating polymer (uncoated)** | Surface morphology | 1–3 kV (low-kV imaging with E-T or in-lens detector) | Charging without conductive coating |
+| **Biological tissue (Pt-coated)** | Cell surface, ultrastructure | 2–5 kV | Beam damage; charging through coating |
+| **EDS mapping** | Elemental composition at depth | 15–30 kV | Need overvoltage ratio of 2–3× the highest-Z element's K-edge |
 
 ---
 
@@ -76,7 +86,14 @@ Drift is more insidious because it can look like poor resolution. The signature 
 
 Astigmatism produces a different directional signature: features are elongated, but the elongation direction rotates 90° as you pass through focus. Underfocus elongates in one direction; overfocus elongates perpendicularly; at nominal focus the image briefly looks sharp but soft at the same time, and there is a narrow range of focus where the elongation is minimized rather than a single sharp optimum. This is the through-focus astigmatism rotation that Chapter 2 described geometrically. The fix is the stigmator cycle: adjust the x-stigmator, refocus, adjust the y-stigmator, refocus, iterate. The stigmator needs to be repeated every time kV, aperture, or working distance changes, because each of those shifts the electron trajectories that intersect the lens's mechanical imperfections.
 
-<!-- → [TABLE: artifact diagnosis reference — columns: image symptom, most likely cause, first parameter to change, diagnostic confirmation; rows: bright regions growing during scan (charging / kV), directional smear consistent across field (drift / thermal), streak rotates 90° through focus (astigmatism / stigmator), uniform softness across flat specimen (defocus), edges sharp but interior blurred (depth of focus / aperture), dim image with asymmetry (aperture misalignment) — student should use as bedside reference during lab sessions] -->
+| Image symptom | Most likely cause | First parameter to change | Diagnostic confirmation |
+|---|---|---|---|
+| **Bright regions growing during scan** | Charging accumulating on insulating regions | Lower the kV (try 5 kV); add coating or use VP mode | Effect persists across multiple frames; spreads outward from specific features |
+| **Directional smear consistent across the field** | Stage drift (thermal or mechanical) | Wait 10–20 min for thermal equilibration; check stage clamp | Drift direction stays consistent across all frames |
+| **Streak rotates 90° through focus** | Astigmatism | Adjust the stigmator | Reverse blur direction at over- vs. under-focus |
+| **Uniform softness across a flat specimen** | Defocus | Refocus | Sharpens at correct working distance |
+| **Edges sharp but interior blurred** | Insufficient depth of focus | Reduce aperture diameter; raise kV | Effect concentrated where specimen has height variation |
+| **Dim image with asymmetry** | Aperture misalignment | Re-center the objective aperture | Dimming asymmetric across field; corrects on aperture wobble |
 
 ---
 
@@ -129,3 +146,4 @@ The graduate student from the beginning of this chapter eventually became that o
 ### Challenge
 
 **5.10** The Kanaya-Okayama penetration depth scales as $R \propto V^{1.7} / \rho Z^{0.89}$ (where $\rho$ is density and $Z$ is atomic number). A research group claims their uncoated 10 nm polymer nanoparticles on a silicon substrate can be imaged charge-free at 5 kV. Use the scaling relation to estimate whether 5 kV puts the interaction volume primarily within the particle, within the substrate, or spanning both. Then look up or estimate a crossover energy for a typical polymer and assess whether their claim is physically plausible. *(Tests: interaction-volume estimation, crossover-energy reasoning, and critical reading of experimental claims.)*
+

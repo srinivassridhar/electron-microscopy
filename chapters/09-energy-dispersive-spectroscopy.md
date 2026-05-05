@@ -12,7 +12,10 @@ That is the EDS experiment. The beam ionizes inner-shell electrons in the atoms 
 
 The wonder is that this works at all. The inner-shell binding energies of every element in the periodic table are quantum-mechanically determined by nuclear charge and electron screening, and they are as distinct as signatures. Carbon's K-shell sits at 0.28 keV; iron's K-shell at 7.11 keV; gold's L-shell at about 11.9 keV. No two elements share the same fingerprint. Read the photon energies, name the atoms.
 
-<!-- → [IMAGE: annotated EDS spectrum from the chalcopyrite/clay/iron-oxide pebble example showing three spot-analysis spectra overlaid or side by side — peaks labeled Cu Kα, S Kα, Fe Kα for the green-black phase; Si Kα, Al Kα, K Kα for the clay; Fe Kα, O Kα for the rust-red — anchors the opening narrative in a real spectrum the student can read] -->
+![Three EDS spot analyses on a single pebble — chalcopyrite (Cu, S, Fe), clay (Si, Al, K), and iron oxide (O, Fe). Inner-shell binding energies are signatures.](../images/09-energy-dispersive-spectroscopy-fig-01.png)
+
+*Figure 1.* Three EDS spot analyses on a single pebble — chalcopyrite (Cu, S, Fe), clay (Si, Al, K), and iron oxide (O, Fe). Inner-shell binding energies are signatures.
+
 
 ## Why the photons have specific energies
 
@@ -143,3 +146,4 @@ The geologist's pebble is chalcopyrite. The spectrum told her.
 *What would change my mind:* evidence that standardless EDS quantification can routinely achieve ±2% relative accuracy on trace elements below 1 wt% without standards-based calibration. This is not what current technology delivers. For major-element surveys, standardless ZAF is adequate; for trace work, it is not.
 
 *Still puzzling:* the practical decision of when to move from EDS to wavelength-dispersive spectrometry (WDS) is rarely formalized in laboratory practice. WDS gives 5–20 eV resolution and would resolve many of the peak-overlap problems that force complex deconvolution in EDS, but most labs default to EDS even when WDS would give cleaner data. The economics — EDS is faster, simpler, and already on the SEM — dominate over the physics.
+

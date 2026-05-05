@@ -264,3 +264,4 @@ This appendix is reference material drawn from week-12 (biological prep, stains)
 Length ~2,400 words. Within the 2,000-4,000 word emma appendix range.
 
 Voice anchoring: anchored, but appendix-style: section-and-table-heavy rather than narrative. Cross-references to Chapters 20 and 22 are explicit per book.md authoring rules.
+

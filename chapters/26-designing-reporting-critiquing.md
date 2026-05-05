@@ -74,7 +74,14 @@ How many observations support the claim? N = 1 is an anecdote. For any quantitat
 
 What cross-check or control is reported? A complementary technique that confirms the result, or a negative control that would have appeared if the artifact hypothesis were true. In the iron-atom paper: what did the carbon-only graphene (no iron, same prep) look like under the same imaging conditions? If bright dots appeared there too, the dots are not iron atoms. The absence of that control is the absence of a critical piece of the argument.
 
-<!-- → [TABLE: the six critical-reading questions as a compact checklist — two columns: "Question to ask" and "Where to find the answer in the paper" — rows: technique-question match (methods), detector named (caption or methods), operating conditions (methods or supplement), sample prep (methods), N and replicates (results + methods), controls (methods or supplementary figures) — designed for a student to use as a literal checklist when reading a published paper] -->
+| Question to ask | Where to find the answer in the paper |
+|---|---|
+| **Does the technique match the question?** | Methods section — does the experimental design address the claim made in the abstract? |
+| **Is the detector named?** | Figure caption *or* Methods section (e.g., "HAADF-STEM at 200 kV", "in-lens SE detector") |
+| **What were the operating conditions?** | Methods section *or* supplementary information — kV, beam current, dwell time, dose |
+| **How was the specimen prepared?** | Methods section — fixation, sectioning, staining, coating, cryo-vitrification protocol |
+| **What is N? How many replicates?** | Results captions *and* Methods section — number of particles measured, biological replicates, technical replicates |
+| **What controls were run?** | Methods section *or* supplementary figures — negative controls, isotype controls, vehicle-only specimens, beam-damage controls |
 
 ## The methods section as intellectual honesty
 
@@ -131,3 +138,4 @@ The lab work continues. The methods sections await. Write them completely.
 *What would change my mind:* evidence that publication standards for EM methods sections have uniformly improved across journals and disciplines over the past decade. The movement exists — journals like eLife and Nature journals have tightened reporting requirements — but enforcement is inconsistent, and the supplementary materials system, while intended to enable completeness, also enables burial of critical information. A uniform standard with mandatory structured methods reporting would help.
 
 *Still puzzling:* the gap between what a methods section should contain and what peer review enforces varies significantly by journal, field, and reviewer. A reviewer who knows the technique reads the methods differently from one who does not. The incentive structure does not consistently reward methodological completeness.
+

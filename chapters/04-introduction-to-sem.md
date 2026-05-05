@@ -10,7 +10,10 @@ That is the SEM's core proposition. Not merely higher magnification — the opti
 
 The question the SEM answers is: *what does the surface look like, and what is it made of?* Everything about the instrument's design follows from that.
 
-<!-- → [IMAGE: side-by-side pair — left: optical micrograph of a metal fracture surface at ~200× showing indistinct striations; right: SEM secondary-electron image of the same type of fracture surface at ~5,000× showing individually resolved fatigue striations with scale bar; caption should note the resolution gap and name the signal type for the SEM image] -->
+![Same fracture surface — optical (left) vs. SEM SE (right). The resolution gap renders the fatigue striations invisible at left.](../images/04-introduction-to-sem-fig-01.png)
+
+*Figure 1.* Same fracture surface — optical (left) vs. SEM SE (right). The resolution gap renders the fatigue striations invisible at left.
+
 
 ---
 
@@ -54,7 +57,10 @@ The most common detector in routine SEM is the **Everhart-Thornley**, a combined
 
 The point is this: the SEM is not a camera. It is a scanning probe that triggers multiple physical processes simultaneously, and the image you see depends entirely on which physical process you chose to detect. An operator who does not know which detector is active — and what that detector measures — will misread the image. Beginners sometimes mistake a BSE compositional bright spot for a surface protrusion. The diagnostic is simple: switch detectors. If the feature disappears or inverts in a secondary-electron image, it was composition, not topography.
 
-<!-- → [IMAGE: three-panel comparison of the same field of view on a two-phase alloy specimen — panel 1: SE image showing topographic contrast; panel 2: BSE image of identical field showing high-Z phase as bright patches with minimal topographic information; panel 3: EDS elemental map of the same field with color overlay for one element; captions name the detector and what contrast mechanism is active in each; student should see how the same specimen reads differently depending on which physical process is detected] -->
+![Same field of view, three detectors — SE (topography), BSE (Z-contrast), EDS (elemental). The detector is the experiment.](../images/04-introduction-to-sem-fig-02.png)
+
+*Figure 2.* Same field of view, three detectors — SE (topography), BSE (Z-contrast), EDS (elemental). The detector is the experiment.
+
 
 ---
 
@@ -66,7 +72,10 @@ The reason is aperture angle. Depth of field scales roughly as $d_p / \alpha$, w
 
 This matters practically. An SEM image of a fracture surface or a three-dimensional scaffold shows deep topographic relief in a single focused frame. The same specimen in an optical microscope would require a focus-stack of dozens of images to cover the same depth range. One of the SEM's most important practical advantages is not its resolution — it is its depth of field.
 
-<!-- → [IMAGE: side-by-side pair — left: optical micrograph of a three-dimensional specimen (e.g., a fractured surface or insect leg) at matched magnification, with only a thin plane in focus and the rest blurred; right: SEM SE image of a similar specimen showing the full depth range in simultaneous focus; scale bars matched; caption should state the numerical aperture / aperture angle for each and the resulting depth-of-field estimate] -->
+![The SEM's small aperture angle gives a depth of field roughly 1000× larger than an optical microscope at matched magnification.](../images/04-introduction-to-sem-fig-03.png)
+
+*Figure 3.* The SEM's small aperture angle gives a depth of field roughly 1000× larger than an optical microscope at matched magnification.
+
 
 ---
 
@@ -133,3 +142,4 @@ What this chapter asked but did not answer: why does probe current matter, and h
  evidence that a non-scanning parallel-beam architecture could match scanning SEM's resolution and surface-topography sensitivity for routine bulk specimens. Such instruments exist as research prototypes. They have not displaced the scanning architecture in practice, which is informative about where the actual constraints live.
 
 **Still puzzling:** why the question of optimal pixel dwell time — which has a well-defined answer in terms of signal yield, detector noise, beam current, and acceptable beam damage dose — is still usually decided in laboratory practice by trial and instinct rather than by calculation. The model exists. It is rarely used.
+

@@ -12,7 +12,10 @@ Now slide the same pollen grain into a scanning electron microscope and image it
 
 That is the whole subject. Everything else in this book — the columns, the vacuum, the lenses, the preparation rituals, the different modes and detectors and techniques — is the consequence of that one substitution. We traded photons for electrons, and everything else followed.
 
-<!-- → [IMAGE: side-by-side pair — left: optical micrograph of a pollen grain at 400× showing only rough spherical shape and indistinct surface texture; right: SEM micrograph of the same species at 5,000× showing sharp spikes, pits, and a germination pore — caption should name the species and the scale bar for each; student should see concretely what "resolving below 200 nm" means in practice] -->
+![Same pollen grain — optical (left) vs. SEM (right). The 200 nm resolution gap renders surface structure invisible at left, sharp at right.](../images/01-introduction-to-em-fig-01.png)
+
+*Figure 1.* Same pollen grain — optical (left) vs. SEM (right). The 200 nm resolution gap renders surface structure invisible at left, sharp at right.
+
 
 ---
 
@@ -38,7 +41,14 @@ where $d$ is the smallest separation between two points that still shows up as t
 
 Plug 100 kilovolts into the de Broglie relation and you get $\lambda \approx 0.004$ nm. Apply Abbe's formula with even modest apertures and the theoretical resolution is well below one nanometer. In practice, aberrations in the electron lenses claw back much of that advantage, and modern instruments operate at resolutions of 0.1 to 0.2 nanometers for transmission work and 1 to 5 nanometers for scanning. Both are still far beyond anything light can achieve.
 
-<!-- → [TABLE: wavelength vs. accelerating voltage — columns: accelerating voltage (kV), electron wavelength (nm), theoretical resolution at α = 0.6° (Å), for 1 / 10 / 100 / 300 kV; student should see the non-linear shrinkage and the gap between theoretical and practical resolution] -->
+| Accelerating voltage | Electron wavelength | Theoretical resolution at α = 0.6° | Practical SEM/TEM resolution |
+|---|---|---|---|
+| **1 kV** | 38.8 pm (0.0388 nm) | 1.85 Å | ~5 nm (SEM, low-kV imaging) |
+| **10 kV** | 12.2 pm | 0.58 Å | ~2 nm (SEM standard) |
+| **100 kV** | 3.70 pm | 0.18 Å | ~2 Å (TEM, conventional) |
+| **300 kV** | 1.97 pm (relativistic) | 0.094 Å | <1 Å (aberration-corrected TEM) |
+
+*Wavelength shrinks non-linearly with voltage. Practical resolution is far worse than theoretical because spherical and chromatic aberration, not the wavelength, are the binding constraints.*
 
 Why do the aberrations eat so much of the theoretical gain? Because electromagnetic lenses — the magnets that focus electrons, filling the role that glass plays for light — are fundamentally imperfect in ways that glass lenses can be ground past. The dominant pathology is spherical aberration: electrons traveling off the axis get focused too strongly, so the focal "point" is actually a disk. Controlling spherical aberration is the central engineering challenge of electron-microscope design. Modern instruments use software-corrected multipole aberration correctors; early ones simply used very small apertures to block the worst off-axis rays, which worked but discarded most of the beam. Chapter 2 goes into this in detail. For now: wavelength sets the ceiling for resolution; aberrations set the floor where you actually live.
 
@@ -105,7 +115,10 @@ Finally, **detectors** and a **computer**. The diversity of detectors is worth a
 
 The whole system is one long chain of trade-offs, each component with its own optimum that does not coincide with its neighbors' optima. A brighter gun lets the condenser lenses spread current more generously, but it costs more vacuum and more money. A smaller objective aperture cleans up aberrations, but it reduces signal and extends the exposure time needed. Higher accelerating voltage means a shorter wavelength and potentially better resolution, but it also means more beam damage to radiation-sensitive specimens. The operator's job is to navigate the few degrees of freedom left accessible at the console, with an understanding of what is being traded against what.
 
-<!-- → [IMAGE: annotated cross-section diagram of a generic electron microscope column — labeled components top to bottom: electron gun, anode/accelerating stage, condenser lens 1, condenser lens 2, condenser aperture, objective lens, specimen stage, scan coils (SEM branch) / projector lenses (TEM branch), detector(s), vacuum pump connections indicated; SEM and TEM variants shown side by side on the same diagram skeleton so student can see what is shared and what differs] -->
+![Generic electron microscope columns — SEM (left) and TEM (right). Components above the specimen are shared; below, the two diverge.](../images/01-introduction-to-em-fig-02.png)
+
+*Figure 2.* Generic electron microscope columns — SEM (left) and TEM (right). Components above the specimen are shared; below, the two diverge.
+
 
 ---
 
@@ -162,3 +175,4 @@ That is the character of this whole field: the physics is rich but it is not arb
  an empirical demonstration that visible-light microscopy can routinely resolve below 100 nm without exotic super-resolution methods that effectively bypass the Abbe limit through fluorophore localization rather than direct imaging. (Localization techniques like STORM and PALM do achieve sub-100-nm resolution; they do not contradict Abbe for direct imaging.)
 
 **Still puzzling:** why electron microscope manufacturers routinely list "resolution" specs in the single-angstrom range when most working laboratories operate well above that limit. The gap between specification and routine practice is a calibration question Chapter 23 will start to address.
+

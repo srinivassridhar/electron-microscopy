@@ -32,7 +32,10 @@ This is still not thin enough for TEM, but it is thin enough for the next step t
 
 Mechanical preparation has a characteristic artifact: sub-surface damage. Grinding and polishing work by fracture and plastic deformation at the surface; in a crystalline metal, this means dislocations, work-hardening, and a damaged layer that extends below the visibly polished surface — sometimes tens or hundreds of nanometers below the surface in soft metals. For dislocation imaging in a steel, prep-induced dislocations mixed with the real ones are a problem. For composition mapping by EDS, they are often irrelevant. The operator decides whether to remove the damaged layer (by subsequent ion milling) or tolerate it.
 
-<!-- → [IMAGE: cross-section schematic of a TEM disc after dimple grinding — top view showing 3 mm disc geometry with labeled rim (100 μm thick) and dimpled center (10 μm thick); side cross-section showing the bowl-shaped dimple profile with thickness labels at rim, shoulder, and center; annotation showing the sub-surface damage zone beneath the mechanically polished surfaces (hatched layer, ~100–500 nm deep in soft metals); inset: comparison of the disc geometry before and after dimpling to show why the dimple concentrates the subsequent ion-milling effort at the center] -->
+![Dimpled TEM disc — top view and cross-section. Dimpling concentrates subsequent ion-mill effort at the thin center.](../images/22-tem-sample-prep-inorganic-fig-01.png)
+
+*Figure 1.* Dimpled TEM disc — top view and cross-section. Dimpling concentrates subsequent ion-mill effort at the thin center.
+
 
 ---
 
@@ -46,7 +49,10 @@ Electropolishing also produces hydrogen at the cathode. Hydrogen is flammable, a
 
 The payoff for following the protocol correctly is a specimen surface that has seen no mechanical work — pristine crystallographic structure right to the thinned region, suitable for high-resolution imaging and diffraction work where a few nanometers of prep-induced disorder would be interpretively significant.
 
-<!-- → [IMAGE: comparison panel — left: BF TEM image near the thinned edge of a mechanically polished and ion-milled steel specimen showing dense prep-induced dislocation tangles in the near-edge region; right: BF TEM image of the same alloy composition prepared by jet electropolishing showing a clean dislocation structure without prep artifacts near the edge; scale bars matched; captions label the prep method and identify which features are real vs. prep-induced; student should see concretely why electropolishing is preferred for dislocation imaging when the electrolyte is available] -->
+![Same alloy, two prep methods. Mechanical polish + ion mill leaves dense prep-induced dislocations near the edge; jet electropolish does not.](../images/22-tem-sample-prep-inorganic-fig-02.png)
+
+*Figure 2.* Same alloy, two prep methods. Mechanical polish + ion mill leaves dense prep-induced dislocations near the edge; jet electropolish does not.
+
 
 ---
 
@@ -58,7 +64,10 @@ The damage artifact from ion milling is amorphization: the top few nanometers of
 
 The solution is a **low-energy cleanup pass**: after the main mill reaches the target thickness, the ion energy is dropped to 0.5–1 keV and the mill runs for a shorter time at a shallower angle. At this energy, the ions do not penetrate deeply enough to implant; they remove the amorphized layer from the previous mill without adding a new one. This cleanup pass is now standard practice before high-resolution TEM of ion-milled specimens. The cost is an extra hour or two; the benefit is lattice fringes that extend to the specimen surface rather than disappearing into the amorphous zone.
 
-<!-- → [IMAGE: HRTEM comparison at specimen edge — left: specimen after 5 keV ion mill only, showing clear amorphous surface bands (~8 nm) where lattice fringes are absent; right: same specimen type after 0.5 keV cleanup pass, showing lattice fringes extending to within ~1–2 nm of the surface; scale bars at 5 nm; annotation labeling the amorphous zone in the left panel and its reduced extent in the right; student should see the direct imaging consequence of the cleanup pass and why it matters for HRTEM] -->
+![HRTEM at the specimen edge — 5 keV ion mill leaves an ~8 nm amorphized layer. A 0.5 keV cleanup pass removes it; lattice fringes extend to within 1–2 nm of the surface.](../images/22-tem-sample-prep-inorganic-fig-03.png)
+
+*Figure 3.* HRTEM at the specimen edge — 5 keV ion mill leaves an ~8 nm amorphized layer. A 0.5 keV cleanup pass removes it; lattice fringes extend to within 1–2 nm of the surface.
+
 
 ---
 
@@ -129,3 +138,4 @@ Chapter 23 returns to all of these artifacts in a comparative context, alongside
  evidence that a single preparation route can match all the others across different material types for damage quality and spatial precision. The current empirical record is consistent: material-specific routes (electropolishing for metals, ion milling for ceramics, FIB for site-specific) each outperform general-purpose alternatives when matched correctly to the specimen. A universal prep technique would be transformative; none currently exists.
 
 **Still puzzling:** the decision of when to invest in FIB lift-out versus conventional mechanical plus ion-mill prep is driven almost entirely by instrument access and cost, not by a clean pedagogical criterion. Both can produce HRTEM-quality specimens in the right materials; the threshold for switching is economic rather than scientific. Students trained in well-equipped labs default to FIB; those in labs without access default to conventional. Neither group is necessarily making the better choice for the science.
+

@@ -6,7 +6,10 @@
 
 There is a moment every new graduate student has, standing in front of a field-emission SEM for the first time. The column hums. A small indicator says "ready." And somewhere on the console, usually printed on a laminated card taped near the monitor, is a number: 1 nm. That is what this instrument can do.
 
-<!-- → [IMAGE: photograph of an FE-SEM console with the laminated spec card visible, column in background — establishes the concrete scene from the opening and grounds the "1 nm" claim for the reader before any physics is introduced] -->
+![The opening scene — an FE-SEM console with the laminated specification card.](../images/03-sources-lenses-detectors-and-components-fig-01.png)
+
+*Figure 1.* The opening scene — an FE-SEM console with the laminated specification card.
+
 
 What the laminated card does not explain is that the 1 nm is not a property of the machine the way the serial number is a property of the machine. It is the output of a chain of decisions, some made years ago by engineers in Japan, and some you are about to make. The gun was chosen for a reason. The lens was wound to a particular geometry for a reason. The vacuum system is running right now, while the column hums, because without it the beam would scatter into nothing before it reached your specimen. Every one of those choices couples to every other. This chapter is about understanding how.
 
@@ -177,3 +180,4 @@ But the hardware is what you just learned. When the rest of the book names a sub
 *What would change my mind:* evidence that a tungsten thermionic gun could be operated stably at $10^{-9}$ Torr with brightness comparable to Schottky for many hours. That would close the gun-family gap the table above describes. The underlying physics does not absolutely forbid it, but it is not what current technology delivers.
 
 *Still puzzling:* the practical question of how often field-emission users actually flash their cold-FE tips versus what the manufacturer recommends. The answer varies by lab, shaped more by usage patterns and institutional culture than by any physics I can derive.
+

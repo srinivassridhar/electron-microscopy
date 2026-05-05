@@ -10,7 +10,10 @@ Nothing about the specimen changed. The beam energy, the kV, the working distanc
 
 This is the central fact about SEM image formation that the previous three chapters were building toward: an SEM image is not a picture of the specimen. It is a map of signal yield from a particular detector. Until you know which detector made the image, you do not know what the image shows.
 
-<!-- → [IMAGE: side-by-side pair of the same field of view on a polished Ni-Al alloy — left: Everhart-Thornley image showing near-uniform gray with faint topographic scratches; right: semiconductor BSE detector image of the identical field showing a four-tone mosaic of compositional phases; scale bar identical in both panels; captions name the detector, kV, and what contrast mechanism dominates each image; student should see concretely how the same specimen carries two independent information channels] -->
+![Same Ni-Al alloy field — Everhart-Thornley (left, near-uniform gray with faint scratches) vs. semiconductor BSE (right, four-tone compositional mosaic).](../images/07-sem-detectors-and-image-formation-fig-01.png)
+
+*Figure 1.* Same Ni-Al alloy field — Everhart-Thornley (left, near-uniform gray with faint scratches) vs. semiconductor BSE (right, four-tone compositional mosaic).
+
 
 ---
 
@@ -32,7 +35,12 @@ Backscattered electrons, by contrast, leave the specimen with most of their orig
 
 **Bandwidth** is the range of signal frequencies the detector and its electronics can follow. As the beam rasters across a specimen with fine-scale features, the signal alternates rapidly — high spatial frequency translates to high temporal frequency. A detector whose amplifier bandwidth is too narrow smooths over fine detail; a slow detector sees coarse features only. Most modern systems span several decades, but very fast scan rates or very slow integrations can hit bandwidth limits and should be checked.
 
-<!-- → [TABLE: four-question framework applied to each detector type — rows: Everhart-Thornley, through-the-lens/in-lens, YAG scintillator BSE, semiconductor BSE; columns: take-off angle (typical), solid angle (relative: small/medium/large), energy response (SE / BSE / both), bandwidth (relative), primary information content; student should be able to use this as a reference to predict detector behavior for an unfamiliar specimen] -->
+| Detector | Take-off angle | Solid angle | Energy response | Bandwidth | Primary information |
+|---|---|---|---|---|---|
+| **Everhart-Thornley (E-T)** | High (above specimen, off-axis ~30–45°) | Medium | Predominantly SE; some BSE leakage | Moderate | Topographic SE imaging — workhorse general-purpose detector |
+| **Through-the-lens / in-lens** | On-axis (collected through the objective lens) | Small but very efficient at low kV | Predominantly SE (low-energy) | High | Low-kV high-resolution imaging — surface-sensitive |
+| **YAG scintillator BSE** | Above specimen, annular | Large | BSE only (energy threshold typically > 50% of beam) | High | Compositional contrast (Z-contrast); some channeling |
+| **Semiconductor (silicon-diode) BSE** | Above specimen, annular | Large | BSE only | Lower (limited by RC time constant of the diode) | Z-contrast at moderate frame rates; common on entry-level SEMs |
 
 ---
 
@@ -44,7 +52,10 @@ Five components — cage, scintillator, light guide, PMT, amplifier — to solve
 
 The +10 kV on the scintillator would normally destroy the primary beam if it extended into the column, bending electron trajectories unpredictably. The Faraday cage prevents this: the +300 V cage potential perturbs the primary beam negligibly, while shielding the beam from the high-voltage scintillator field. The cage is simultaneously the collector, the shield, and the accelerator — three functions in one wire mesh.
 
-<!-- → [IMAGE: annotated cross-section schematic of the Everhart-Thornley detector — labeled components: Faraday cage (with +300 V label), scintillator face (+10 kV label), light guide, photomultiplier tube, amplifier output; arrows showing SE trajectory from specimen surface into cage and onward to scintillator; primary beam trajectory shown passing the cage undisturbed; caption should explain the dual-voltage design and why the cage potential is low while the scintillator potential is high] -->
+![Everhart-Thornley detector — Faraday cage (+300 V) attracts SEs without disturbing the primary beam; scintillator (+10 kV) accelerates them into light.](../images/07-sem-detectors-and-image-formation-fig-02.png)
+
+*Figure 2.* Everhart-Thornley detector — Faraday cage (+300 V) attracts SEs without disturbing the primary beam; scintillator (+10 kV) accelerates them into light.
+
 
 What does the E-T detector actually collect? The answer is messier than the name "secondary electron detector" implies. The +300 V bias attracts SEs broadly, but the E-T detector also intercepts backscattered electrons that happen to enter its solid angle, and it collects a population called SE3 — secondary electrons generated where BSEs strike the chamber walls, the polepiece, and other surfaces at some distance from the specimen. SE3 electrons carry no spatial information about the specimen; they contribute a uniform background. A detailed accounting of an E-T signal on a typical metal specimen shows roughly that SE1 (generated within the primary beam footprint, the high-resolution surface signal) accounts for perhaps a third of the total; SE2 (generated where BSEs exit the specimen, BSE-modulated and lower in lateral resolution) for another fraction; SE3 for a substantial uniform pedestal; and direct BSE interception for a smaller compositional contribution. The E-T is called an SE detector in the same spirit that a city is called quiet: mostly, under typical conditions, but not reliably.
 
@@ -74,7 +85,10 @@ Topography still contributes a secondary effect in BSE images. A tilted surface 
 
 The suppression method is elegant. A segmented annular BSE detector — four quadrants, or simply two halves A and B — catches BSEs in opposing directions. Reading the **sum** (A + B) gives total BSE yield, which is composition-dominated: topographic asymmetries cancel because whatever geometrical brightening appears in segment A appears as a corresponding dimming in segment B. Reading the **difference** (A − B) gives the asymmetry between the two halves, which is topography-dominated: compositional variations contribute equally to both sides and cancel in the subtraction. One scan, one detector, two images. Experienced operators acquire both routinely.
 
-<!-- → [IMAGE: three-panel comparison on the same rough-surfaced two-phase alloy — panel 1: SE image showing topographic relief; panel 2: segmented BSE sum mode (A+B) showing composition-dominated contrast with topography suppressed; panel 3: segmented BSE difference mode (A-B) showing topography-dominated contrast with composition cancelled; captions name the mode and what cancels in each; student should see the algebraic logic of sum vs. difference made visually concrete] -->
+![Segmented BSE — sum (A+B) cancels topographic asymmetries (composition shows); difference (A−B) cancels common-mode composition (topography shows). The algebra is the experiment.](../images/07-sem-detectors-and-image-formation-fig-03.png)
+
+*Figure 3.* Segmented BSE — sum (A+B) cancels topographic asymmetries (composition shows); difference (A−B) cancels common-mode composition (topography shows). The algebra is the experiment.
+
 
 ---
 
@@ -131,3 +145,4 @@ The operator who understands this is not just running the instrument. They are c
  evidence that a single detector geometry could simultaneously deliver SE-quality surface resolution and BSE-quality Z-contrast on routine samples without any signal mixing or trade-off. Modern energy-discriminating annular detectors are pushing in this direction. The four constraints of Section 2 — take-off angle, solid angle, energy response, bandwidth — still form a joint constraint surface that no current instrument fully escapes.
 
 **Still puzzling:** the SE3 contribution to E-T signal varies substantially across instruments and chamber geometries depending on chamber material, polepiece geometry, and nearby detector hardware, yet is almost never characterized for a specific instrument. The instrument-to-instrument variation means that "E-T detector" does not specify a measurement with precision — which makes quantitative comparison between SEMs using the same nominal detector type harder than it should be.
+

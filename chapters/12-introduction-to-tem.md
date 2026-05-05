@@ -105,3 +105,4 @@ De Broglie wrote a nine-page thesis appendix sketching what would follow from hi
 *What would change my mind:* evidence that the thin-specimen requirement could be substantially relaxed — to, say, 1 μm — without sacrificing atomic-resolution imaging. High-voltage TEMs at 1–3 MV extend the limit somewhat, but the fundamental contrast-and-multiple-scattering argument holds across the practical accelerating voltage range.
 
 *Still puzzling:* the gap between specimen-preparation effort and imaging time remains stubbornly large in biological TEM. A typical session is at least 10:1 prep-to-imaging. Cryo-EM vitrification and fast-prep methods have helped at one end of the problem; the ultramicrotomy bottleneck for sectioned specimens has not changed fundamentally in fifty years.
+

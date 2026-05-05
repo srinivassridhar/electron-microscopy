@@ -28,7 +28,14 @@ STEM-EDS adds the elemental dimension. The beam in STEM mode is focused to a sub
 
 The pattern is the same across all the nanomedicine applications. Lipid nanoparticles, polymeric drug carriers, magnetic iron oxide contrast agents for MRI, gold nanoparticles for diagnostic assays — each has a set of characterization questions, and each question maps to a technique whose physics makes it the right tool. Size and shape at the population level: SEM. Internal structure: TEM. Three-dimensional structure: tomography. Elemental composition and distribution: EDS or EELS. Crystal phase of an inorganic core: selected-area electron diffraction. Atomic-scale interface structure: HRTEM or HAADF-STEM.
 
-<!-- → [TABLE: nanomedicine characterization question-to-technique mapping — rows: characterization goal (size/shape population, internal structure, 3D cargo location, elemental composition, crystal phase, atomic interface); columns: technique, what physics makes it the right tool, key limitation; student should use this as a reference when designing characterization for new nanoparticle systems] -->
+| Characterization goal | Technique | What physics makes it the right tool | Key limitation |
+|---|---|---|---|
+| **Particle size and shape population (n ≥ 100)** | SEM (uncoated for polymers, coated for inorganics) | High-throughput 2D imaging at moderate resolution; statistics on hundreds of particles | 2D projection; can miss internal structure |
+| **Internal structure of a single particle** | TEM bright-field | Transmits through the particle; reveals core-shell, hollow, encapsulated payloads | Sample-prep-intensive; limited statistics |
+| **3D cargo location inside a delivery vehicle** | Cryo-electron tomography | Native hydrated state; 3D reconstruction from tilt series | Low signal-to-noise; demands low-dose imaging discipline |
+| **Elemental composition (single particle)** | STEM-EDS or STEM-EELS | Characteristic X-ray / energy-loss spectra at nanometer probe size | Beam damage, especially for soft cargo; spectral overlap |
+| **Crystal phase identification** | TEM electron diffraction (SAED) or HRTEM with FFT | Reciprocal-space pattern fingerprints crystal structure | Requires single-crystal or near-single-crystal regions |
+| **Atomic-resolution interface (e.g., shell on core)** | Aberration-corrected HAADF-STEM | Z-contrast at single-atom sensitivity; composition step at the interface | Restricted to specific instruments; very high beam dose |
 
 ---
 
@@ -60,7 +67,10 @@ The practical discipline is to start with the broadest scale and work inward. SE
 
 The workflow serves a scientific argument. Every technique produces data; the data must cohere into a conclusion. A figure in a published paper that shows SE, BSE, BF TEM, EDS map, and HAADF-STEM side by side is not a demonstration of technique fluency — it is a structured argument in which each panel answers one sub-question, and together the panels close the case.
 
-<!-- → [IMAGE: example multi-panel publication figure — five panels of the same nanoparticle system: (1) SE image: population overview, hundreds of particles; (2) BSE image: same field, Z-contrast confirming heavy-element cores; (3) BF TEM: single particle internal structure showing bilayer or core-shell; (4) EDS elemental map: spatial distribution of key elements overlaid on STEM image; (5) HAADF-STEM: atomic-resolution Z-contrast of core region; each panel labeled with its technique and the specific sub-question it answers; caption format showing what a methods section should state for each panel; student should see how a multi-panel figure is a structured argument rather than a collection of images] -->
+![A multi-panel publication figure as a structured argument. Each panel earns its place by answering a sub-question.](../images/25-applications-fig-01.png)
+
+*Figure 1.* A multi-panel publication figure as a structured argument. Each panel earns its place by answering a sub-question.
+
 
 This is why methods sections in modern electron-microscopy papers are as long as they are. The reader needs to know which detector was active for each image, what the accelerating voltage and working distance were, how the specimen was prepared, and what cross-checks were performed. Without that information, the panels cannot be read critically. With it, the reader can assess whether each technique was used at conditions appropriate to the question it was answering, and whether the artifact families relevant to those conditions were addressed.
 
@@ -111,3 +121,4 @@ Chapter 26 closes the book by addressing how to communicate the multi-technique 
  a compelling demonstration that a single EM technique can answer, without cross-checks, the full range of structural, compositional, and three-dimensional questions that characterize a complex specimen in any of the three application areas. The trend in the field is consistently in the other direction: as techniques improve, the questions researchers can ask become more demanding, and more techniques are required to answer them — not fewer.
 
 **Still puzzling:** the practical decision of when a workflow is "complete enough" for publication is more sociological than scientific. Different journals, different fields, and different reviewers have different expectations, and those expectations vary in ways that do not always track the actual information requirements of the research question. The resulting variability in what counts as sufficient characterization is a persistent source of both retractable errors and unnecessarily delayed papers.
+
