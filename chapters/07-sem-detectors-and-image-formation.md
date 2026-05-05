@@ -1,366 +1,133 @@
 # Chapter 7 — SEM Detectors and Image Formation
 
-## Title options
-
-1. **What the Detector Sees: How an SEM Image Gets Built**
-2. **Reading Light from Electrons: The Detector Stack**
-3. **Same Specimen, Different Detector, Different Image**
-
-## TL;DR
-
-The same specimen looks different through different SEM detectors because each detector samples a different combination of secondary electrons, backscattered electrons, and BSE-modulated populations from a different angular range. This chapter is the operator's guide to which detector tells you what — and to the artifacts each one introduces along the way.
+*The specimen did not change. The physics did not change. Only the detector changed — and suddenly there were four phases where before there was one.*
 
 ---
 
-## 1. Chapter Opening
+A graduate student is at the SEM with a polished nickel-aluminum alloy. The instrument is running at 20 kV. Through the Everhart-Thornley detector, the screen shows a uniform gray surface with faint hints of phase contrast at the scratched edge of the polish. Unremarkable. Then the student switches to the semiconductor backscatter detector mounted under the objective lens. The same field of view becomes a four-tone mosaic: near-black where aluminum dominates, two shades of gray for intermediate phases, near-white where the nickel concentration peaks. Phase boundaries that were invisible a moment ago are now the dominant feature of the image.
 
-A graduate student is at the SEM with a polished Ni–Al alloy specimen, the same one used in Goldstein's textbook. The slide on the screen says the alloy has four phases. Through the Everhart–Thornley detector at 20 kV, the student sees a uniform gray surface with faint hints of phase boundaries in the corner where polishing got rough. Switch to the semiconductor BSE detector mounted under the objective lens. The same field of view is now a four-tone mosaic: jet black where aluminum dominates, mid-gray where the Al–Ni–Fe phase sits, light gray for the Ni-rich phase, near-white for the highest-Ni region. Phase boundaries that were invisible thirty seconds ago are now the dominant feature in the image.
+Nothing about the specimen changed. The beam energy, the kV, the working distance, the probe size — all identical. What changed is which population of electrons is being counted. The Everhart-Thornley counts mostly secondary electrons, which carry information about surface topography and almost none about atomic number. The backscatter detector counts backscattered electrons, which carry strong atomic-number contrast and very little topographic information. The same specimen, the same physics, two completely different images.
 
-Nothing about the specimen changed. The beam is the same, the kV is the same, the working distance is the same. What changed is which population of electrons is being counted. The E-T detector counts mostly secondary electrons, which carry surface morphology and almost no atomic-number information. The BSE detector counts only backscattered electrons, which carry strong atomic-number contrast and very little surface topography. Two detectors, two pictures, one specimen.
+This is the central fact about SEM image formation that the previous three chapters were building toward: an SEM image is not a picture of the specimen. It is a map of signal yield from a particular detector. Until you know which detector made the image, you do not know what the image shows.
 
-This chapter teaches you to read which picture you are looking at. By the end, you can name every standard SEM detector, predict what kind of image each one produces, and identify the artifacts each one introduces. You will also be able to combine detectors — the simultaneous SE plus BSE pair, the sum-and-difference annular geometry — to extract more information than either alone provides.
-
-### Learning objectives
-
-By the end of this chapter you can:
-
-- **Distinguish** Everhart–Thornley, in-lens / through-the-lens, scintillator BSE, and semiconductor BSE detectors by their physical principle and signal sensitivity.
-- **Predict** what kind of image each detector produces for a given specimen.
-- **Apply** the four detector questions — take-off angle, solid angle, energy response, bandwidth — to analyze a detector's behavior.
-- **Recognize** detector-specific artifacts (E-T edge brightening, in-lens distortion, BSE topographic misreads, shadowing).
-- **Choose** sum-mode versus difference-mode acquisition on a segmented BSE detector.
-
-### Prerequisites
-
-Chapter 6: which signals exist (SE1/SE2/SE3, BSE, characteristic X-rays), what they cost in energy, and where they sample from. Some elementary electronics: photomultiplier tubes, semiconductor diodes, gain.
-
-### Why this chapter matters
-
-An SEM image is uninterpretable without knowing which detector produced it. Every methods section in a published SEM paper names the detector for a reason. This chapter is the operator's foundation for both producing publishable images and reading them.
+<!-- → [IMAGE: side-by-side pair of the same field of view on a polished Ni-Al alloy — left: Everhart-Thornley image showing near-uniform gray with faint topographic scratches; right: semiconductor BSE detector image of the identical field showing a four-tone mosaic of compositional phases; scale bar identical in both panels; captions name the detector, kV, and what contrast mechanism dominates each image; student should see concretely how the same specimen carries two independent information channels] -->
 
 ---
 
-## 2. Four questions to ask of any detector
+It helps to have a framework for reasoning about any detector, whether you have used it before or not. Every detector, regardless of its specific design, can be characterized by four independent quantities: where it sits (take-off angle), how much of the emission it intercepts (solid angle), which electron energies it responds to (energy response), and how fast it can follow signal changes (bandwidth). The four together define what the detector measures and what it cannot.
 
-The question this section answers is: what makes one detector behave differently from another, and how do you reason about a detector you have never used before?
+**Take-off angle** is measured from the specimen surface to the line connecting the beam impact point to the center of the detector face. A detector directly overhead has a take-off angle near 90° and sees the specimen nearly symmetrically regardless of its tilt. A side-mounted detector at 30° take-off angle sees features on the near side of any surface protrusion brightly and features on the far side dimly — which is why Everhart-Thornley images look like photographs lit from one side. The apparent "illumination direction" in an E-T image is the take-off angle, not a real light source. When operators mistakenly read the shadow direction as the specimen's physical orientation, the error comes from forgetting what take-off angle means.
 
-### Mechanism — geometry, sensitivity, response, speed
-
-The week-4 source frames every detector with the same four questions. Every detector sits somewhere in the chamber; every detector has a face that catches electrons; every detector converts electrons into a signal at some efficiency that varies with electron energy; and every detector has electronics that pass through some range of frequencies. Together those four parameters tell you what the detector will do.
-
-**Take-off angle ψ** is the angle from the specimen surface to the line connecting the beam impact point to the center of the detector face. A take-off angle near 90° (detector directly above the specimen) reads roughly the same signal regardless of specimen tilt. A take-off angle of 30° (typical Everhart–Thornley geometry) makes the detector much more sensitive to features facing toward it than to features facing away. Take-off angle is what the source identifies as the detector's *position*, and it sets the directional bias of the image.
-
-**Solid angle Ω** is the size of the detector relative to its distance from the specimen:
+**Solid angle** is the fraction of the total emission hemisphere the detector face intercepts:
 
 $$
 \Omega = \frac{A}{r^2}
 $$
 
-where $A$ is the detector face area and $r$ is the radial distance to the beam impact point. Solid angle is *what fraction of the emission cone the detector sees*. A small detector far away has a small solid angle and collects little. A large detector close to the specimen has a large solid angle and collects much. Higher solid angle gives better signal-to-noise, but at the cost of chamber clearance and other trade-offs (a big detector can block other detectors, occlude the eucentric tilt, and clutter the chamber geometry).
+where $A$ is the face area and $r$ is the distance from the beam impact point to the detector center. Larger solid angle means more signal collected, better signal-to-noise, shorter required dwell times. A large detector close to the specimen collects aggressively; a small detector far away collects a tiny fraction of the emission. This is not a subtle effect: solid angle scales as $1/r^2$, so doubling the working distance quarters the collected signal. An operator who increases working distance without compensating for the solid-angle loss will wonder why the image went noisy.
 
-**Energy response** is the detector's efficiency for converting an incoming electron of a given energy into a useful signal. A scintillator-based BSE detector responds well to electrons above a few keV but gives nothing at all from a 5 eV SE — the SE just bounces off the scintillator. A solid-state silicon diode responds linearly to electron energy above its threshold (about 3.6 eV per electron-hole pair in Si, so a 15 keV BSE generates about 4000 free electrons before any amplification). The energy-response function is the key to *which signal* a detector measures, before anyone tells you what its name is.
+**Energy response** is the detector's efficiency as a function of incoming electron energy. This is the parameter that discriminates between detectors most cleanly. Secondary electrons have energies mostly below 50 eV. A bare scintillator crystal cannot be excited by a 5 eV electron — the energy is far below what's needed to emit light from the phosphor. A silicon diode can produce electron-hole pairs, but 5 eV divided by 3.6 eV per pair is barely more than one pair, which drowns in noise. Secondary electrons, left to their own devices, cannot be detected by the simple converters that work beautifully for backscattered electrons. The engineering of SE detectors is entirely a response to this problem.
 
-**Bandwidth** is the range of signal frequencies the detector and its amplifier can pass. As the beam scans across fine-scale features, the signal changes rapidly — high spatial frequency translates to high temporal frequency. Coarse features change slowly, low temporal frequency. A detector with a bandwidth too narrow at the high end *blurs* fine features. A detector with a bandwidth too narrow at the low end *loses* the gradual shading of large features. Most modern systems span several decades of frequency, but specialty modes (very fast scanning, very slow integration) can hit bandwidth limits.
+Backscattered electrons, by contrast, leave the specimen with most of their original beam energy — at 20 kV, BSEs peak around 14–18 keV. That is plenty to excite a scintillator directly, or to generate thousands of electron-hole pairs in silicon. No acceleration needed. BSEs are easy to detect; SEs require a clever solution.
 
-### Trade-off
+**Bandwidth** is the range of signal frequencies the detector and its electronics can follow. As the beam rasters across a specimen with fine-scale features, the signal alternates rapidly — high spatial frequency translates to high temporal frequency. A detector whose amplifier bandwidth is too narrow smooths over fine detail; a slow detector sees coarse features only. Most modern systems span several decades, but very fast scan rates or very slow integrations can hit bandwidth limits and should be checked.
 
-The four questions hand you the joint constraint surface. A detector designer can optimize any one — bigger solid angle, wider energy range, faster bandwidth, more flexible take-off geometry — but rarely all four. Modern multi-detector chambers solve the problem by mounting half a dozen specialized detectors and letting the operator switch.
-
-### Worked example: take-off angle and tilted-specimen geometry
-
-**Problem.** An E-T detector is mounted at 30° take-off angle for a flat specimen at 0° tilt. The operator tilts the specimen 45° toward the detector. Estimate the new effective take-off angle.
-
-**Given.** Initial $\psi_0 = 30°$ relative to specimen surface. Specimen tilt 45°.
-
-**Reasoning.** Take-off angle is measured from the *specimen surface* to the line to the detector. When the specimen tilts toward the detector by 45°, the angle between the surface (now tilted up toward the detector) and the line to the detector decreases by 45°.
-
-If the unrotated geometry placed the detector at 30° above the original surface, tilting the surface up toward the detector by 45° rotates the surface so that the line to the detector now sits at $30° - 45° = -15°$ relative to the new surface — meaning the detector is now *below* the new surface plane. Practically: the detector loses direct line of sight to the surface, the take-off angle has gone negative, and SE collection efficiency drops sharply. The image goes dark.
-
-**Sanity check.** This matches operational experience: tilting too aggressively toward an asymmetric detector causes the image to dim. Operators learn to either tilt away from or rotate around the detector axis.
-
-**General lesson.** Take-off angle changes with specimen tilt. The detector geometry that the manufacturer optimized for flat-specimen 0° tilt may not be the right geometry for 45°-tilted samples. For aggressively tilted work — fracture surfaces, cross-sections, geological thin sections — the operator picks detectors whose take-off angle survives the tilt.
-
-### What Goes Wrong Here
-
-Detector geometry confusion is common when readers try to interpret SEM images without knowing the detector position:
-
-- **Side-lit images read as top-lit.** An E-T at 30° take-off lights the image from the side; the eye reads the shadow pattern as direction-of-light, sometimes mislocating which way is "up."
-- **Mistaking a tilt-induced dimming for a charging artifact.** When the specimen tilt drops below the detector take-off angle, the image goes dark because of geometry, not because of beam-specimen problems. Diagnostic: rotate the stage; the dimming should follow.
-- **Ignoring solid angle when comparing detectors.** A detector with large $\Omega$ at short working distance can't be matched by the same detector with the same kV at long working distance, because $\Omega$ shrinks as $r^2$.
+<!-- → [TABLE: four-question framework applied to each detector type — rows: Everhart-Thornley, through-the-lens/in-lens, YAG scintillator BSE, semiconductor BSE; columns: take-off angle (typical), solid angle (relative: small/medium/large), energy response (SE / BSE / both), bandwidth (relative), primary information content; student should be able to use this as a reference to predict detector behavior for an unfamiliar specimen] -->
 
 ---
 
-## 3. Secondary-electron detectors: Everhart–Thornley and the through-the-lens family
+The Everhart-Thornley detector, designed in 1960, is the solution to the SE detection problem. It is worth understanding mechanically, because its design reveals exactly what the problem required.
 
-The question this section answers is: how do we collect 5 eV electrons that cannot make it to a scintillator on their own?
+Secondary electrons leave the specimen with energies too low to excite a scintillator. The solution is to accelerate them first. A **Faraday cage** — a wire mesh — sits in front of the scintillator and is biased at +300 volts relative to ground. This positive bias attracts low-energy SEs from a wide solid angle around the specimen, pulling them in from nearly the full hemisphere even though the detector is mounted off to the side of the chamber. Once inside the cage, the SEs encounter a second accelerating field: the scintillator face itself is biased at +10 kilovolts, which drives the incoming electrons into the phosphor with enough energy to generate light. The light travels through a glass light guide to a photomultiplier tube, where it triggers an avalanche of amplification — a factor of $10^5$ or more. The final output is a voltage proportional to the number of electrons that entered the cage.
 
-### Mechanism — accelerate, scintillate, multiply
+Five components — cage, scintillator, light guide, PMT, amplifier — to solve one problem: how do you measure a 5 eV electron?
 
-The defining problem of an SE detector is energy. Secondary electrons leave the specimen with at most 50 eV — typically less than 10. That is not enough to excite the phosphor on a scintillator. Not enough to drive a photodiode. Not enough, by itself, to be measured.
+The +10 kV on the scintillator would normally destroy the primary beam if it extended into the column, bending electron trajectories unpredictably. The Faraday cage prevents this: the +300 V cage potential perturbs the primary beam negligibly, while shielding the beam from the high-voltage scintillator field. The cage is simultaneously the collector, the shield, and the accelerator — three functions in one wire mesh.
 
-The **Everhart–Thornley detector**, developed by Everhart and Thornley in 1960, solves this with a two-stage acceleration. A **Faraday cage** sits in front of a scintillator; the cage is biased at +300 V relative to ground. The biased cage attracts SEs from a wide solid angle around the specimen — roughly hemispherical, even with the detector mounted asymmetrically off the optic axis. SEs that enter the cage are then accelerated by an additional +10 kV applied to the aluminum-coated front face of the **scintillator**, a phosphor (yttrium aluminum garnet doped with cerium, or similar) that emits light when struck by energetic electrons. The light passes through a **light guide** to a **photomultiplier tube (PMT)**, where it strikes a photocathode, releases photoelectrons, and triggers an avalanche amplification of $10^5$ or more. The output is a voltage proportional to the number of electrons that hit the cage.
+<!-- → [IMAGE: annotated cross-section schematic of the Everhart-Thornley detector — labeled components: Faraday cage (with +300 V label), scintillator face (+10 kV label), light guide, photomultiplier tube, amplifier output; arrows showing SE trajectory from specimen surface into cage and onward to scintillator; primary beam trajectory shown passing the cage undisturbed; caption should explain the dual-voltage design and why the cage potential is low while the scintillator potential is high] -->
 
-That is the whole detector: collector, scintillator, light guide, PMT, amplifier. Five components, one job — turn a 5 eV SE into a measurable signal.
+What does the E-T detector actually collect? The answer is messier than the name "secondary electron detector" implies. The +300 V bias attracts SEs broadly, but the E-T detector also intercepts backscattered electrons that happen to enter its solid angle, and it collects a population called SE3 — secondary electrons generated where BSEs strike the chamber walls, the polepiece, and other surfaces at some distance from the specimen. SE3 electrons carry no spatial information about the specimen; they contribute a uniform background. A detailed accounting of an E-T signal on a typical metal specimen shows roughly that SE1 (generated within the primary beam footprint, the high-resolution surface signal) accounts for perhaps a third of the total; SE2 (generated where BSEs exit the specimen, BSE-modulated and lower in lateral resolution) for another fraction; SE3 for a substantial uniform pedestal; and direct BSE interception for a smaller compositional contribution. The E-T is called an SE detector in the same spirit that a city is called quiet: mostly, under typical conditions, but not reliably.
 
-The +10 kV scintillator bias is high enough to disturb the primary beam if uncontrolled. The fix is the **Faraday cage**, which encloses the scintillator and shields the column from the high voltage; the much lower +300 V cage potential perturbs the beam negligibly. The architecture is a delicate compromise: enough field to attract and accelerate SEs, not enough to deflect the primary beam.
-
-**Position.** The rigid light guide forces the E-T detector to a fixed position in the chamber, typically at 30° take-off angle relative to a 0°-tilt flat specimen. Take-off angle and collection efficiency depend on tilt, as Section 2's worked example showed.
-
-**What it actually collects.** The week-4 source enumerates four populations the E-T detector picks up:
-
-1. **SE1** — generated within the beam entrance footprint. The high-resolution surface signal.
-2. **SE2** — generated where BSEs exit the specimen. BSE-modulated, lower lateral resolution.
-3. **SE3** — generated where BSEs strike the chamber walls or polepiece. Spatially uninformative; uniform pedestal.
-4. **Direct BSE** that happen to enter the scintillator solid angle. Carry Z-contrast.
-
-The total E-T signal is roughly an SE-dominated mix with significant BSE-modulated contributions. SE1 alone might be a third or less of the total. This is why the E-T detector is described as "an SE detector" while honest treatments add "with BSE contamination."
-
-### Through-the-lens (TTL) and in-lens detectors
-
-Modern field-emission SEMs with strong objective fields — snorkel and immersion lenses (Chapter 3) — exploit the lens field itself. SE1 and SE2, generated near the specimen, are captured by the strong axial $B$ field and spiral up *through the lens* along magnetic field lines. The SE3 signal, generated far from the specimen, mostly cannot make it back into the lens. After emerging from the top of the objective, the SE1+SE2 stream is attracted to an E-T-style detector mounted above. The same scintillator-PMT physics, but a different collection geometry.
-
-**The advantage.** Near-pure SE1+SE2, with most direct BSE and most SE3 excluded. Image quality, especially at low kV, is dramatically better than conventional E-T. This is why FE-SEMs with TTL/in-lens detectors are the high-resolution surface-imaging instruments of choice.
-
-**The catch.** TTL works only when the lens is producing strong field at the specimen — that is, at short working distance. At long working distances the SE collection drops sharply. Also, the SE2 component is still BSE-modulated; the TTL is closer to a pure-SE detector than the E-T but is not perfectly pure.
-
-### Trade-off
-
-E-T detectors give you a detector that works at any working distance, on any column, with a robust signal. They mix populations.
-TTL/in-lens detectors give you a near-pure SE1+SE2 image at the cost of working-distance constraint and instrument-specific availability.
-
-For most labs: use the in-lens for low-kV high-resolution work, the E-T for everything else.
-
-### Worked example: counting E-T signal contributions
-
-**Problem.** A polished sample at 20 kV, with $\eta = 0.3$, $\delta = 0.15$ for SE1+SE2. The E-T detector geometry collects all BSEs entering its solid angle (estimate 5% of the half-sphere) plus essentially all SEs from any direction. A reasonable estimate of SE3 yield is $\delta_{\text{SE3}} \approx 0.1$ on an alloy specimen. What fraction of the E-T signal is from SE1+SE2 versus SE3 versus direct BSE?
-
-**Given.** $\eta = 0.3$, $\delta_{\text{SE1+2}} = 0.15$, $\delta_{\text{SE3}} = 0.1$, BSE collection fraction = 0.05.
-
-**Reasoning.** Per beam electron, the E-T collects approximately:
-
-- SE1+SE2: 0.15 (assuming high collection efficiency)
-- SE3: 0.10 (ditto)
-- Direct BSE: 0.30 × 0.05 = 0.015
-
-Total: 0.265. Of that, SE1+SE2 is about 57%, SE3 is about 38%, direct BSE is about 6%.
-
-**Sanity check.** Standard textbook accounts attribute roughly half the E-T signal to true SE1+SE2 and the other half to BSE-modulated contributions (SE3 + direct BSE). Our estimate gives 57%/44% — close to that breakdown.
-
-**General lesson.** Even on a "pure SE" detector, more than a third of the signal can come from BSE-driven processes. The high-resolution component (SE1) is a fraction of the SE1+SE2 number; on a well-collimated detector this might be 20% of the total signal. Hence the appeal of TTL.
-
-### What Goes Wrong Here
-
-- **Edge brightening on E-T images.** Thin edges, fibers, and small particles look brighter than they should because SE escape from edges is enhanced — escape paths are shorter for SEs generated near a steep surface gradient. This is a *real signal*, not a detector artifact, but it can mislead a quantitative size measurement. Recognition: thin features look "over-exposed" relative to the bulk material.
-- **In-lens distortion at long WD.** TTL detectors lose efficiency rapidly when the working distance exceeds the design point. Image suddenly dims and grows noisy.
-- **Charging amplified by E-T sensitivity.** The +300 V Faraday-cage bias attracts not just SEs but also any low-energy electrons emitted by a charging surface. A charged region can generate a parasitic signal completely decoupled from the primary beam impact point. Recognition: bright spots that move when the charge redistributes.
+This contamination matters when resolution matters. If SE3 accounts for thirty or forty percent of the total signal, and SE3 carries no spatial information, then a proportional fraction of the image's contrast is background noise smeared uniformly across the frame. The image looks fine at low magnification. At high resolution, the SE3 pedestal limits how much contrast can be extracted from SE1.
 
 ---
 
-## 4. Backscatter detectors: scintillator and semiconductor
+The solution is through-the-lens detection. In a field-emission SEM with a strong objective lens — the immersion or snorkel geometries described in Chapter 3 — the magnetic field of the objective lens extends down to the specimen and captures secondary electrons generated near the beam impact point. SE1 and SE2 spiral upward along the magnetic field lines, pass through the objective lens, and emerge at the top of the column where a conventional E-T-style detector intercepts them. SE3, generated far from the specimen on chamber walls and polepieces, cannot make it back into the lens field from those distances and is mostly excluded. Direct BSEs, traveling in straight lines, are not captured by the spiral motion and pass through the lens without entering the detector.
 
-The question this section answers is: how do we measure the high-energy BSE signal that an E-T mostly throws away, and what does the resulting image actually show?
+The result is a near-pure SE1+SE2 signal. The BSE contamination is suppressed. The SE3 pedestal is suppressed. The image contrast comes predominantly from genuine surface information close to the beam impact point. This is why field-emission SEMs with in-lens detection produce qualitatively sharper images at low voltage than conventional SEMs with side-mounted E-T detectors — it is not only the smaller probe, but the purer signal.
 
-### Mechanism — scintillator and semiconductor, two physics, one signal
-
-BSEs leave the specimen with most of the beam energy. They do not need acceleration. They can directly excite a scintillator or a semiconductor.
-
-**YAG scintillator BSE detector.** A crystal of yttrium aluminum garnet, $\text{Y}_3\text{Al}_5\text{O}_{12}$ (etymology: garnet = the gem; "yttrium aluminum" tells you the structure type), doped with a small concentration of cerium that does the actual light emission. The crystal sits below the objective, often as an annulus around the optic axis. BSEs strike the crystal directly; the cerium ions emit visible photons; a light guide carries the photons to a PMT, which amplifies them into a signal. Because BSEs are energetic (5–25 keV typical), no post-specimen acceleration is needed — and that means no high voltage near the specimen, no Faraday cage, no beam disturbance. The detector can sit very close to the specimen.
-
-**Semiconductor BSE detector (silicon diode).** A thin annular silicon diode, mounted under the objective. When a BSE strikes the silicon, it creates electron-hole pairs at a rate of one pair per 3.6 eV of deposited energy. A 15 keV BSE creates about 4000 free electrons in the silicon — a measurable signal even before amplification. Silicon diodes are thin, mechanically simple, easy to segment into multiple sectors (typically four quadrants A, B, C, D, or just A and B for sum-difference work), and can sit very close to the specimen for large solid angle.
-
-Both detectors sense BSEs only. SEs lack the energy to excite the scintillator or generate enough e-h pairs to register above noise — the SEs effectively pass through invisible to the BSE detector. This automatic energy filtering is exactly what we want for clean Z-contrast imaging.
-
-### Annular geometry, sum and difference modes
-
-A segmented annular BSE detector mounts above the specimen, surrounding the beam axis, with the segments oriented so that each catches BSEs leaving in roughly opposite directions. With two segments (A and B), the operator can read out:
-
-- **Sum mode (A + B).** Total BSE signal. Composition-dominated; topographic effects mostly cancel because A and B catch roughly symmetric tilt-driven asymmetries from opposite directions.
-- **Difference mode (A − B).** The asymmetry between A and B. Topography-dominated; composition cancels because both segments see the same Z-driven yield. Tilted features show up brightly in difference; flat composition variations disappear.
-
-The two modes from one detector give you, in one acquisition, both a Z-contrast image and a topographic image — without changing the column setup.
-
-### Trade-off
-
-**Scintillator vs. semiconductor.** Scintillators are robust, fast (high bandwidth), energy-linear, and can be made large. Semiconductors are thin, easily segmented, allow sum-difference work, and have higher energy resolution but slower bandwidth (the detector capacitance limits frequency response). Most modern SEMs offer both; the choice between them is mostly operator preference and historical instrument design.
-
-**BSE vs. SE.** BSE optimizes for compositional sensitivity and depth penetration; SE optimizes for surface specificity and lateral resolution. The same specimen always looks different through the two. Smart imaging acquires both simultaneously.
-
-### Worked example: BSE signal from a semiconductor diode
-
-**Problem.** A 20 kV beam strikes a copper sample; the BSE coefficient is $\eta = 0.30$. The semiconductor BSE detector has a solid angle of 1.0 sr (a large, low-mounted annulus). The beam current is 1 nA. Estimate the average BSE signal current at the diode.
-
-**Given.** $E_0 = 20$ keV, $\eta = 0.3$, $\Omega_{\text{det}} = 1.0$ sr, $i_b = 1$ nA. BSE angular distribution roughly cosine over 2π sr (hemispheric).
-
-**Reasoning.** BSE current leaving the specimen: $i_{\text{BSE}} = \eta i_b = 0.30 \times 1 \text{ nA} = 0.30 \text{ nA}$. The fraction collected by the detector solid angle is $\Omega_{\text{det}} / (2\pi) \approx 0.16$, so collected BSE current ≈ 0.30 × 0.16 = 0.048 nA. Average BSE energy is roughly 0.7–0.9 of $E_0$; call it 14 keV. Each BSE produces 14,000 / 3.6 ≈ 3,900 e-h pairs in the diode. The diode current is then roughly $i_{\text{BSE}} \times (3900) = 0.048 \text{ nA} \times 3900 = 187 \text{ nA}$ — substantially amplified by the e-h pair gain in silicon, before any external amplification.
-
-**Sanity check.** Real semiconductor BSE detector signals are tens to hundreds of nA at typical operating points, well above the noise floor of routine amplifiers. Match.
-
-**General lesson.** The semiconductor diode has internal "gain" — about 4000× per BSE in silicon, given by the ratio of beam-electron energy to e-h pair creation energy. Even modest collection efficiency gives a robust signal because of this multiplication.
-
-### What Goes Wrong Here
-
-- **Topographic features misread as compositional in BSE.** A facet tilted toward the BSE detector is brighter in BSE *because of geometry*, not composition. Difference-mode imaging or stage rotation can disambiguate.
-- **Annular detector blocking other detectors.** A large under-the-objective BSE detector occludes the EDS detector or limits short-working-distance SE work. Modern instruments mount BSE on a retractable mechanism for this reason.
-- **BSE detector saturation at high beam current.** Scintillators can saturate and become non-linear; semiconductor diodes can hit thermal limits. Recognition: bright regions of the image cap at maximum gray rather than getting brighter.
-- **The "buried bright spot" problem from Chapter 6.** A subsurface inclusion shows as a bright spot in BSE that is *not* on the surface. Diagnostic: drop kV; if the spot fades, it was buried. If it stays, it's at the surface.
+The constraint is working distance. The spiraling capture mechanism requires the lens field to reach the specimen. As working distance increases past the design point of the lens, the field at the specimen weakens, SE collection efficiency drops, and the image goes noisy. A TTL detector at twice its design working distance may be no better than a side-mounted E-T. Operators who push working distance for mechanical clearance — to tilt the specimen, to fit a large stage, to clear a sample with tall features — give up in-lens performance when they do it.
 
 ---
 
-## 5. Synthesis: detector choice as a deliberate operator move
+Backscattered electrons need no acceleration. They leave the specimen with beam-level energies and can drive a detector directly.
 
-Every SEM image you produce is a choice of which detector to read. The choice is consequential. Same specimen, four detectors, four different images.
+The **YAG scintillator BSE detector** is a crystal of yttrium aluminum garnet, doped with cerium, typically mounted as an annulus around the optic axis directly below the objective. BSEs strike the crystal, excite the cerium dopant, and the crystal emits light — the same scintillator-PMT chain as the E-T, minus the acceleration stage. Because no Faraday cage is needed, no bias field disturbs the primary beam. The detector can sit close to the specimen for a large solid angle.
 
-**A polished alloy with phase variation and surface scratches**, imaged at 20 kV:
-- E-T (SE-dominated): scratches and surface oxide visible; phases nearly invisible.
-- TTL (pure SE1+SE2): scratches sharper; phases still mostly invisible.
-- BSE scintillator (sum mode if segmented): phase mosaic dominant; scratches faint.
-- BSE semiconductor (difference mode): scratches and steep slopes visible; phases largely cancelled.
+The **semiconductor BSE detector** is a thin annular silicon diode in the same position. When a BSE strikes silicon, it deposits energy and creates electron-hole pairs at a rate of approximately one pair per 3.6 eV. A 15 keV BSE generates roughly 4,000 free electron-hole pairs in the silicon — a detectable current even before external amplification. The silicon diode is essentially doing its own first-stage gain internally, which gives it good signal levels even at low beam current.
 
-**A 50 nm gold nanoparticle on carbon**, imaged at 5 kV on FE-SEM:
-- E-T at 5 kV: charging artifacts on the carbon, particles visible but noisy.
-- In-lens at 5 kV: high-resolution surface morphology of particle. Best image.
-- BSE at 5 kV: low signal (small interaction volume, low BSE yield), particles barely above noise.
+What both detectors see is BSEs only. Secondary electrons arrive at these detectors with energies below 50 eV; the scintillator threshold is far above that, and the semiconductor signal from 50 eV is fewer than 15 electron-hole pairs — invisible above noise. The energy response function does the filtering automatically. No bias voltage selection, no software gate — the detector physics self-selects for BSEs by construction.
 
-**A buried tungsten interconnect under 200 nm SiO₂** at 25 kV:
-- E-T: no signal. SE escape depth is too short to reach back through the oxide.
-- BSE semiconductor: clear bright tungsten lines visible through the oxide. The right tool.
+The BSE image is a map of BSE coefficient $\eta$, the fraction of primary electrons that backscatter. And $\eta$ depends strongly on atomic number: light elements like carbon ($Z = 6$) have $\eta \approx 0.05$; heavy elements like gold ($Z = 79$) have $\eta \approx 0.50$. A ten-to-one variation across the periodic table translates directly into a ten-to-one variation in BSE image brightness, which is why the Ni-Al alloy that looked uniformly gray through the E-T became a four-tone mosaic through the BSE detector. The phases differ in mean atomic number; the BSE image encodes that difference faithfully.
 
-**A thin biological section with metal-shadowed contrast**, prepared per Chapter 20, imaged at 8 kV:
-- E-T: shadow-cast topography clear; the metal shadow does the contrast work.
-- BSE: would resolve metal versus tissue but loses much of the shadow's directional information.
+Topography still contributes a secondary effect in BSE images. A tilted surface presents a different geometry to the incoming beam and a different angular distribution of backscattered electrons, which changes the fraction intercepted by the detector. For qualitative work this is manageable. For quantitative composition mapping it must be corrected or geometrically suppressed.
 
-**Reading any SEM image** means asking: which detector? At what kV? Tilt? Working distance? The methods sentence "*all images acquired in SE mode at 5 kV with WD = 6 mm using the in-lens detector*" tells you, in advance, what to expect to see.
+The suppression method is elegant. A segmented annular BSE detector — four quadrants, or simply two halves A and B — catches BSEs in opposing directions. Reading the **sum** (A + B) gives total BSE yield, which is composition-dominated: topographic asymmetries cancel because whatever geometrical brightening appears in segment A appears as a corresponding dimming in segment B. Reading the **difference** (A − B) gives the asymmetry between the two halves, which is topography-dominated: compositional variations contribute equally to both sides and cancel in the subtraction. One scan, one detector, two images. Experienced operators acquire both routinely.
 
-The wonder is that the detector, not the physics of the beam, is what lets you see one thing or another. A specimen that is "a flat metal" to one detector is "a four-phase mosaic" to another. An SEM is not just a microscope; it is a chamber full of specialized eyes, each tuned to a different part of the spectrum of beam-specimen interaction. The operator who chooses well is reading from many books at once.
+<!-- → [IMAGE: three-panel comparison on the same rough-surfaced two-phase alloy — panel 1: SE image showing topographic relief; panel 2: segmented BSE sum mode (A+B) showing composition-dominated contrast with topography suppressed; panel 3: segmented BSE difference mode (A-B) showing topography-dominated contrast with composition cancelled; captions name the mode and what cancels in each; student should see the algebraic logic of sum vs. difference made visually concrete] -->
 
 ---
 
-## 6. Pre-lab Checklist (Lab 7 — detector comparison)
+The practical guidance distills to a simple discipline: before interpreting any SEM image, name the detector.
 
-**By the end of this chapter, you should be able to:**
+An SEM image labeled only "SEM micrograph" is ambiguous in the same way that a scientific measurement labeled only "signal" is ambiguous. Which signal? From which detector? The information content differs fundamentally by detector, and misidentification leads to misinterpretation. A BSE compositional bright spot read as a surface protrusion; a topographic shadow in an E-T image read as a phase boundary; an SE3-dominated image read as a high-resolution surface map — each is a real failure mode, and each follows from forgetting which detector produced the image.
 
-- Predict the qualitative difference between SE and BSE images of the same specimen.
-- Recognize edge-brightening, side-lighting, and topographic-vs-compositional contrast from a given detector.
-- Switch between sum-mode and difference-mode on a segmented BSE detector and predict what each will reveal.
+The discipline is simple in principle: always read the methods line. *SE mode, 5 kV, in-lens detector, WD = 4 mm* tells you the signal is near-pure SE1+SE2, that the interaction volume is shallow, that depth-of-field will be large, and that compositional contrast will be weak. *BSE detector, 20 kV, sum mode, WD = 8 mm* tells you composition is the dominant contrast and topography is suppressed. The methods line is not a formality. It is the key to reading the image.
 
-**Bring to lab:**
+For producing images, the discipline runs in the other direction: start with the question, derive the detector. A question about surface morphology at nanometer scale routes to the in-lens at low kV. A question about compositional phase distribution routes to the BSE annulus in sum mode. A question about both simultaneously routes to a simultaneous SE + BSE acquisition, which most modern instruments support in one scan pass. A question about whether a bright feature is topographic or compositional routes to BSE difference mode.
 
-- This chapter, especially Section 5.
-- A specimen with at least one feature that should appear differently in SE vs BSE (a polished multi-phase alloy, a coated heterogeneous polymer, a heavy-metal-stained biological section).
-
-**Expect on the floor:**
-
-- A demonstration of the same specimen imaged in SE, BSE-sum, and BSE-difference modes.
-- A working-distance scan on a TTL-equipped FE-SEM, watching image quality degrade as WD exceeds the design point.
-- A first attempt at sum-difference acquisition on a real specimen, where you identify which features come from composition and which from topography.
-
-### Hazards and Safe Practice
-
-The hazards specific to detector hardware:
-
-- **High voltage (+10 kV) at the E-T scintillator.** Inside the chamber, behind the Faraday cage. Modern instruments have interlocks; do not defeat them. Service work on the detector wiring is for trained personnel only.
-- **Mechanical handling of detectors.** BSE detectors mount on retractable arms; insert and retract slowly. A poorly secured BSE detector can drop into the chamber and damage the polepiece. Two-handed handling, slow motion.
-- **Liquid-nitrogen-cooled detectors** (some EDS detectors, certain CCD/CMOS direct-detection cameras in TEM). Cryogenic burn risk and asphyxiation risk in confined spaces. Cross-reference Chapter 9 for EDS detector cooling specifics.
-
-Cross-reference: **Appendix A** for the comprehensive treatment.
+<!-- → [INFOGRAPHIC: decision tree for detector selection — root: "What does your question ask?"; branch 1: surface morphology, nanometer scale → in-lens / TTL, low kV, short WD; branch 2: surface morphology, any WD / large sample → Everhart-Thornley; branch 3: compositional phase mapping → BSE annular, sum mode, 15–25 kV; branch 4: topography of rough surface with composition suppressed → BSE difference mode; branch 5: both composition and topography simultaneously → simultaneous SE + BSE acquisition; branch 6: elemental identity → EDS (Chapter 9); terminal nodes name the detector and key operating condition] -->
 
 ---
 
-## 7. Quick-Reference Table
+The feature of all this that I find most striking is how much information lives in the same specimen, invisible until the right detector makes it visible. The four-phase alloy was always four phases. The BSE detector did not create the phase boundaries; it revealed them by measuring a physical quantity — BSE yield — that the E-T was insensitive to. The specimen carries many signals simultaneously. The column delivers them all at once. The detectors are the filters that let you read one signal at a time, or in combinations, depending on what you need to know.
 
-| Detector | Signal | Energy range collected | Geometry | Information |
-|---|---|---|---|---|
-| Everhart–Thornley (E-T) | mostly SE; some BSE | wide (300 V to 10 kV acc.) | side-mounted, 30° take-off typical | surface morphology + side-lighting |
-| Through-the-lens / in-lens | SE1+SE2 | low-energy SE | through objective | high-res surface; FE-SEM only; short WD |
-| YAG scintillator BSE | BSE | > a few keV | under objective, often annular | Z-contrast, near-specimen mount |
-| Semiconductor (Si) BSE | BSE | > a few keV | annular under objective | Z-contrast; segmented sum/diff |
-| EDS (preview, full Ch. 9) | characteristic X-rays | 0.05–30 keV | side-mounted; 35° take-off typical | elemental composition |
-| Other | cathodoluminescence, EBIC, EBSD | various | various | specialized — see Chapter 25 |
-
-| Operating regime | Best detector |
-|---|---|
-| Low-kV high-resolution surface | TTL / in-lens |
-| Conventional surface, any WD | E-T |
-| Composition mapping | BSE annular |
-| Topography of rough surface at low magnification | E-T or BSE difference mode |
-| Buried subsurface feature | BSE at high kV |
+The operator who understands this is not just running the instrument. They are choosing which physical quantity to measure, knowing what that choice reveals and what it hides. Chapter 8 will show how those choices interact with specimen preparation — how the coating you apply, the fixation protocol you use, and the section thickness you cut all interact with the detector physics you have just learned. And Chapter 9 opens the third major detector family: energy-dispersive spectroscopy, which makes the characteristic X-ray signal legible as elemental identity. The interaction volume produces SE, BSE, and X-rays simultaneously. Each has its detector, its resolution, its artifacts. This chapter gave you the first two.
 
 ---
 
-## 8. Exercises
+## Exercises
 
 ### Warm-up
 
-**Exercise 7.1 (LO: distinguish detectors).**
-For each of the following, name the detector you would choose: (a) surface morphology of a fungal spore, (b) buried tungsten lines under silicon dioxide, (c) phase distribution on a polished steel section, (d) high-resolution image of a 5 nm gold particle on carbon. Difficulty: easy.
+**7.1** — Name the four framework questions used to characterize any SEM detector. For each, write one sentence stating what it controls about the image. *(Tests: four-question framework recall. Difficulty: easy.)*
 
-**Exercise 7.2 (LO: ask the four questions).**
-For an E-T detector mounted at 30° take-off angle with an aperture diameter of 5 mm at a working distance of 10 mm, estimate the solid angle. Difficulty: easy.
+**7.2** — An E-T detector is mounted at 30° take-off angle. A specimen is tilted 35° toward the detector. Predict qualitatively what happens to the collected SE signal and explain why in terms of take-off angle geometry. *(Tests: take-off angle and tilt interaction. Difficulty: easy.)*
 
-**Exercise 7.3 (LO: name the artifact).**
-You see an annular BSE image where slopes facing the detector are bright and slopes facing away are dark, on a uniform-composition surface. What is happening? Which mode would suppress the effect? Difficulty: easy.
+**7.3** — You are looking at a BSE image and see a bright region on what appears to be a flat, polished surface. Give two distinct physical explanations for the brightness — one compositional, one topographic — and state one additional measurement that would distinguish between them. *(Tests: BSE contrast mechanisms. Difficulty: easy.)*
 
 ### Application
 
-**Exercise 7.4 (LO: predict E-T signal mix).**
-On a polished aluminum surface at 20 kV with $\eta = 0.16$, $\delta_{\text{SE1+2}} = 0.20$, $\delta_{\text{SE3}} = 0.07$, BSE collection 5%, estimate the fraction of the E-T signal from each population. Difficulty: medium.
+**7.4** — An E-T detector has a face area of 2 cm² and is mounted 15 mm from the beam impact point. A second session moves the working distance to 25 mm with the detector position fixed relative to the column. Calculate the solid angle at each working distance and find the ratio of collected signal between the two sessions, assuming all else equal. *(Tests: solid angle calculation and $1/r^2$ scaling. Difficulty: medium.)*
 
-**Exercise 7.5 (LO: choose detector under constraints).**
-You need high-resolution surface imaging at 1.5 kV on an insulating polymer. The available detectors are E-T (working at all WDs) and TTL (working only at WD < 5 mm). The chamber requires WD = 8 mm to fit your sample stage. Which detector and why? What change to the experiment would let you use the other detector? Difficulty: medium.
+**7.5** — A field-emission SEM has an in-lens detector optimized for WD = 4 mm and an E-T detector that works at any WD. A researcher needs to image a biological specimen on a stub with tall features requiring WD = 12 mm. Which detector is appropriate and why? What would the researcher sacrifice by using the other detector at this WD? *(Tests: TTL working-distance constraint vs. E-T flexibility. Difficulty: medium.)*
 
-**Exercise 7.6 (LO: interpret BSE topography).**
-A BSE image at 25 kV shows a uniform alloy with bright "stripes" that change direction when the stage is rotated. Compositional variation, topographic effect, or both? Justify. Difficulty: medium.
+**7.6** — You are imaging a polished steel alloy with a segmented BSE detector. In sum mode (A+B), you see bright and dark regions correlating with two phases. In difference mode (A−B), you see bright ridges at grain boundaries and dark flat interiors. Interpret what each image shows physically, and explain why the grain-boundary ridges appear in difference mode but not sum mode. *(Tests: sum vs. difference mode contrast logic. Difficulty: medium.)*
 
-**Exercise 7.7 (LO: choose mode on segmented detector).**
-You have a segmented BSE detector with quadrants A, B, C, D, and you want to image a polished surface where you suspect both compositional phases and surface scratches. Describe an acquisition strategy that lets you produce both types of image from one scan. Difficulty: medium.
+**7.7** — A semiconductor BSE detector in silicon has a threshold of about 3.6 eV per electron-hole pair. The beam is at 10 kV and the BSE coefficient is $\eta = 0.25$. The beam current is 500 pA and the detector solid angle subtends 8% of the hemisphere. Estimate: (a) the BSE current incident on the detector, and (b) the e-h pair generation rate in the silicon per second. *(Tests: BSE signal current calculation and semiconductor gain. Difficulty: medium.)*
 
 ### Synthesis
 
-**Exercise 7.8 (LO: integrate detector choice with operating physics).**
-A graduate student is imaging cryo-fixed bacterial cells coated with 8 nm Pt. Goals: (a) high-resolution surface morphology of cell membrane; (b) confirm even Pt distribution across the surface; (c) detect any platinum-rich aggregates (>20 nm) that might be unevenly deposited Pt. For each, name the detector and the operating point (kV, WD, mode), and explain in one sentence each how the chapter's physics guided the choice. Difficulty: hard.
+**7.8** — A materials scientist is characterizing a thin-film solar cell stack: a glass substrate, a transparent conducting oxide layer (~200 nm), an absorber layer (~2 μm), and a back contact metal. She wants (a) a cross-section image resolving all four layers, (b) a map showing whether the absorber layer composition is uniform across a 100 μm width, and (c) identification of any metallic inclusions larger than ~50 nm in the absorber. For each goal, specify the detector, the approximate kV, and one artifact or limitation specific to that measurement on this specimen geometry. *(Tests: detector selection + operating conditions + artifact awareness integrated across a layered specimen. Difficulty: hard.)*
+
+**7.9** — A classmate argues that the E-T detector is always preferable to the in-lens because it works at any working distance and collects more total signal. Write a rebuttal of two to three paragraphs. Your argument must address: what populations contaminate the E-T signal and what those populations cost in image quality, under what specific conditions the in-lens is clearly superior, and what the operator actually gives up by using the in-lens at short working distance. *(Tests: nuanced comparison of E-T vs. TTL across signal purity, WD constraints, and resolution. Difficulty: hard.)*
 
 ### Challenge
 
-**Exercise 7.9 (open-ended).**
-Find a published SEM micrograph in your field that shows surface morphology and where the detector is identified. Read what kind of detector was used. Predict what the image would look like through the *other* detector type (SE → BSE or BSE → SE) and write a paragraph about what new information the swap would reveal. Difficulty: open-ended.
+**7.10** — Find a published SEM figure in your field where the detector type is specified in the methods section. Read the methods line carefully. Based on what this chapter taught about that detector, predict one feature or artifact you would expect to see in the image — and check whether it is there. Then write one sentence describing what you would expect to see differently if the authors had used the other major detector type (SE → BSE or BSE → SE) for the same specimen and operating conditions. *(Difficulty: open-ended.)*
 
 ---
 
-## 9. Summary
+ evidence that a single detector geometry could simultaneously deliver SE-quality surface resolution and BSE-quality Z-contrast on routine samples without any signal mixing or trade-off. Modern energy-discriminating annular detectors are pushing in this direction. The four constraints of Section 2 — take-off angle, solid angle, energy response, bandwidth — still form a joint constraint surface that no current instrument fully escapes.
 
-You walked into this chapter with one detector in mind. You walk out with a chamber-full and the operator's discipline to pick from them. You can name the four questions for any detector — take-off angle, solid angle, energy response, bandwidth — and read what the detector will do before pressing acquire. You can recognize the artifacts each one introduces, and you can use sum-difference acquisition on segmented detectors to extract both Z-contrast and topographic information from one scan.
-
-The one idea that matters most: the same specimen looks different through different detectors because each detector samples a different combination of populations from the interaction volume. Reading an SEM image without knowing the detector is reading an unsigned painting.
-
-The common mistake to watch for: assuming "SEM image" means SE image. Many published images are BSE, in-lens, or detector-sum composites; the visual style of each is recognizable with practice. Always check the detector caption.
-
-The Feynman test: explain to a labmate, without using the words "secondary" or "backscattered," why the same specimen at the same kV produces a different image through two different detectors.
-
----
-
-## 10. Connections Forward
-
-Chapter 8 covers the sample-preparation choices that decide which detector will produce a clean image; coating and mount choices interact with detector physics. Chapter 9 unpacks the EDS detector — a third major detector family, sensitive to characteristic X-rays for elemental analysis. Chapter 10 covers FIB-SEM dual-beam systems where the detector inventory expands further to include secondary-ion imaging detectors. The "What Goes Wrong" content of this chapter feeds directly into Chapter 23, where artifacts are synthesized comparatively across techniques.
-
-The question this chapter raised but did not answer: how does an EDS detector, which is sensitive to X-rays rather than electrons, integrate into the same chamber? Chapter 9 explains.
-
----
-
-**What would change my mind:** evidence that a single detector geometry could simultaneously deliver SE-quality surface resolution and BSE-quality Z-contrast on routine samples. Modern direct-detection cameras and energy-discriminating annular detectors are pushing in this direction; the trade-offs of Section 2 still hold for now.
-
-**Still puzzling:** the specific contributions of SE3 to the E-T signal vary substantially across instruments and chamber geometries, yet are rarely characterized for a specific SEM. The instrument-by-instrument variation makes precise SE1 measurements harder than they should be.
-
-**Tags:** `SEM-detectors`, `Everhart-Thornley`, `BSE`, `in-lens`, `image-formation`
-
----
-
-### Note to the professor
-
-`[verify]` markers in this chapter:
-- E-T accelerating potentials (+300 V cage, +10 kV scintillator) — source-stated.
-- 3.6 eV per e-h pair in Si — source-stated, standard.
-- Take-off-angle 30° as E-T default — instrument-dependent.
-- Solid-angle estimate of 1.0 sr in worked example.
-- "About 50%" SE-vs-BSE-modulated split for E-T as standard textbook account.
-
-Voice anchoring: anchored. Chapter-opening hook (the Ni-Al alloy mosaic appearing on the BSE switch). Capability-ending closer.
+**Still puzzling:** the SE3 contribution to E-T signal varies substantially across instruments and chamber geometries depending on chamber material, polepiece geometry, and nearby detector hardware, yet is almost never characterized for a specific instrument. The instrument-to-instrument variation means that "E-T detector" does not specify a measurement with precision — which makes quantitative comparison between SEMs using the same nominal detector type harder than it should be.
