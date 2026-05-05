@@ -1,289 +1,113 @@
 # Chapter 25 — Applications of Electron Microscopy in Nanomedicine, Materials Science, and Engineering
 
-## Title options
-
-1. **What EM Actually Does: Cross-Technique Applications**
-2. **From the Lab to the Paper: EM Applications Across Fields**
-3. **The Multi-Technique Workflows of Modern Microscopy**
-
-## TL;DR
-
-Real EM research lives at the cross-technique level — combining SEM, TEM, EDS, EELS, FIB, cryo-EM, and tomography to answer specific research questions in nanomedicine, materials science, and engineering. This chapter is application-focused: representative workflows showing how multiple techniques combine to characterize specimens that no single technique can fully describe.
+*No single technique tells the whole story. The story comes from the techniques in conversation.*
 
 ---
 
-## 1. Chapter Opening
+A pharmaceutical company has developed a new lipid nanoparticle formulation for mRNA vaccine delivery. The new formulation differs from the standard by one component — a single ionizable lipid designed to improve cellular uptake. Before clinical trials can begin, the regulatory filing requires structural characterization demonstrating that the particles are the right size, have intact bilayer organization, carry the mRNA in the expected location, and are free of unexpected impurities or aggregates from the manufacturing process.
 
-A pharmaceutical company's R&D team has developed a new lipid nanoparticle formulation for mRNA vaccine delivery. The formulation differs from the standard by a single lipid component — a new ionizable lipid intended to improve cellular uptake. Before clinical trials, the team needs structural characterization that demonstrates the new formulation produces particles of the expected size, with the expected bilayer organization, with the expected mRNA loading, and without unexpected impurities or aggregates. The characterization is the "before" data that supports the regulatory filing; without it, the trial cannot proceed.
+The team cannot answer all of those questions with one technique. Cryo-TEM shows individual particles at near-native state and resolves the bilayer. Cryo-tomography on single particles reveals where the mRNA sits inside. STEM-EDS confirms elemental homogeneity and the absence of trace contaminants. SEM at moderate magnification surveys enough particles for the size distribution to be statistically meaningful. Six weeks of work, four instruments, twelve figures in the regulatory submission. The formulation passes. Trials begin.
 
-The team designs a multi-technique workflow. Cryo-TEM at low dose confirms 100-nm particles with intact lipid bilayer. Cryo-tomography on a single particle resolves the mRNA distribution inside. STEM-EDS confirms elemental homogeneity and the absence of trace contamination from the manufacturing process. SEM at lower magnification surveys hundreds of particles for size distribution. The full characterization takes six weeks of work, four instruments, and produces a 12-figure regulatory submission. The new formulation passes; clinical trials begin.
+What the team assembled is not a collection of technique demonstrations. It is a structured argument in which each technique answers a specific question that the others cannot: cryo-TEM for bilayer structure, tomography for three-dimensional cargo location, EDS for composition, SEM for population statistics. Removing any one of them leaves a gap in the argument. Adding them together closes it.
 
-This is what cross-technique EM does in practice. By the end of this chapter you can read application-specific case studies and see how multiple techniques combine to characterize specimens in their full complexity.
+This is what cross-technique electron microscopy looks like in practice.
 
-### Learning objectives
-
-By the end of this chapter you can:
-
-- **Recognize** representative cross-technique workflows in nanomedicine, materials science, and engineering.
-- **Identify** which question each technique in a workflow specifically addresses.
-- **Read** publication-quality EM figures across techniques as part of a coherent argument.
-- **Design** a multi-technique workflow for a research question in your own field.
-
-### Prerequisites
-
-Chapters 4-22 (all techniques). Chapter 23 (artifacts). Chapter 24 (technique selection). This chapter is applications-focused; the reader is assumed to know the techniques.
-
-### Why this chapter matters
-
-Real research is cross-technique. Reading published EM papers, designing your own research, and interpreting other people's results all require fluency in multi-technique workflows. This chapter is the connection between the techniques as taught and the techniques as used.
+<!-- → [INFOGRAPHIC: lipid nanoparticle multi-technique workflow diagram — four panels connected by arrows showing the information each technique contributes: (1) SEM at moderate magnification → "population statistics: size, shape, aggregation" (hundreds of particles visible); (2) Cryo-TEM → "individual particle bilayer structure: intact bilayer, internal organization" (single particle cross-section); (3) Cryo-tomography → "3D cargo location: mRNA inside or at surface?" (3D rendered reconstruction); (4) STEM-EDS → "elemental homogeneity: trace contamination absent" (elemental map overlay); arrows between panels labeled "what TEM cannot show" / "what tomography adds to single image" / "what EDS adds to structural image"; student should see the information decomposition before reading the physics explanation] -->
 
 ---
 
-## 2. Nanomedicine: nanoparticles and drug delivery
+The logic of multi-technique workflows follows from the physics of each technique — specifically from what each technique can and cannot access.
 
-The question this section answers is: how do EM techniques combine to characterize nanoparticle drug-delivery systems?
+SEM, run at moderate magnification over a wide field, sees many particles in a single acquisition. A session that images 1,000 nanoparticles provides population statistics: size distribution, shape variation, aggregate fraction. What it cannot resolve is internal structure. The electron beam interacts with the surface and near-surface; it does not pass through. A nanoparticle 100 nanometers across is effectively a surface to the SEM beam.
 
-### Workflow archetype
+TEM, with its transmitted beam, sees through the particle. At 200 keV, the beam passes through a 100-nanometer lipid particle and the image is a projection of everything it encountered. The bilayer appears as two dark lines separated by a bright gap because the phospholipid headgroups stain darkly (high electron density) while the hydrophobic core stains lightly. This is the internal structure SEM cannot show. The trade is that TEM images one particle at a time at high magnification; getting population statistics from TEM alone would require hundreds of individual frames.
 
-Nanomedicine has standard characterization questions across many particle types:
+Cryo-tomography, which acquires a tilt series of projections and reconstructs a three-dimensional volume from them, adds the dimension that the single TEM image projects away. Where does the mRNA sit — in the lipid core, at the surface, distributed throughout the aqueous interior? A single TEM image cannot answer this because it collapses the three-dimensional distribution into a two-dimensional shadow. The tomographic reconstruction answers it, at the cost of dose and acquisition time.
 
-- **Size and shape distribution.** SEM survey, then TEM detail. Population statistics from SEM (1,000+ particles per session); single-particle resolution from TEM.
-- **Surface morphology and surface chemistry.** Low-kV FE-SEM (in-lens) for surface; EDS for surface composition.
-- **Internal structure.** Cryo-TEM for native hydrated state; conventional TEM with stained sections for detailed ultrastructure.
-- **Cargo distribution.** Cryo-tomography for 3D location of internal cargo (mRNA, drug, protein).
-- **Surface functionalization.** STEM-EDS for elemental confirmation of conjugates; HAADF for heavy-atom labels.
-- **Crystallinity (for inorganic cores).** SAED for phase identification; HRTEM for atomic structure.
+STEM-EDS adds the elemental dimension. The beam in STEM mode is focused to a sub-nanometer probe that scans across the particle; at each position, characteristic X-rays identify which elements are present and at what concentration. If the manufacturing process leaves trace heavy-metal contamination, EDS finds it. If the new lipid component distributes unevenly across the particle, the EDS map shows it. Neither the TEM image nor the SEM survey provides this information.
 
-### Worked case studies
+The pattern is the same across all the nanomedicine applications. Lipid nanoparticles, polymeric drug carriers, magnetic iron oxide contrast agents for MRI, gold nanoparticles for diagnostic assays — each has a set of characterization questions, and each question maps to a technique whose physics makes it the right tool. Size and shape at the population level: SEM. Internal structure: TEM. Three-dimensional structure: tomography. Elemental composition and distribution: EDS or EELS. Crystal phase of an inorganic core: selected-area electron diffraction. Atomic-scale interface structure: HRTEM or HAADF-STEM.
 
-**Lipid nanoparticles for mRNA delivery.** Cryo-TEM is the dominant technique. Workflow: vitrification (Ch. 21), low-dose imaging at 200 kV, cryo-tomography for mRNA localization, STEM-EDS for elemental purity. Recent regulatory filings for COVID mRNA vaccines included extensive cryo-TEM characterization [verify].
-
-**Polymeric nanoparticles for drug delivery.** TEM with conventional staining (uranyl acetate, lead citrate, Ch. 20) gives morphology of the polymer matrix and drug distribution. SEM at low kV for surface characterization without coating. EDS for drug-element confirmation when drug contains trace metals (e.g., platinum-based drugs).
-
-**Magnetic nanoparticles for MRI contrast.** TEM imaging of cores; HAADF-STEM for atomic-resolution Z-contrast (heavy iron oxide on light polymer matrix); SAED for phase confirmation (Fe₃O₄ vs Fe₂O₃ vs other iron oxides). Magnetic specimens require careful prep to avoid contaminating the column (Ch. 22).
-
-**Gold nanoparticles for diagnostics.** SEM and TEM at low kV; HRTEM for facet identification; HAADF for size distribution at sub-nanometer resolution. Gold's high Z makes HAADF particularly powerful.
-
-### What Goes Wrong Here
-
-Nanoparticle EM has specific challenges:
-- **Aggregation during prep.** Drying or coating concentrates particles. Recognition: clusters of >10 particles in close contact. Mitigation: lower particle concentration; cryo-TEM to image native dispersion.
-- **Beam damage on organic particles.** Polymer particles burn under sustained beam exposure. Mitigation: low-dose protocols.
-- **Selection bias in single-particle analysis.** Imaging a few "representative" particles may miss aggregation or polydispersity. Mitigation: large population statistics (200+ particles minimum).
+<!-- → [TABLE: nanomedicine characterization question-to-technique mapping — rows: characterization goal (size/shape population, internal structure, 3D cargo location, elemental composition, crystal phase, atomic interface); columns: technique, what physics makes it the right tool, key limitation; student should use this as a reference when designing characterization for new nanoparticle systems] -->
 
 ---
 
-## 3. Materials science: alloys, ceramics, semiconductors
+Materials science runs the same workflow logic with a different set of specimens and questions.
 
-The question this section answers is: how does EM characterize materials at the level of grains, defects, interfaces, and chemistry?
+A failure-analysis team receives a fractured turbine blade — the case that opened Chapter 4. The blade failed in service. The team needs to understand why. SEM at low magnification surveys the fracture surface and locates the initiation site: a region where the fracture morphology changed character, the fatigue striations converged, the surface showed unusual topography. That is the answer to "where." EDS at the suspicious region answers "what is there" — identifying whether an inclusion, a segregation, or a corrosion product started the crack. If the EDS points to a specific inclusion, FIB lift-out extracts a lamella from exactly that location: the specific inclusion at the crack initiation site, in cross-section, 80 nanometers thick and ready for TEM. The TEM then answers "what is its structure" — SAED identifies the crystallographic phase of the inclusion, HRTEM shows the lattice mismatch at the inclusion-matrix interface, BF diffraction contrast maps the dislocation density in the matrix adjacent to the inclusion. The conclusion: a titanium nitride inclusion with a specific orientation relationship to the nickel-base matrix, surrounded by a dislocation-dense zone that concentrated strain and initiated the fatigue crack.
 
-### Workflow archetype
+No single step in that sequence answers the question alone. The SEM found the location; the EDS found the composition; the FIB retrieved the lamella from the right place; the TEM resolved the structure. Each was load-bearing.
 
-Materials science has a distinct set of cross-technique workflows:
+<!-- → [INFOGRAPHIC: turbine blade failure analysis workflow — sequential four-panel flowchart: (1) SEM at low magnification showing fracture surface with fatigue striations; arrow pointing to "initiation zone" circled; label: "SEM: finds the where"; (2) EDS spectrum at the suspect inclusion; label: "EDS: finds the what"; (3) FIB lift-out schematic showing lamella extracted from the circled inclusion; label: "FIB: retrieves the site"; (4) BF TEM + SAED panel showing inclusion phase and dislocation density in matrix; label: "TEM: resolves the structure"; bottom: "conclusion: TiN inclusion + dislocation zone = fatigue initiation"; student should see the load-bearing role of each technique and why removing any step leaves a gap] -->
 
-- **Grain structure characterization.** EBSD in SEM for orientation maps; BF/DF in TEM for grain morphology; SAED for individual-grain identification.
-- **Defect characterization.** TEM diffraction contrast (BF, DF, two-beam) for dislocations; HRTEM for atomic structure of defects; STEM-EELS for chemistry near defects.
-- **Interface characterization.** FIB lamella + HRTEM for atomic structure of interfaces; HAADF for Z-contrast across the interface; EELS at each side for chemistry.
-- **Composition mapping.** SEM-EDS for μm-scale; TEM-EDS for nm-scale; STEM-EELS for atomic resolution and chemical-state.
-- **Phase identification.** SAED for primary identification; XRD (cross-technique) for bulk confirmation.
-- **Failure analysis.** SEM survey for fracture morphology; EDS for elemental products; FIB cross-section for failure site; TEM for microstructure at failure.
+The same workflow logic applies to catalyst characterization, where the question is how individual metal atoms or sub-nanometer clusters are distributed on a support surface. HAADF-STEM at atomic resolution images the heavy metal atoms as bright spots against the lighter support — the Z-contrast of HAADF (where image brightness scales roughly as $Z^2$) makes a single platinum atom on a carbon support visible. STEM-EELS at each atomic site identifies the oxidation state — whether the platinum is metallic, oxide, or in a specific coordination with the support. HRTEM on the support material resolves the zeolite framework or oxide lattice structure that determines how the catalyst is anchored. Tomography reconstructs the three-dimensional distribution of catalyst particles across the support's pore network — are the particles accessible to reactants, or buried in closed pores? The combination answers the structure-activity relationship question that no single technique could address.
 
-### Worked case studies
-
-**Failure analysis of a fractured turbine blade.** Workflow: SEM at low magnification to characterize fracture topography; EDS at suspect features (inclusions, segregations); FIB lift-out of a 50-nm lamella from the failure initiation site; TEM bright-field for dislocation structure; SAED for matrix and inclusion phase identification; HAADF for Z-contrast of inclusions. The result: a complete picture of how the failure initiated, propagated, and which microstructural features mattered.
-
-**Catalyst characterization.** Workflow: HAADF-STEM at atomic resolution to image individual metal atoms or clusters on the support; STEM-EDS or STEM-EELS for chemical-state confirmation; HRTEM for structure of the support (zeolite framework, oxide lattice); TEM tomography for 3D distribution of catalyst particles. The combination resolves single-atom catalysts in a way no single technique can.
-
-**Battery materials.** In-situ TEM (a specialized capability beyond this textbook's depth) for live observation of charge/discharge dynamics; STEM-EELS for chemical-state changes; HAADF for Li distribution mapping. Standard ex-situ workflows: TEM lamellae through battery interfaces; EDS for cathode-electrolyte chemistry; cryo-TEM for vitrified battery components.
-
-**Semiconductor device structure.** FIB lamella through specific transistors; HAADF-STEM for the multilayer device structure (silicon, oxides, metal contacts); STEM-EDS for layer composition and dopant maps; HRTEM for atomic-scale interface structure. The result: characterization that supports both fabrication-process improvement and failure analysis.
-
-### What Goes Wrong Here
-
-Materials EM has specific challenges:
-- **FIB-induced damage** on lamellae. Cleanup pass at low kV essential for HRTEM (Ch. 22).
-- **Drift during long acquisitions** at atomic resolution. Specimen settling time, drift correction.
-- **Beam-induced changes** in specific materials (zeolites burn, polymers melt). Low-dose protocols.
+Battery materials present yet another variant of the same logic. The cathode-electrolyte interface in a lithium-ion battery changes chemistry during cycling; understanding that change requires imaging the same interface before and after cycling, at multiple scales. FIB lamellae through the interface provide the cross-section for TEM. STEM-EELS across the lamella maps the lithium distribution and the transition-metal oxidation states on either side of the interface. HRTEM at the interface resolves the atomic structure of the interphase layer that forms during cycling. EDS identifies any elemental redistribution — manganese dissolution, for instance, which is a known failure mode for some cathode chemistries. The full characterization package supports both fundamental understanding and engineering decisions about cell design.
 
 ---
 
-## 4. Engineering: failure analysis, quality control, manufacturing
+Engineering applications compress this logic into a more time-constrained context. Failure analysis in an industrial lab runs SEM + EDS as a first pass: survey the fracture surface, identify compositional anomalies, locate the initiation zone. For most failure cases, that is sufficient. When it is not — when the failure mode requires knowing the defect structure at the atomic scale, or when the failure occurred inside a multilayer device rather than at the surface — FIB cross-section and TEM become necessary. The decision of how far down the technique chain to go is driven by what the question requires and how much time the analysis can consume.
 
-The question this section answers is: how do EM techniques support engineering decisions?
+Quality control is simpler: periodic SEM characterization of production samples, statistical measurement of grain size or surface roughness, EDS verification that composition is on-spec. The techniques here are the same as in research, but the question is narrower ("is this batch within tolerance?") and the answer needs to come in hours rather than months.
 
-### Workflow archetype
-
-Engineering EM is application-driven and time-sensitive:
-
-- **Failure analysis.** Quick SEM survey + EDS + FIB cross-section as needed. Goal: find the failure cause.
-- **Quality control.** Routine SEM imaging of production samples; statistical analysis of defects; EDS for contamination identification.
-- **Process development.** Sequential SEM and TEM imaging to characterize how a manufacturing change affected the product.
-- **Forensics.** SEM-EDS analysis of trace evidence (paint, fibers, gunshot residue, glass fragments). Often non-destructive (low-kV SEM with no coating preserves the sample for further analysis).
-
-### Worked case studies
-
-**Welding defect analysis.** Workflow: SEM at low magnification to find suspicious regions; EDS for chemical identification of inclusions; FIB cross-section through a specific weld defect; TEM bright-field for dislocation structure at the failure origin; SAED for inclusion phase identification.
-
-**Coating quality assessment.** Workflow: SEM cross-sectional imaging of the coating thickness; EDS depth profiling across the coating-substrate interface; for thin coatings, FIB lift-out + HAADF-STEM at atomic resolution.
-
-**Forensic trace analysis.** Workflow: SEM-EDS at low kV for non-destructive characterization; if needed, FIB lift-out + TEM at higher resolution. Maintains evidence chain.
-
-**Manufacturing process control.** Periodic SEM characterization of pilot-plant samples; quantitative measurement of grain size, defect density, or surface roughness; trending over time to detect process drift.
+Forensic analysis occupies the same position: low-kV SEM with EDS for trace evidence characterization, designed to be non-destructive (no coating, minimal dose) so the sample is preserved for legal chain-of-custody and additional analysis. The physics is the same; the constraints are different.
 
 ---
 
-## 5. Synthesis: how multi-technique workflows actually work
+The graduate student who designs a multi-technique workflow is doing something that takes practice: reading a research question and decomposing it into sub-questions, each of which maps to a technique. The decomposition is not arbitrary. It follows from knowing what each technique can access — what physical quantity it measures, at what spatial scale, with what artifacts — and from knowing which sub-questions are independent (can be answered separately) versus which are coupled (answering one constrains or enables answering another).
 
-A real cross-technique research project follows a pattern:
+The practical discipline is to start with the broadest scale and work inward. SEM first, to survey the population and identify regions of interest. TEM second, to resolve the internal structure at the scale of interest. Specialized modes third — EELS, tomography, HAADF-STEM — when the question requires chemical state, three-dimensional distribution, or atomic-scale structure that conventional TEM cannot provide. Cross-checks throughout: SE/BSE comparisons, tilt tests, EDS confirmation of compositional claims.
 
-1. **Define the question.** What needs to be answered, in what specifications?
-2. **Survey at the broadest scale.** SEM, optical microscopy, AFM. Find the regions of interest.
-3. **Identify specific targets.** Single particles, single failure sites, single grains. Get GPS-style location.
-4. **Specialize.** TEM lamellae, cryo-TEM grids, HAADF-STEM, EELS, etc. — each chosen for the specific question.
-5. **Cross-check.** Multiple techniques on the same target. Confirm the conclusions.
-6. **Quantify and report.** Population statistics, methods sections, figures with proper captions.
+The workflow serves a scientific argument. Every technique produces data; the data must cohere into a conclusion. A figure in a published paper that shows SE, BSE, BF TEM, EDS map, and HAADF-STEM side by side is not a demonstration of technique fluency — it is a structured argument in which each panel answers one sub-question, and together the panels close the case.
 
-The pattern is consistent across nanomedicine, materials, and engineering. The techniques are different in each field; the workflow logic is the same.
+<!-- → [IMAGE: example multi-panel publication figure — five panels of the same nanoparticle system: (1) SE image: population overview, hundreds of particles; (2) BSE image: same field, Z-contrast confirming heavy-element cores; (3) BF TEM: single particle internal structure showing bilayer or core-shell; (4) EDS elemental map: spatial distribution of key elements overlaid on STEM image; (5) HAADF-STEM: atomic-resolution Z-contrast of core region; each panel labeled with its technique and the specific sub-question it answers; caption format showing what a methods section should state for each panel; student should see how a multi-panel figure is a structured argument rather than a collection of images] -->
 
-### Putting it all together (worked synthesis)
+This is why methods sections in modern electron-microscopy papers are as long as they are. The reader needs to know which detector was active for each image, what the accelerating voltage and working distance were, how the specimen was prepared, and what cross-checks were performed. Without that information, the panels cannot be read critically. With it, the reader can assess whether each technique was used at conditions appropriate to the question it was answering, and whether the artifact families relevant to those conditions were addressed.
 
-A graduate student in cardiac nanomedicine studies engineered scaffolds for myocardial regeneration. Goals:
-- (a) Confirm the scaffold's macroporous architecture (50-200 μm pores).
-- (b) Image cardiac fibroblasts adhering to the scaffold and extending filopodia into pores.
-- (c) Confirm cell viability and metabolic activity at the scaffold interface.
-- (d) Image the bilayer of mitochondria in cells located at the cell-scaffold interface.
-- (e) Measure the metal cation distribution in mitochondria for ferritin storage analysis.
-
-Multi-technique workflow:
-
-1. **SEM at low kV** with in-lens detector. Hours per session. Confirms scaffold morphology, cell adhesion, filopodial extension. (Goals a, b)
-2. **Conventional TEM with osmium-stained sections.** Days of prep, days of imaging. Reveals mitochondrial bilayers, ribosomes, intercalated discs. (Goal d)
-3. **Cryo-TEM with low-dose protocol.** Weeks of optimization, days of imaging. Confirms native-state structure. (Goal d, alternative)
-4. **STEM-EELS at the mitochondrial interior.** Specialized session. Identifies Fe oxidation states for ferritin analysis. (Goal e)
-5. **Tomography of the cell-scaffold interface.** Days of acquisition + reconstruction. Resolves 3D structure. (Goals b, d)
-
-Total: 6-12 months of work for full characterization. The thesis chapter on this work has 8-12 figures, 4-5 of them multi-technique composites. The methods section is several paragraphs. The defense reviewer asks about technique selection and gets a clear, framework-based answer.
-
-The wonder. A research question that started as "how do cells grow on scaffolds?" has become a structured multi-technique investigation that combines five specialty modalities, each chosen for the specific information it provides. The graduate student who completes this thesis has demonstrated not just experimental skill but technique-selection discipline. This is the practitioner the book has been preparing.
+<!-- → [INFOGRAPHIC: broad-to-specific workflow discipline — inverted pyramid diagram: widest level at top labeled "Survey: SEM, population statistics, many particles/regions"; middle level: "Target: TEM/FIB, internal structure, single particles or sites"; narrow level: "Specialized: EELS/tomography/HAADF, chemical state/3D/atomic structure"; alongside each level: annotation showing typical magnification range, number of features imaged, and which technique cross-checks apply; student should internalize the sequence logic before designing their first workflow] -->
 
 ---
 
-## 6. Pre-lab Checklist (Lab 25 — application-specific workflow practice)
+The arc of this book has been from the physics of how electrons interact with matter, through the instrument that shapes and detects that interaction, to the techniques that extract different kinds of information from the interaction, to the workflows that combine those techniques into scientific arguments. The graduate student who understands all of that is not just technically proficient — they can sit down with a research question they have never seen before, decompose it into sub-questions, identify the techniques whose physics makes them appropriate for each sub-question, design the workflow that combines them, and read the resulting figures critically.
 
-**By the end of this chapter, you should be able to:**
+That is the practitioner the book has been preparing.
 
-- Read a published multi-technique EM paper and identify what each technique contributed.
-- Design a multi-technique workflow for a research question in your field.
-- Justify each technique selection with reference to the question's information needs.
-
-**Bring to lab:**
-
-- This chapter, especially Sections 2-4.
-- A research question from your area of interest.
-
-**Expect on the floor:**
-
-- Discussion of your proposed workflow with the lab manager.
-- Critique from peers in the lab.
-- Possibly a hands-on session running one technique on a representative specimen.
+Chapter 26 closes the book by addressing how to communicate the multi-technique workflow to a reader: what the methods section must contain, how figures should be captioned, and how to critique published figures using the frameworks developed in Chapters 23 and 25.
 
 ---
 
-## 7. Quick-Reference Table
-
-| Application area | Standard workflow |
-|---|---|
-| Nanomedicine - lipid NP | cryo-TEM + cryo-tomography + STEM-EDS + SEM survey |
-| Nanomedicine - polymer NP | TEM + SEM + EDS + dynamic light scattering (cross-tech) |
-| Nanomedicine - magnetic NP | TEM + HAADF + SAED + magnetometry (cross-tech) |
-| Materials - failure analysis | SEM + EDS + FIB cross-section + TEM (BF + SAED) |
-| Materials - catalyst | HAADF-STEM + STEM-EELS + HRTEM + tomography |
-| Materials - battery | SEM + EDS + STEM-EELS + (in-situ TEM if available) |
-| Engineering - QC | SEM + EDS routine; FIB if needed |
-| Engineering - forensic | low-kV SEM + EDS (non-destructive) |
-| Biology - cell ultrastructure | conventional TEM + tomography + cryo-EM if dynamic |
-
-| Decision point | Trade-off |
-|---|---|
-| Cryo vs conventional TEM | native state vs prep ease |
-| FIB vs conventional thinning | site specificity vs damage |
-| HAADF vs HRTEM | Z-contrast vs structural |
-| Low-kV vs high-kV SEM | surface sensitivity vs penetration |
-| Tomography vs single image | 3D info vs dose & time |
-
----
-
-## 8. Exercises
+## Exercises
 
 ### Warm-up
 
-**Exercise 25.1 (LO: identify workflow elements).**
-For each goal, name the technique you would expect in a typical workflow: (a) confirming size of nanoparticles, (b) imaging mitochondrial bilayers, (c) chemical analysis of an inclusion, (d) atomic-resolution interface imaging. Difficulty: easy.
+**25.1** — For each characterization goal below, name the most appropriate primary technique and state in one sentence why the physics of that technique makes it the right choice: (a) size distribution of 100 nm polymer nanoparticles across a population of 500; (b) internal bilayer structure of a single lipid nanoparticle; (c) three-dimensional distribution of mRNA cargo within a 100 nm particle; (d) oxidation state of iron at a battery cathode-electrolyte interface. *(Tests: question-to-technique mapping by physics. Difficulty: easy.)*
 
-**Exercise 25.2 (LO: choose primary technique).**
-A nanomedicine PI brings 100 nm magnetic iron oxide nanoparticles. Primary technique for size + shape characterization? Primary technique for crystal phase identification? Difficulty: easy.
+**25.2** — A graduate student claims that SEM alone is sufficient to characterize a lipid nanoparticle drug delivery system for a regulatory submission. Identify two specific characterization requirements that SEM cannot address and name the technique that addresses each. *(Tests: SEM access limitations and workflow necessity. Difficulty: easy.)*
 
-**Exercise 25.3 (LO: name multi-technique need).**
-Why does a published paper on lipid nanoparticles for vaccines typically require both SEM and cryo-TEM? Difficulty: easy.
+**25.3** — In the turbine blade failure analysis, the SEM survey and EDS composition data are followed by FIB lift-out and TEM. Explain in two sentences why FIB lift-out is necessary at this stage rather than conventional mechanical TEM preparation. *(Tests: site-specificity logic for FIB in a workflow context. Difficulty: easy.)*
 
 ### Application
 
-**Exercise 25.4 (LO: design workflow for materials).**
-A research group studies a steel alloy that has shown unusual creep behavior. Goals: (a) characterize grain structure; (b) identify any second-phase precipitates; (c) map elemental distribution at the grain boundaries; (d) confirm the alloy phase composition. Specify a multi-technique workflow. Difficulty: medium.
+**25.4** — Design a multi-technique characterization workflow for magnetic iron oxide nanoparticles intended as MRI contrast agents. The characterization must answer: (a) size and shape of the iron oxide cores, (b) crystal phase (Fe₃O₄ vs Fe₂O₃ vs other phases), (c) distribution of polymer coating thickness, and (d) confirmation that no free heavy-metal contamination is present. For each goal, name the technique, the key information it provides, and one artifact specific to that technique and specimen that the operator must address. *(Tests: workflow design for a real nanoparticle system across four distinct characterization sub-questions. Difficulty: medium.)*
 
-**Exercise 25.5 (LO: critique a published workflow).**
-A paper on solar cell efficiency reports characterization with "SEM imaging at 25 kV, no coating." What's missing? What additional techniques would improve the characterization for solar cell research? Difficulty: medium.
+**25.5** — A battery research group has cycled a lithium-ion cell 500 times and wants to characterize how the cathode-electrolyte interface changed. Their methods section reports: "SEM-EDS at 15 kV on bulk cathode material." Identify three characterization sub-questions that this workflow cannot answer, name the technique that addresses each, and explain what information would be lost if the workflow remains incomplete. *(Tests: workflow gap identification and technique decomposition for a battery materials problem. Difficulty: medium.)*
 
-**Exercise 25.6 (LO: integrate cryo-EM and conventional).**
-A research group has a viral protein complex. They want both atomic-resolution structure and quaternary assembly behavior. Outline how cryo-EM single-particle analysis (Ch. 21) and conventional negatively-stained TEM (Ch. 20) might both contribute. Difficulty: medium.
+**25.6** — A single-atom catalyst paper reports HAADF-STEM images showing bright spots on a zeolite support, claimed to be individual platinum atoms. The authors report no STEM-EELS data and no tomography. (a) What specific question does HAADF-STEM answer that SEM cannot? (b) What does STEM-EELS add that HAADF alone cannot provide? (c) What does tomography add that a single HAADF image cannot? *(Tests: technique decomposition logic applied to a specific published claim. Difficulty: medium.)*
 
-**Exercise 25.7 (LO: technique decisions in engineering).**
-A failure-analysis lab has a packaged power transistor that has shorted at the gate. Specify a workflow combining SEM, FIB, and TEM that would identify the failure mode. Difficulty: medium.
+**25.7** — An engineering failure-analysis lab receives a cracked semiconductor device with a reported open-circuit failure at a buried metal interconnect. The team has access to SEM, FIB-SEM, and TEM. Design a step-by-step workflow specifying which technique is used at each step, what it reveals, and at what point the team would stop if the answer were already clear. *(Tests: engineering failure-analysis workflow logic with stopping criteria. Difficulty: medium.)*
 
 ### Synthesis
 
-**Exercise 25.8 (LO: complete cross-technique workflow).**
-A nanomedicine researcher wants to characterize a multi-component vesicle: lipid bilayer, polymer scaffold, mRNA cargo, conjugated peptide ligands, gold nanoparticle marker. Specify a workflow combining 5+ techniques and explain what each adds that the others cannot. Difficulty: hard.
+**25.8** — A nanomedicine researcher wants to characterize a multi-component vesicle system: lipid bilayer shell, polymer scaffold inside, mRNA cargo, conjugated peptide targeting ligands on the surface, and gold nanoparticle markers for tracking. Design a complete characterization workflow that addresses each component separately. For each technique in your workflow: (a) state which component it characterizes, (b) explain why that technique's physics makes it the right choice, (c) name the key artifact risk, and (d) name the cross-check that addresses that artifact. Your workflow must use at least five distinct techniques. *(Tests: complex multi-component workflow design integrating all three chapters' frameworks. Difficulty: hard.)*
+
+**25.9** — Write a two-paragraph argument explaining why the methods section of a multi-technique EM paper needs to report the detector type, accelerating voltage, working distance, and specimen preparation for each panel — and why these cannot simply be stated once for the full paper. Frame your argument in terms of what a critical reader needs to assess (a) whether each technique was used at conditions appropriate to its stated question, and (b) which artifact families are active under those conditions. *(Tests: methods section logic derived from the workflow-as-scientific-argument framework. Difficulty: hard.)*
 
 ### Challenge
 
-**Exercise 25.9 (open-ended).**
-Find a recent high-impact paper in your research field that uses a multi-technique EM workflow. Reconstruct the techniques used; for each, identify what specific question it addressed; list one technique you would have added that the authors did not include and explain what additional information it would have provided. Difficulty: open-ended.
+**25.10** — Find a recent high-impact paper in your research field that uses three or more EM techniques in a multi-panel figure. For each technique panel: (a) identify which characterization sub-question it addresses, (b) verify whether the reported imaging conditions are appropriate for that question, and (c) identify one artifact family that could be active under those conditions and whether the authors addressed it. Then identify one additional technique not used in the paper that would have strengthened the characterization argument and explain what information it would have provided. *(Difficulty: open-ended.)*
 
 ---
 
-## 9. Summary
+ a compelling demonstration that a single EM technique can answer, without cross-checks, the full range of structural, compositional, and three-dimensional questions that characterize a complex specimen in any of the three application areas. The trend in the field is consistently in the other direction: as techniques improve, the questions researchers can ask become more demanding, and more techniques are required to answer them — not fewer.
 
-You walked into this chapter with the techniques individually mastered. You walk out with the cross-technique workflows that real research uses — workflow archetypes for nanomedicine, materials, and engineering, with worked case studies showing how multiple techniques combine to answer real research questions.
-
-The one idea that matters most: real EM research is multi-technique. The single-technique paper is increasingly rare; the multi-technique workflow is the norm.
-
-The common mistake to watch for is presenting single-technique data with single-technique conclusions. Modern reviewers expect cross-technique evidence, and rightly so.
-
-The Feynman test: explain to a labmate, without using the word "workflow," why a typical research paper uses three or four EM techniques rather than just one.
-
----
-
-## 10. Connections Forward
-
-Chapter 26 covers reporting and critique — how to write methods sections, captions, and figure narratives that demonstrate the multi-technique workflow to readers and reviewers. Appendix A covers safety practices that span all the techniques in workflow combinations. Appendix B covers the supplies and grids that support TEM workflows.
-
-The question this chapter raised but did not answer: how do you write the methods section that documents a multi-technique workflow defensibly? Chapter 26 covers it.
-
----
-
-**What would change my mind:** evidence that single-technique research could match multi-technique workflows for the kind of structural and analytical depth that modern EM-based papers achieve. The empirical record consistently shows that cross-technique evidence wins on rigor.
-
-**Still puzzling:** the practical decision of when single-technique evidence is "enough" varies by field, by reviewer expectations, and by budget constraints. The convention is shifting toward multi-technique requirements but inconsistently across disciplines.
-
-**Tags:** `cross-technique`, `applications`, `nanomedicine`, `materials-science`, `engineering`
-
----
-
-### Note to the professor
-
-This chapter is application-driven synthesis. Few `[verify]` markers because content is taxonomic and descriptive.
-
-Voice anchoring: anchored. Lipid-nanoparticle pharmaceutical-company chapter opening (one scene only). Capability ending. Wonder grounded in 6-12-month thesis-scale workflows. Length ~4500 words.
-
-The chapter is suited for late in the course when students plan their own thesis work and need to design multi-technique characterization plans.
+**Still puzzling:** the practical decision of when a workflow is "complete enough" for publication is more sociological than scientific. Different journals, different fields, and different reviewers have different expectations, and those expectations vary in ways that do not always track the actual information requirements of the research question. The resulting variability in what counts as sufficient characterization is a persistent source of both retractable errors and unnecessarily delayed papers.
