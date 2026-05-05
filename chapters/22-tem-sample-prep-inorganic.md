@@ -1,464 +1,131 @@
 # Chapter 22 — TEM Sample Preparation for Inorganic and Materials Science Specimens
 
-## Title options
-
-1. **Thinning the Hard Stuff: TEM Prep for Metals, Ceramics, and Semiconductors**
-2. **From Bulk to Lamella: Inorganic TEM Prep Techniques**
-3. **The Many Routes to Electron Transparency**
-
-## TL;DR
-
-Inorganic TEM specimen preparation has several distinct routes — mechanical polishing, electrochemical polishing, ion milling, and FIB lift-out — chosen by material hardness, conductivity, and spatial specificity needs. The single goal across all routes: 3 mm disc-shaped specimens, less than 100 nm thick at the imaging area, with minimal preparation-induced artifacts.
+*A chunk of steel starts at five millimeters thick. The electron beam needs it under one hundred nanometers. Five orders of magnitude separate the starting point from the requirement, and every order of magnitude has its own technique.*
 
 ---
 
-## 1. Chapter Opening
+A graduate student carries a small piece of stainless steel to the TEM prep lab — roughly 5 mm × 5 mm, about a millimeter thick, unremarkable. The goal is to image dislocations in the steel by TEM. The bulk specimen is opaque to electrons; somehow, the student needs to thin part of it to below 100 nanometers while preserving the dislocation structure that the imaging is intended to reveal.
 
-A graduate student carries a small chunk of stainless steel — about 5 mm × 5 mm × 1 mm thick — to the TEM prep lab. Goal: image dislocations in the steel by TEM. The bulk specimen is far too thick for the beam to penetrate; somehow, the student needs to thin it to less than 100 nm at the imaging area while preserving the dislocation structure. The full prep pipeline:
+Three days later, the student loads a three-millimeter disc of steel into a TEM holder. Most of the disc is still a hundred micrometers thick — mechanically robust enough to handle. But at the center, where a grinding process removed material in a shallow bowl shape and then an argon-ion beam finished the job, there is a perforation surrounded by a region thinner than 100 nanometers. The student finds this region, fires up the beam at 200 keV, and sees individual dislocations as fine dark lines threading through the steel grains.
 
-1. **Cut a 3 mm disc** from the slab using an ultrasonic disc cutter or a diamond wire saw. The disc is the size that fits a TEM grid holder.
-2. **Mechanically thin** the disc to about 100 μm using a tripod polisher with progressively finer grit.
-3. **Dimple grind** the center of the disc to about 10 μm thickness while leaving the rim at 100+ μm for mechanical strength.
-4. **Final thinning by ion milling.** Argon ions at low angle remove a few atomic layers per minute, eventually perforating the dimple. The region around the perforation, just before final breakthrough, is electron-transparent (<100 nm).
+The path from the original slab to that disc took: cutting to the three-millimeter disc format, mechanical grinding down to about a hundred micrometers, dimple grinding to create a concave depression at the center that reaches down to about ten micrometers, and finally ion milling — argon ions at a glancing angle sputtering the specimen thinner over several hours until the dimple perforate. Four steps, three days, five orders of magnitude reduction in thickness. Every step was load-bearing; skipping any one of them would have left the specimen either too thick to image or too damaged to trust.
 
-Three days of work. The student loads the now-perforated disc into a TEM holder, finds the thinned region near the hole, and at 200 kV bright-field sees individual dislocations as fine dark lines crossing the steel grains. Each step in the prep was necessary; skipping any step would have left the specimen too thick or too damaged for the imaging the student wants.
+Inorganic TEM preparation is not the same problem as biological TEM preparation. There is no fixation, no dehydration, no embedding resin, no ultramicrotome. Instead there is mechanical thinning, electrochemical dissolution, ion bombardment, and — for the highest precision — focused gallium ions milling a lamella from exactly the feature the operator has identified. Each technique has its own physics, its own artifacts, its own material restrictions. The chapter's governing question is which technique serves which specimen and which question.
 
-Inorganic TEM prep is a different beast from biological TEM prep (Chapter 20). No fixation, no dehydration, no resin embedding — but mechanical, ionic, and electrochemical thinning chains that take their own days of work. By the end of this chapter you can choose a prep route for a given specimen and predict the artifacts each route produces.
-
-### Learning objectives
-
-By the end of this chapter you can:
-
-- **Identify** the four major prep routes for inorganic TEM specimens: mechanical, electrochemical, broad-ion-beam milling, FIB lift-out.
-- **Choose** an appropriate route based on material properties (hardness, conductivity, magnetism) and research question.
-- **Recognize** prep-induced artifacts: ion-milling amorphization, electropolishing pitting, FIB curtaining, polymer microtomy chatter.
-- **Plan** a multi-step prep workflow combining routes (e.g., dimple + ion mill, FIB lift-out + cleanup pass).
-- **Apply** safety procedures for hazardous prep chemistries (electropolishing electrolytes, ion-mill operation).
-
-### Prerequisites
-
-Chapter 20 (biological TEM prep, for the conceptual contrast). Chapter 10 (FIB-SEM, since FIB lift-out is now a major prep method). Chapter 12 (TEM thin-specimen requirement).
-
-### Why this chapter matters
-
-Materials-science TEM is a different specimen-prep ecosystem from biological TEM. Each material class has its preferred routes; a student of materials microscopy must navigate all of them. Cross-cutting prep questions (e.g., "should I use mechanical polishing then ion mill, or skip to FIB?") have practical and quality consequences.
+<!-- → [INFOGRAPHIC: five-orders-of-magnitude reduction diagram — vertical log scale from 5 mm to 50 nm; four labeled steps with thickness ranges: (1) Bulk specimen → Cut disc: 5 mm → 200 μm (diamond saw/ultrasonic cutter); (2) Grinding and polishing: 200 μm → 100 μm (grit sequence); (3) Dimple grinding: 100 μm → 10 μm (center only); (4) Ion milling or FIB: 10 μm → <100 nm (final thinning); each step labeled with its characteristic artifact; student should see the full pipeline as a single figure before reading the detailed sections] -->
 
 ---
 
-## 2. Specimen requirements and the disc-shaped target
+The universal requirement across all routes is geometric. The TEM holder accepts a three-millimeter disc. The TEM beam needs the imaging region below 100 nanometers — more precisely, below the inelastic mean free path at the operating voltage, typically 50 to 100 nanometers for 200 keV electrons in most metals and ceramics. That region should be as flat and as representative of the bulk material as the preparation can achieve. Every technique in this chapter is, in essence, a different answer to the question: how do you get from bulk specimen to three-millimeter disc to sub-100-nanometer transparent region, with the least damage to the features you want to see?
 
-The question this section answers is: what is the universal target shape for inorganic TEM specimens, and what does each requirement constrain?
-
-### Mechanism — six requirements per the source
-
-Per the week-13 source, all inorganic TEM specimens must satisfy:
-
-1. **Thin (<100 nm)** for electron transparency at typical TEM voltages.
-2. **Uniform thickness** across the area of interest, so contrast variations come from specimen features not from thickness gradients.
-3. **Clean** — free of polishing residues, embedding compounds, or dust.
-4. **Representative** — the prepared region must reflect the bulk material's properties, not a localized artifact zone.
-5. **Stable under the beam** — the specimen must survive electron exposure without degrading.
-6. **Conducting and nonmagnetic** — magnetic specimens deflect the beam; nonconducting specimens charge.
-
-These constraints interact. A magnetic specimen (e.g., ferritic steel) can sometimes be thinned to a region small enough that its residual field is acceptable; alternatively, the magnetic phase can be embedded in a nonmagnetic matrix. A perfectly conducting metal needs no coating but may be too soft to support the prep itself. A ceramic is brittle and may shatter during sectioning. Each material's constraints shape the prep choice.
-
-The universal target: a **3 mm diameter disc**, with the imaging region thinned to electron transparency. The 3 mm size matches the TEM holder. Most preparation pipelines work backwards from this disc geometry.
-
-### Three categories of specimens
-
-The source organizes specimens into three categories by their starting shape and required handling:
-
-- **Powders, nanoparticles, and fibers** — small particulates, prepared by dispersion onto a grid (Chapter 8 SEM-prep parallels).
-- **Bulk samples** — solid specimens (metals, ceramics, semiconductors) that must be cut to disc and thinned.
-- **Thin films** — already deposited as a film on a substrate; the substrate must be removed or the film selectively thinned.
-
-Each category routes through a different combination of techniques. Most of this chapter focuses on bulk-specimen prep, the most common case in materials science.
-
-### Trade-off
-
-Inorganic TEM prep optimizes for **specimen-state preservation at the cost of multi-step processing time**. Each step introduces some artifact; the operator's goal is to choose steps whose artifacts are tolerable for the question being asked. For high-resolution imaging, the cleanest possible final region matters; for survey imaging, faster prep with more residual artifacts is acceptable.
-
-### What Goes Wrong Here
-
-- **Insufficient thinning.** Specimen too thick at imaging area; image dim and low-contrast. Recognition: at 200 kV BF, if the image looks washed out and lacks fine detail, the specimen probably exceeds 200 nm. Fix: longer ion mill, more dimpling.
-- **Over-thinning.** Hole is too big or imaging area is destroyed by thinning. Recognition: the perforation extended into the specimen of interest. Fix: stop sooner; better real-time monitoring.
-- **Contamination.** Polishing media, embedding residue, or fingerprints. Recognition: amorphous halos in BF; spurious EDS peaks. Fix: ultrasonic clean; fresh polishing materials; gloves.
+Inorganic specimens add constraints that biological specimens do not have. Magnetic specimens deflect the electron beam inside the column and distort images. Insulating specimens charge under the beam and produce field distortions that mimic structural features. Very hard materials resist mechanical polishing; very soft materials deform under it. Multi-phase materials thin non-uniformly because each phase has a different mechanical hardness or electrochemical dissolution rate or ion sputter yield. The prep technique must be matched not just to the thinning goal but to the material's specific response to each thinning mechanism.
 
 ---
 
-## 3. Mechanical preparation: cutting, dimpling, polishing
+Mechanical preparation is the foundation on which everything else rests. The bulk specimen is too thick for any final-thinning technique to handle efficiently; mechanical steps bring it down to a manageable starting point.
 
-The question this section answers is: how do you bring a bulk specimen down to ~100 μm by purely mechanical means, and what artifacts does that introduce?
+The first step is cutting the specimen to disc. For hard ceramics and semiconductors, a diamond wire saw or ultrasonic disc cutter sections the material without cracking it. For metals, a diamond-edged saw or a shear-press disc punch works. The disc is the geometry the holder requires; get to it first, then thin.
 
-### Mechanism — saw, grind, polish, dimple
+Grinding follows: a sequence of successively finer abrasive papers, typically silicon carbide, run wet to prevent heat buildup. The standard sequence moves through increasingly fine grits, each removing the scratches from the previous step, until the disc is down to around 100 micrometers and the surface is scratch-free at the scale that matters. Then diamond suspension polishing — 30 micrometers, 9, 3, 1, down to 0.05-micrometer colloidal silica — brings the surface roughness below 50 nanometers.
 
-The mechanical pipeline:
+This is still not thin enough for TEM, but it is thin enough for the next step to be efficient: **dimple grinding**. A rotating diamond wheel, set to the center of the disc, removes material from the center of one face in a shallow bowl shape. The rim of the disc stays at 100 micrometers — mechanical support. The center of the dimple reaches down to about 10 micrometers. That 10-micrometer center is what the ion mill or the FIB will finish.
 
-```
-PROCEDURE — Mechanical thinning
+Mechanical preparation has a characteristic artifact: sub-surface damage. Grinding and polishing work by fracture and plastic deformation at the surface; in a crystalline metal, this means dislocations, work-hardening, and a damaged layer that extends below the visibly polished surface — sometimes tens or hundreds of nanometers below the surface in soft metals. For dislocation imaging in a steel, prep-induced dislocations mixed with the real ones are a problem. For composition mapping by EDS, they are often irrelevant. The operator decides whether to remove the damaged layer (by subsequent ion milling) or tolerate it.
 
-1. CUT to 3 mm disc.
-   - Diamond wire saw (MicroSaw-style) for hard ceramics or
-     semiconductors. Slice thickness ~100-200 μm.
-   - Ultrasonic disc cutter for brittle materials. Tubular blade
-     vibrates and cuts down through the slab.
-   - For metals: diamond saw or shear-press disc punch.
-
-2. THIN with grinding paper.
-   - Sequence: 60, 120, 240, 320, 400, 600 grit silicon carbide.
-   - Wet grinding to prevent thermal damage and clear debris.
-   - Each grit removes the previous one's damage.
-   - Final thickness ~100 μm typical.
-
-3. POLISH with diamond suspension.
-   - 30 μm, 9 μm, 3 μm, 1 μm sequence.
-   - Final polish at 0.05 μm colloidal silica.
-   - Result: surface roughness <50 nm, suitable for further thinning.
-
-4. DIMPLE.
-   - Specialized instrument with rotating diamond wheel that creates
-     a dimple at the center of the disc.
-   - Center thickness ~10 μm; rim thickness ~100 μm for mechanical strength.
-   - Dimple greatly reduces the time needed for ion milling later.
-
-5. (Optional) TRIPOD POLISHING.
-   - Three-point polishing head for ultra-fine final thinning.
-   - Reaches ~100 nm thickness directly on appropriate materials.
-   - Replaces ion milling for some specimens.
-```
-
-The week-13 source describes each step in detail. The mechanical pipeline alone can reach ~100 nm for some materials; for most, it serves as preparation for ion milling or FIB.
-
-### Polymer materials
-
-Mechanical thinning of polymers is challenging — the material is soft and tends to compress rather than thin uniformly. The source notes that ultramicrotomy can be used for polymer cross-sections, with the same artifacts (chatter, knife marks) as biological ultramicrotomy.
-
-### Magnetic nanoparticles
-
-Magnetic specimens contaminate the TEM column if loose particles deposit on the polepiece. The source notes that magnetic particles can be embedded in epoxy resin and ultramicrotomed — the resin holds the particles in place, eliminating the contamination risk while still allowing electron-transparent sections.
-
-### Trade-off
-
-Mechanical preparation optimizes for **direct material handling at the cost of mechanical damage**. The grinding and polishing steps deform the specimen surface — work-hardening for metals, dislocations for crystals, sub-surface damage that extends below the visibly polished surface. For many questions this is irrelevant; for high-resolution structural work near the surface, ion milling or FIB is needed to remove the damaged layer.
-
-### What Goes Wrong Here
-
-- **Surface scratches from coarse grit.** Recognition: parallel lines crossing the imaging region. Fix: more polishing time at finer grits.
-- **Sub-surface damage from mechanical work.** Recognition: dense dislocation networks in BF that don't represent the bulk. Fix: ion milling to remove the damaged layer.
-- **Dimple too thin or too thick.** Recognition: ion milling either perforates immediately (too thin) or takes hours (too thick). Fix: better dimple-depth monitoring; calibrate against material-specific ranges.
+<!-- → [IMAGE: cross-section schematic of a TEM disc after dimple grinding — top view showing 3 mm disc geometry with labeled rim (100 μm thick) and dimpled center (10 μm thick); side cross-section showing the bowl-shaped dimple profile with thickness labels at rim, shoulder, and center; annotation showing the sub-surface damage zone beneath the mechanically polished surfaces (hatched layer, ~100–500 nm deep in soft metals); inset: comparison of the disc geometry before and after dimpling to show why the dimple concentrates the subsequent ion-milling effort at the center] -->
 
 ---
 
-## 4. Electrochemical preparation: jet electropolishing
+For conducting metals, there is a cleaner alternative to mechanical polishing for the final thinning: **jet electropolishing**. The specimen is the anode in an electrochemical cell. An electrolyte — a concentrated acid chosen specifically for the material — is jetted onto the center of the disc. Metal at the anode dissolves into the electrolyte. The jetting concentrates the dissolution at the disc's center; as the center thins, a perforation forms there, surrounded by an electron-transparent annular region. When light transmits through the specimen, the operator stops. The result is a smooth, damage-free thinned region with no work-hardening, no sub-surface dislocations, no mechanical artifacts.
 
-The question this section answers is: how do you thin a metal specimen without mechanical work-hardening?
+The electrolyte is the constraint. Different metals require different electrochemical conditions. Steel and nickel use perchloric acid in acetic acid or methanol; aluminum uses perchloric in ethanol; copper uses phosphoric acid in ethanol. The wrong electrolyte either fails to thin the material or produces pitting rather than uniform dissolution.
 
-### Mechanism — anodic dissolution
+Perchloric acid in alcohol mixtures deserves its own paragraph. Perchloric acid is a strong oxidizer; alcohols are fuel. The combination is stable under the controlled conditions of a properly designed electropolisher running established recipes at controlled temperature. It is explosive under improper conditions: heating, contamination, improvised recipes, old reagents. Every electropolishing lab has procedures for this chemistry because the consequences of ignoring them are severe. The protocol is: use published recipes, use fresh reagents, work in a fume hood with a face shield and acid-resistant gloves, never improvise. This is not routine caution — it is the specific caution that this chemistry requires.
 
-**Jet electropolishing** uses an electrochemical cell to remove material from a metal specimen. The specimen is the anode of a DC circuit; an electrolyte (typically a concentrated acid or acid mixture) is the medium; a cathode (often platinum or stainless steel) closes the circuit. Current flows; metal at the anode dissolves into the electrolyte; the cathode produces hydrogen.
+Electropolishing also produces hydrogen at the cathode. Hydrogen is flammable, and in a confined space the concentration can reach explosive levels. The work area needs ventilation, and the operator should not seal the cell during operation.
 
-In a **jet electropolisher**, the electrolyte is jetted onto the anode at controlled pressure, often while the anode rotates or tilts. The jets concentrate the electrochemical action at the specimen's center, creating a perforation that begins from the center. The region just before perforation is electron-transparent.
+The payoff for following the protocol correctly is a specimen surface that has seen no mechanical work — pristine crystallographic structure right to the thinned region, suitable for high-resolution imaging and diffraction work where a few nanometers of prep-induced disorder would be interpretively significant.
 
-```
-PROCEDURE — Jet electropolishing
-
-1. Mount the 3 mm disc (already mechanically thinned to ~100 μm).
-2. Fill the cell with the appropriate electrolyte for the material.
-3. Set voltage and current per material-specific calibration.
-4. Apply jets; monitor perforation by light transmission through
-   the specimen.
-5. When light transmits, terminate immediately.
-6. Remove specimen, rinse in solvent (often methanol or water + alcohol).
-7. Dry; load into TEM.
-```
-
-Common electrolytes [verify all]:
-- Iron / steel / nickel: perchloric acid + acetic acid (Struers A2-style).
-- Aluminum: perchloric acid + ethanol.
-- Copper: phosphoric acid + ethanol.
-
-**Electrolyte choice depends on the material**, and using the wrong electrolyte produces poor polishing or hazards.
-
-### Hazards and Safe Practice
-
-Electropolishing electrolytes are seriously hazardous chemistries:
-
-- **Perchloric acid + alcohols are explosive when mishandled.** The acid is a strong oxidizer; alcohols are fuel. The mixture is stable at controlled temperature but can detonate from heat, friction, or contamination. Strict protocols apply: published recipes, controlled temperatures, no organic mineral oils on equipment.
-- **Acid burns** from concentrated electrolytes.
-- **Hydrogen evolution at the cathode** is flammable in confined spaces.
-- **Toxic fumes** from many electrolytes.
-
-PPE: face shield, acid-resistant gloves, lab coat, fume hood. Never improvise an electropolishing recipe; always use published protocols. Cross-reference Appendix A.
-
-### Trade-off
-
-Electropolishing optimizes for **damage-free thinning of conducting metals at the cost of electrolyte hazards and material restrictions**. No mechanical work-hardening; surfaces are smooth. But electropolishing only works on conducting specimens (does not work on ceramics or insulators); each material has its own electrolyte; the chemistry is dangerous.
-
-### What Goes Wrong Here
-
-- **Pitting at the perforation.** Recognition: perforation has irregular ragged edges; thin region is uneven. Fix: better jet alignment, fresher electrolyte, lower current density.
-- **Premature perforation.** Specimen perforates before reaching the thin region the operator wanted. Fix: shorter polish times; better real-time monitoring.
-- **Surface contamination from electrolyte residue.** Recognition: amorphous deposits on the thinned region. Fix: thorough rinsing; switch electrolytes if residue persists.
+<!-- → [IMAGE: comparison panel — left: BF TEM image near the thinned edge of a mechanically polished and ion-milled steel specimen showing dense prep-induced dislocation tangles in the near-edge region; right: BF TEM image of the same alloy composition prepared by jet electropolishing showing a clean dislocation structure without prep artifacts near the edge; scale bars matched; captions label the prep method and identify which features are real vs. prep-induced; student should see concretely why electropolishing is preferred for dislocation imaging when the electrolyte is available] -->
 
 ---
 
-## 5. Ion-beam milling
+For most specimens, whether mechanically polished or electropolished to a dimple, the final step toward electron transparency is **broad-beam ion milling**. Argon ions, accelerated to a few kilovolts, are directed at the specimen at a grazing angle — typically about five degrees from the specimen surface. At that angle, the collision cascades from each ion impact are concentrated near the surface rather than deep in the material, maximizing the fraction of atoms ejected and minimizing the depth of ion implantation. The ion beam rotates around the disc, thinning symmetrically, until the dimple perforates and the surrounding region is transparent.
 
-The question this section answers is: how do you reach the final 100 nm thickness using a non-mechanical, non-chemical method?
+Ion milling requires four to twelve hours for a typical inorganic specimen. The operator sets the energy and angle, turns on the mill, and waits. Modern instruments have optical detectors that signal when the perforation occurs; older ones require periodic checks. The final perforation is the endpoint; the thin annulus around it is the imaging region.
 
-### Mechanism — argon ions at glancing angle
+The damage artifact from ion milling is amorphization: the top few nanometers of every milled surface have been disrupted by the ion cascade into an amorphous layer that no longer has the crystalline structure of the bulk. At 5–10 keV, this layer is 5–10 nanometers thick. For most imaging purposes this is invisible — the damage layer is thinner than the specimen's total thickness and does not contribute much to the image. For HRTEM lattice imaging, where the outermost atomic planes are the subject, the amorphous surface layer obscures the lattice fringes right at the specimen faces and is genuinely problematic.
 
-**Broad ion beam milling** (precision ion polishing, PIPS) uses a beam of argon ions to sputter atoms from the specimen surface (Chapter 10 introduced sputtering for FIB).
+The solution is a **low-energy cleanup pass**: after the main mill reaches the target thickness, the ion energy is dropped to 0.5–1 keV and the mill runs for a shorter time at a shallower angle. At this energy, the ions do not penetrate deeply enough to implant; they remove the amorphized layer from the previous mill without adding a new one. This cleanup pass is now standard practice before high-resolution TEM of ion-milled specimens. The cost is an extra hour or two; the benefit is lattice fringes that extend to the specimen surface rather than disappearing into the amorphous zone.
 
-For TEM thinning, ions hit at a shallow angle (~5° from surface, per week-13 source), which:
-- Maximizes sputter yield (Section 10.3 noted yield peaks at 60-80° from surface normal, equivalent to 10-30° from surface).
-- Minimizes ion penetration depth into the specimen.
-- Produces uniform thinning across a wide area.
-
-```
-PROCEDURE — Ion-beam milling
-
-1. Mount the dimpled disc in the ion mill.
-2. Set ion energy (typically 3-6 keV for polishing).
-3. Set incidence angle (typically 4-8° from specimen surface).
-4. Mill until perforation occurs at the dimple center.
-5. (Optional) Low-energy cleanup pass at 0.5-1 keV to remove
-   amorphized surface layer from the high-energy mill.
-6. Remove specimen; load into TEM immediately to avoid contamination.
-```
-
-**Final-stage low-energy ion milling** (0.5-1 keV at glancing angle) removes the damaged surface layer and reduces ion-induced amorphization. This is now standard for high-resolution TEM and HRTEM specimens.
-
-### Advantages of ion milling per the source
-
-- **Precise thinning** — controllable to <100 nm.
-- **Minimal mechanical damage** — no work-hardening or surface defects.
-- **Electron transparency** — produces flat, smooth thinned regions.
-- **Versatility** — works on metals, ceramics, semiconductors, polymers, even biological specimens.
-- **Site-specificity for FIB** — Chapter 10 covered the localized-thinning aspect.
-
-### Trade-off
-
-Ion milling optimizes for **damage-controlled thinning of any material at the cost of ion-induced amorphization and time**. A typical ion mill for a TEM specimen takes 4-12 hours. The amorphization (first few nm of damaged surface) is unavoidable but reduceable through low-energy cleanup.
-
-### What Goes Wrong Here
-
-- **Ion-implantation amorphization.** Surface few nm becomes amorphous from ion bombardment. Recognition: HRTEM lattice fringes do not extend to the imaged surface. Fix: low-energy cleanup pass.
-- **Differential thinning** in multi-phase materials. Different phases sputter at different rates. Recognition: thinning preferentially in soft phases; hard phases remain. Fix: lower angle of incidence; rotation during milling.
-- **Surface contamination.** Backstreaming of pump oils or residual gases. Fix: cleaner vacuum; final argon-only mill.
+<!-- → [IMAGE: HRTEM comparison at specimen edge — left: specimen after 5 keV ion mill only, showing clear amorphous surface bands (~8 nm) where lattice fringes are absent; right: same specimen type after 0.5 keV cleanup pass, showing lattice fringes extending to within ~1–2 nm of the surface; scale bars at 5 nm; annotation labeling the amorphous zone in the left panel and its reduced extent in the right; student should see the direct imaging consequence of the cleanup pass and why it matters for HRTEM] -->
 
 ---
 
-## 6. FIB lift-out: site-specific TEM lamellae
+All the techniques described so far produce specimens in which the imaging area is determined by where the disc center happens to be. The thinning is non-localized: the whole disc gets thinner together. For most questions this is fine. For a question that begins "I want to image this specific transistor in this specific packaged chip" or "I want to look at the grain boundary at this particular location in this deformed sample," non-localized thinning fails — the chance that the non-localized prep happens to produce electron-transparent material at exactly the right location is essentially zero.
 
-The question this section answers is: how do you prepare a TEM specimen from a precise location (a specific transistor, a specific grain, a specific defect)?
+**FIB lift-out** — introduced in Chapter 10 in the context of failure analysis — is the answer to site specificity. In a dual-beam FIB-SEM, the SEM column identifies the target feature; the FIB column mills a lamella from exactly that location. The steps:
 
-### Mechanism — focused ion beam, in-situ manipulator
+A protective platinum strip is deposited over the target by FIB-induced gas decomposition, shielding the target surface from the oblique ion milling that follows. Two rectangular trenches are milled on either side of the platinum strip, leaving a thin wall of specimen between them — the lamella. The FIB mills underneath to release the lamella from the substrate, and a tungsten micromanipulator lifts the lamella out of the trench and carries it to a TEM grid, where it is welded in place by platinum deposition. The lamella is then thinned by further FIB milling, from both sides, down to the target thickness — typically 50 to 100 nanometers. A final cleanup pass at 2–5 keV removes the damaged surface.
 
-**FIB lift-out** (introduced in Chapter 10) is the modern site-specific TEM-prep method. The dual-beam FIB-SEM:
+The entire procedure takes two to six hours. The lamella can come from any location on any surface, identified in advance by SEM or by electrical testing or by any other diagnostic. Site precision is routinely below 100 nanometers — well sufficient to hit a specific transistor in a device or a specific inclusion in a weld.
 
-1. **Locates the target** in SEM mode at moderate magnification.
-2. **Deposits a protective platinum layer** over the target via FIB-induced gas decomposition.
-3. **Mills two parallel trenches** alongside the target, leaving a thin "lamella" of specimen between them.
-4. **Mills underneath** to release the lamella from the bulk.
-5. **Lifts out** the lamella using a micromanipulator (a tungsten needle on an in-vacuum stage).
-6. **Mounts** the lamella onto a TEM grid (typically a Cu Omniprobe grid with multiple lift-out positions).
-7. **Thins** the lamella by FIB ion-mill to ~50-100 nm at the imaging area.
-8. **Final cleanup** at low FIB voltage (~5 keV) to reduce amorphization.
-
-The whole process takes 2-6 hours; modern automated FIBs can run unattended overnight.
-
-### When FIB lift-out wins
-
-- **Site specificity.** Down to ~100 nm precision in lamella position.
-- **Hard-to-prepare materials.** Multi-phase, layered, or fragile materials that would shatter under conventional thinning.
-- **Localized features.** Specific failures, specific transistors, specific grain boundaries.
-- **3D analysis.** Slice-and-view (Chapter 10) builds 3D from sequential FIB sections.
-
-### Trade-off
-
-FIB lift-out optimizes for **site specificity at the cost of ion-beam damage, gallium contamination, and operator skill**. The damaged surface (~5-20 nm of amorphized material with implanted gallium) requires cleanup; the operator skill is non-trivial; the FIB-SEM instrument is expensive ($1M+ class).
-
-### What Goes Wrong Here
-
-- **Curtaining.** Vertical streaks across the lamella's milled face. Recognition: parallel vertical lines at the cross-section. Fix: protective Pt deposition; lower current; specific scan patterns.
-- **Redeposition.** Sputtered material lands back on the lamella, creating walls. Recognition: bumpy texture on what should be smooth. Fix: oxygen-assisted etching or higher scan rate.
-- **Gallium contamination.** Implanted Ga affects local chemistry and EDS spectra. Recognition: spurious Ga peaks in EDS. Fix: low-voltage cleanup; chemical removal.
-- **Ion-beam-induced amorphization.** Surface layer is amorphous, blocks HRTEM. Fix: low-voltage cleanup pass at 5 keV or 2 keV.
+The damage artifacts from FIB lift-out are the same as from any gallium-ion milling: amorphization at the surfaces (5–20 nanometers at 30 keV, reduceable by the cleanup pass), implanted gallium (which shows as a spurious peak in EDS and alters local electrical properties), curtaining (vertical striations across the cross-section face where layers of alternating hardness created uneven milling rates), and redeposition (sputtered material landing back on adjacent surfaces). These are managed rather than eliminated: the protective platinum deposit reduces surface damage at the entry face; the cleanup pass reduces amorphization; the scan pattern and gas-assisted etching reduce curtaining and redeposition. A well-executed FIB lift-out lamella, after cleanup, is clean enough for lattice imaging at 0.2-nanometer resolution.
 
 ---
 
-## 7. Synthesis: choosing a route for the question
+The choice between routes reduces to three questions: does the specimen conduct? is there a compatible electropolishing electrolyte? and does the imaging location need to be specified in advance?
 
-The four prep routes — mechanical, electrochemical, broad-ion-beam, FIB lift-out — each have their material and question constraints:
+If the material is a metal with a known electrolyte, and if any part of the thinned disc will serve the question, jet electropolishing is the cleanest route. It produces no mechanical damage and leaves the crystalline structure undisturbed to the surface.
 
-| Specimen / question | Preferred route |
-|---|---|
-| Powder / nanoparticles | dispersion on grid (Chapter 8 parallel) |
-| Bulk metal, dislocation imaging | mechanical + dimple + ion mill |
-| Bulk metal, no work-hardening | jet electropolishing (if electrolyte exists) |
-| Ceramic | mechanical + dimple + ion mill (or tripod polish) |
-| Semiconductor, site-specific feature | FIB lift-out |
-| Polymer, internal structure | ultramicrotomy (Chapter 20-style) |
-| Multi-phase or layered structure | FIB lift-out |
-| Failure analysis | FIB lift-out |
-| Magnetic nanoparticles | resin embedding + microtomy |
-| Thin film on substrate | careful mechanical thinning + ion mill from substrate side |
+If the material is a ceramic, semiconductor, or other non-conductor — or a metal whose electrolyte chemistry is unknown or hazardous — mechanical plus ion milling is the standard route. It works on essentially any solid material.
 
-### Putting it all together (worked synthesis)
+If the question requires imaging a specific location — a specific device feature, a specific defect, a specific inclusion identified by another technique — FIB lift-out is the only route that can deliver the necessary spatial precision.
 
-A research group needs to characterize a Si-Ge multilayer device for a memory application:
-- (a) Confirm layer thicknesses across a 1 mm × 1 mm area.
-- (b) Image a specific failure site identified by electrical testing.
-- (c) HRTEM the Si-Ge interface for atomic-level structure.
+In practice, most materials-science TEM prep combines routes. The bulk specimen is mechanically thinned; the dimple grind reduces the center; the ion mill does the final work. For high-resolution work, the low-energy cleanup pass removes the amorphization. For site-specific work, the FIB replaces the entire final-thinning pipeline. The skill the operator develops is reading the specimen type and the research question and matching them to the combination of techniques that produces the least damage at the imaging area.
 
-Plan:
-- (a) Cleave the wafer along a [110] direction; mechanically polish the cleaved face to <50 μm; jet electropolish from the wafer side; ion mill to perforation. Several specimens per session.
-- (b) FIB lift-out of the failure site with site precision <100 nm. Single specimen per session, 4-6 hours.
-- (c) Final low-voltage FIB cleanup of the lift-out lamella to remove amorphous surface, then HRTEM imaging at 200 kV.
-
-Three goals, three different prep routes, all on the same Si-Ge stack. This is typical of materials-TEM workflows.
-
-### Hazards and Safe Practice
-
-The hazards specific to inorganic TEM prep:
-
-- **Electropolishing electrolytes** — perchloric acid, methanol-based solutions, fluorides. Acid burns, explosion risk (perchlorate + alcohol mixtures), toxic fumes. PPE: face shield, acid-resistant gloves, fume hood. Cross-reference Chapter 8 (SEM electropolishing) for additional discussion.
-- **Ion mill operation** — high voltage, vacuum implosion, RF interference. Standard TEM-instrument-class hazards. Argon gas cylinder requires standard handling.
-- **FIB-SEM operation** — gallium contamination, ion-beam exposure, GIS chemistries. Cross-reference Chapter 10.
-- **Polishing slurries** — colloidal silica, alumina suspensions; some are sensitizers. PPE: gloves.
-- **Chemical etchants** — material-specific (HF for silicon dioxide, KOH for silicon, etc.). Each requires specific handling; cross-reference SDS sheets.
-- **Diamond and glass knives** — same hazards as Chapter 20.
-
-For comprehensive treatment, see **Appendix A**.
-
-### Scale shift
-
-Inorganic TEM prep operates at multiple length scales simultaneously. The 5 mm bulk specimen is reduced through mechanical steps to a 3 mm disc, then to a 100 μm thickness, then to a 10 μm dimple, then to a <100 nm thinned region. Each step reduces the dimension by one or two orders of magnitude. The final imaging area — a few μm² of <100 nm thickness — is the result of compressing five orders of magnitude in length scale through a multi-day chain of techniques. The wonder is that the molecular-scale order of the original material survives.
+<!-- → [INFOGRAPHIC: prep-route decision tree — root: "What is your specimen?"; branch 1: conducting metal with known electrolyte + no location specificity → jet electropolishing; branch 2: ceramic / insulator / unknown electrolyte → mechanical + dimple + ion mill + (optional) cleanup pass; branch 3: any material + specific imaging location required → FIB lift-out + cleanup pass; branch 4: nanoparticles or powder → dispersion on grid; each terminal node labeled with characteristic artifact and typical time cost; student should use this as a quick reference for technique selection] -->
 
 ---
 
-## 8. Pre-lab Checklist (Lab 22 — inorganic TEM prep)
+What carries across all of this is the five-orders-of-magnitude problem stated at the beginning. The molecular-scale order of the original material — the dislocations, the grain boundaries, the interface structures — must survive the entire reduction from millimeter bulk to nanometer thin section. Each step in the pipeline threatens that order in a different way: grinding smears it, electropolishing dissolves it selectively if conditions are wrong, ion milling amorphizes it at the surface, gallium ions implant foreign atoms and damage the lattice. The operator's job is not to eliminate these damage mechanisms — none of them are eliminable — but to understand each one well enough to choose damage that is tolerable for the imaging question and to apply cleanup steps that remove what is intolerable.
 
-**By the end of this chapter, you should be able to:**
-
-- Choose a prep route for a given inorganic specimen.
-- Execute one stage of the prep pipeline (typically dimpling or ion milling) under supervision.
-- Recognize prep-induced artifacts in a TEM image.
-
-**Bring to lab:**
-
-- This chapter, especially Sections 3 and 6.
-- A pre-cut 3 mm disc of an inorganic material (typically provided by the lab).
-
-**Expect on the floor:**
-
-- A guided dimpling demonstration; possibly hands-on dimpling under supervision.
-- A walkthrough of the ion-mill setup and operating cycle.
-- A discussion of FIB lift-out for site-specific prep; possibly a cross-lab FIB demo.
+Chapter 23 returns to all of these artifacts in a comparative context, alongside the imaging artifacts introduced by the TEM itself. Understanding prep-induced artifacts and instrument-induced artifacts as two separate classes, each with its own mechanisms and signatures, is the diagnostic foundation for reading a published TEM image critically.
 
 ---
 
-## 9. Quick-Reference Table
-
-| Step | Method | Typical thickness produced |
-|---|---|---|
-| Disc cut | diamond saw, ultrasonic cutter | 100-200 μm |
-| Mechanical thin | grinding papers (60-600 grit) | 100 μm |
-| Polishing | diamond suspensions (30 μm to 0.05 μm) | scratch-free surface |
-| Dimpling | dimple grinder | rim 100 μm, center 10 μm |
-| Tripod polish | 3-point polishing | ~100 nm direct |
-| Jet electropolish | electrolyte, anodic dissolution | <100 nm at perforation |
-| Ion milling | Ar at 3-6 keV, 5° angle | <100 nm |
-| Low-energy cleanup | Ar at 0.5-1 keV | reduces amorphization |
-| FIB lift-out | Ga at 30 keV; cleanup at 5 keV | <100 nm |
-
-| Material | Preferred route(s) |
-|---|---|
-| Aluminum (soft) | mechanical + ion mill or jet electropolish |
-| Steel | mechanical + ion mill or jet electropolish (perchloric) |
-| Silicon | mechanical + ion mill (or tripod for thin films) |
-| Ceramic | mechanical + ion mill |
-| Semiconductor multilayer | FIB lift-out |
-| Polymer | ultramicrotomy or FIB |
-| Magnetic | resin embed + microtomy |
-
----
-
-## 10. Exercises
+## Exercises
 
 ### Warm-up
 
-**Exercise 22.1 (LO: name route).**
-For each specimen, name an appropriate prep route: (a) gold nanoparticles in suspension, (b) bulk steel for dislocation imaging, (c) specific transistor in a packaged IC, (d) thin polymer film. Difficulty: easy.
+**22.1** — Name the four major prep routes for inorganic TEM specimens and give one sentence each describing the physical mechanism by which each one thins the specimen. *(Tests: prep route identification and mechanism recall. Difficulty: easy.)*
 
-**Exercise 22.2 (LO: identify artifact).**
-A TEM image shows the lamella surface with a clear amorphous band at the edges. Cause? Mitigation? Difficulty: easy.
+**22.2** — Why is dimple grinding performed before ion milling rather than skipping directly from mechanical polishing to ion milling? Give a quantitative reason involving time. *(Tests: dimple grinding rationale and thickness arithmetic. Difficulty: easy.)*
 
-**Exercise 22.3 (LO: order steps).**
-Put in correct order for typical bulk-metal prep: ion mill, dimple, polish, cut disc, grind. Difficulty: easy.
+**22.3** — An HRTEM image shows lattice fringes across the bulk of the specimen but the fringes abruptly stop about 8 nm from the surface on both faces. Name the artifact, identify its cause, and describe the prep step that would have prevented it. *(Tests: ion-milling amorphization recognition and cleanup pass rationale. Difficulty: easy.)*
 
 ### Application
 
-**Exercise 22.4 (LO: design protocol).**
-Specify a complete prep protocol for TEM imaging of a polycrystalline ceramic for grain-boundary characterization. Include all steps with timings and termination criteria. Difficulty: medium.
+**22.4** — A researcher wants to image dislocations in a single-crystal nickel superalloy by TEM at the two-beam diffraction condition. They have access to a jet electropolisher (electrolyte: perchloric acid + acetic acid for Ni alloys) and a broad-beam ion mill. (a) Which final-thinning route is preferable for dislocation imaging, and why? (b) What specific artifact of the alternative route would contaminate the dislocation count? *(Tests: electropolish vs. ion mill decision based on artifact type for a specific imaging question. Difficulty: medium.)*
 
-**Exercise 22.5 (LO: choose between routes).**
-A multilayer thin film consists of alternating Au and amorphous Si layers each 5 nm thick. Goal: HRTEM image of the interface. Mechanical+ion-mill, electropolish, or FIB? Justify in two sentences. Difficulty: medium.
+**22.5** — A graduate student is setting up a perchloric acid + ethanol electropolishing solution for aluminum TEM preparation. List three specific safety hazards this chemistry presents and the corresponding precautionary measures. *(Tests: electropolishing hazard identification and mitigation. Difficulty: medium.)*
 
-**Exercise 22.6 (LO: recognize prep failure).**
-A jet-electropolished disc has perforated, but the thin region has irregular pitted edges and the imaging area shows non-uniform composition by EDS. What went wrong, and how would you re-prep? Difficulty: medium.
+**22.6** — A TEM lamella prepared by FIB lift-out shows vertical striations (curtaining) across the cross-section face, running through layers of alternating composition. Identify the cause of curtaining in terms of the FIB milling physics and propose two distinct mitigation strategies, one before milling and one during milling. *(Tests: FIB curtaining origin and mitigation, integrating Chapter 10 sputtering physics. Difficulty: medium.)*
 
-**Exercise 22.7 (LO: identify hazard).**
-A new graduate student is asked to mix perchloric acid with ethanol for a Cu electropolish. Why is this potentially dangerous, and what is the safe protocol? Difficulty: medium.
+**22.7** — You are preparing a TEM cross-section of a multilayer thin film: 50 nm gold / 20 nm titanium nitride / silicon substrate. The interfaces between layers are the features of interest. Compare mechanical + ion mill versus FIB lift-out for this specimen, addressing: (a) whether site specificity is needed, (b) differential thinning risk, and (c) the artifact each route introduces at the layer interfaces. *(Tests: route comparison on a real layered specimen with multiple artifact considerations. Difficulty: medium.)*
 
 ### Synthesis
 
-**Exercise 22.8 (LO: integrate methods).**
-A failure analyst has a packaged GaN power transistor that has shorted at its gate. Specify a prep workflow that combines FIB-SEM site-specific lift-out with TEM imaging at HRTEM resolution. Note where each technique adds value and what artifacts each introduces. Difficulty: hard.
+**22.8** — A failure analyst needs to characterize a cracked grain boundary in a turbine blade alloy (nickel base) at HRTEM resolution. The crack is at a known location identified by SEM fractography. Plan a complete prep workflow from bulk specimen to HRTEM-ready lamella, specifying: (a) the prep route and rationale, (b) the steps in order with estimated time for each, (c) the artifacts introduced at each step and how each will be managed, and (d) what the HRTEM image would show if the cleanup pass is skipped versus if it is performed. *(Tests: end-to-end workflow design integrating all four routes, artifact management, and HRTEM consequence of cleanup. Difficulty: hard.)*
+
+**22.9** — Compare the prep-induced damage hierarchy of the four routes in terms of: (a) depth of subsurface damage, (b) type of structural alteration (work-hardening vs. amorphization vs. chemical contamination), and (c) which imaging modalities are most sensitive to each damage type. Use this comparison to construct a general rule for when each route is appropriate versus inappropriate for HRTEM work. *(Tests: comparative analysis of all four prep routes across damage mechanism, depth, and imaging consequence. Difficulty: hard.)*
 
 ### Challenge
 
-**Exercise 22.9 (open-ended).**
-Find a published HRTEM image with a methods section describing FIB lift-out. Identify the cleanup-pass parameters (voltage, angle, time). Comment on whether the imaged region appears to have residual amorphization at the surface and how this affects the resolution claim. Difficulty: open-ended.
+**22.10** — Find a published HRTEM paper where the specimen preparation method is described in the methods section. Identify the thinning technique(s) used. For each technique, find or infer: (a) what artifacts were introduced, (b) whether a cleanup pass was used, and (c) whether any artifacts are visible in the images. Comment on whether the preparation choices were appropriate for the imaging claims made. *(Difficulty: open-ended.)*
 
 ---
 
-## 11. Summary
+ evidence that a single preparation route can match all the others across different material types for damage quality and spatial precision. The current empirical record is consistent: material-specific routes (electropolishing for metals, ion milling for ceramics, FIB for site-specific) each outperform general-purpose alternatives when matched correctly to the specimen. A universal prep technique would be transformative; none currently exists.
 
-You walked into this chapter with bulk inorganic specimens and the TEM thin-specimen requirement. You walk out with four major prep routes, the operator's discipline for choosing among them, and the artifacts to recognize. You can plan a multi-step prep workflow and predict its damage and time costs.
-
-The one idea that matters most: every prep route has its own damage signature, and the operator's job is to choose damage that is tolerable for the imaging question. Mechanical work-hardening, electropolish pitting, ion-beam amorphization, gallium contamination — none can be eliminated, only managed.
-
-The common mistake to watch for is skipping the cleanup pass on FIB lamellae. The 5-20 nm of amorphized surface from 30 keV gallium milling blocks HRTEM lattice imaging; a 1-2 keV cleanup pass at glancing angle removes most of it.
-
-The Feynman test: explain to a labmate, without using the word "milling," why a bulk metal cannot go directly into a TEM column.
-
----
-
-## 12. Connections Forward
-
-Chapter 23 returns to artifact recognition with the prep-induced artifacts in this chapter as part of the comparative synthesis. Chapter 25 covers cross-technique applications including materials-science workflows that use FIB lift-out for TEM. Appendix B catalogs grids and supports relevant to inorganic TEM specimens.
-
-The question this chapter raised but did not answer: how do you compare and integrate artifacts from prep, imaging, and detection into a coherent diagnostic framework? Chapter 23 provides the comparative synthesis.
-
----
-
-**What would change my mind:** evidence that a single prep route could match all the others in damage and quality across different materials. The empirical record consistently shows that material-specific prep routes outperform general-purpose ones.
-
-**Still puzzling:** the practical decision of when to switch from conventional mechanical+ion mill to FIB lift-out is mostly cost-driven. FIB is faster but instrument-expensive; conventional is slower but cheaper. The break-even depends on local lab economics rather than a clean pedagogical rule.
-
-**Tags:** `inorganic-TEM-prep`, `dimpling`, `ion-milling`, `electropolishing`, `FIB-lift-out`
-
----
-
-### Note to the professor
-
-`[verify]` markers in this chapter:
-- Specific electrolyte recipes for various materials.
-- Ion-mill parameters (voltage, angle, time) — material-dependent.
-- FIB cleanup-pass parameters.
-- Damage-layer thickness ranges.
-- FIB instrument cost ($1M+).
-
-Voice anchoring: anchored. Steel-disc chapter opening (one scene only). Capability ending. Hazards callout for electropolishing chemistries. Scale shift in Section 7. Wonder grounded in numbers (5 mm bulk → 100 nm imaging area = 5 orders of magnitude reduction; 4-12 hour ion mill; FIB lamella site precision <100 nm). Length ~5500 words.
+**Still puzzling:** the decision of when to invest in FIB lift-out versus conventional mechanical plus ion-mill prep is driven almost entirely by instrument access and cost, not by a clean pedagogical criterion. Both can produce HRTEM-quality specimens in the right materials; the threshold for switching is economic rather than scientific. Students trained in well-equipped labs default to FIB; those in labs without access default to conventional. Neither group is necessarily making the better choice for the science.
