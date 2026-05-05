@@ -1,364 +1,123 @@
 # Chapter 14 — Image Formation in TEM
 
-## Title options
-
-1. **Choosing What to Look At: Bright-Field, Dark-Field, and the Objective Aperture**
-2. **The Two-Stage Imaging Process: Why TEM Has Two Image Planes**
-3. **Reading a TEM Image: Direct Beam, Scattered Beam, and the Aperture That Picks Between Them**
-
-## TL;DR
-
-A TEM image is formed in two stages — the objective lens makes a primary image; the projector lenses magnify it. The objective aperture sits at the back focal plane and selects which beams contribute to the image: the direct beam alone (bright-field), a single scattered beam (dark-field), or many beams together (high-resolution phase contrast). Reading any TEM image starts with knowing which choice was made.
+*The same specimen produces different images in bright-field and dark-field because the objective aperture is deciding which electrons are allowed to tell their story.*
 
 ---
 
-## 1. Chapter Opening
+A graduate student is at the TEM looking at a thin foil of polycrystalline aluminum. The image at 50,000× shows a nearly uniform gray field — grain boundaries barely visible, defects invisible. The student inserts the objective aperture and centers it on the direct beam. The image transforms: grains sharpen into distinct gray levels, dark contours appear that mark dislocations, grain boundaries resolve cleanly. Now the student tilts the aperture to surround a single diffracted beam instead of the direct beam. The image inverts. What was bright is dark. What was dark is bright. Some grains light up; others go black. The dislocations that appeared as dark lines are now bright lines against a dark background.
 
-A graduate student is at the TEM looking at a thin foil of polycrystalline aluminum. The image at 50,000× shows a uniform gray field with subtle variations — grain boundaries faint, defects barely visible. The student inserts the objective aperture, centers it on the direct beam. The image transforms: grains appear as distinct gray levels, dark contours snake across some grains marking dislocations, the boundaries between grains sharpen. Same specimen, same kV, same magnification. What changed is what the lens is allowed to image. Now switch the aperture: tilt the objective aperture to surround a single diffracted beam. The bright-field image inverts — what was bright is now dark, what was dark is now bright. Some grains light up; others go black. The dislocations that were dark are now bright lines. Same physical features, different image.
+Same specimen. Same accelerating voltage. Same magnification. Nothing physical changed except which electrons were allowed to contribute to the image.
 
-This is the central operator move in TEM: choosing which post-specimen beams get to form the image. Bright-field, dark-field, and high-resolution phase-contrast are not three different microscopes — they are three different aperture configurations on the same instrument, three different selections from the same scattered electron distribution. Reading any TEM image starts with knowing which selection was made.
-
-By the end of this chapter you can identify bright-field versus dark-field imaging from the methods section, predict what each shows for a given specimen, and decide which to acquire for a given research question.
-
-### Learning objectives
-
-By the end of this chapter you can:
-
-- **Describe** the two-stage TEM image-formation process: primary image at the objective image plane, magnified image at the camera plane.
-- **Distinguish** the back focal plane from the image plane and locate the objective aperture in the column.
-- **Choose** between bright-field and dark-field imaging for a given specimen and question.
-- **Define** contrast quantitatively as $C = \Delta I / I$ and predict how aperture size affects it.
-- **Recognize** projection ambiguity in TEM images and propose imaging strategies that resolve it.
-
-### Prerequisites
-
-Chapter 13 (TEM column components, especially objective and intermediate lenses), Chapter 12 (TEM as transmission microscopy). Some familiarity with lens optics: object plane, image plane, focal plane.
-
-### Why this chapter matters
-
-Bright-field is the default mode for almost all TEM work. The minute you understand what BF actually selects, you can also read DF, HRTEM, and STEM images critically. Reading a paper's TEM figures starts here.
+That is the whole of this chapter. Once you understand what the objective aperture is selecting — and why the different selections give radically different images from the same physical object — you can read any TEM image critically. Bright-field, dark-field, and high-resolution phase contrast are not three different instruments. They are three aperture configurations on the same instrument, three different answers to the question: of all the electrons that passed through the specimen, which ones are we letting form the image?
 
 ---
 
-## 2. The two-stage image formation process
+To understand the aperture's role, you need to understand how the TEM forms an image in the first place. The process has two stages, and most of the confusion about TEM imaging comes from not keeping the two stages clearly separated.
 
-The question this section answers is: how does the TEM go from a 100-nm specimen to a 1-million-fold magnified image at the camera?
+In the first stage, the electron beam strikes the specimen. Some electrons pass straight through without any interaction — these are the **direct beam**, the unscattered electrons. Others scatter elastically at specific angles determined by the crystal structure of the specimen, producing a pattern of discrete beams called **diffracted beams**. Still others scatter at larger angles, lose energy in inelastic events, or scatter diffusely. All of these electrons — direct, diffracted, and scattered in various directions — then pass through the objective lens.
 
-### Mechanism — objective primary image, projector cascade
+Here is the crucial thing about a lens: it does two distinct things at two distinct planes below it. At the **back focal plane**, which sits at one focal length below the lens, all rays that were parallel when they entered the lens — meaning all electrons scattered at the same angle — converge to the same point. The result is a **diffraction pattern**: a map of scattering directions, where each spot corresponds to a particular beam direction. For a crystalline specimen, this pattern is a set of sharp spots arranged according to the crystal's symmetry. For an amorphous specimen, it is a set of diffuse rings.
 
-Per the week-11 source, image formation in the TEM occurs in two stages:
+At a different plane, farther below the lens, something else happens: all the electrons that originated from the same point on the specimen converge back together, regardless of what angle they scattered through. This is the **image plane**, and it contains a magnified image of the specimen.
 
-**Stage A: scattering and primary image formation.** An incident electron beam strikes the specimen; some electrons pass through unscattered (the **direct beam**), others scatter elastically at small angles (forming a discrete diffraction pattern for crystalline specimens) or at larger angles (diffuse scattering for amorphous or biological specimens), still others scatter inelastically (losing energy as they go). All these scattered and unscattered electrons pass through the **objective lens**, which focuses them.
+<!-- → [DIAGRAM: ray diagram of a TEM objective lens showing three electron trajectories from a single specimen point — direct beam, one diffracted beam at a shallow angle, one at a steeper angle — converging at the image plane; simultaneously showing that parallel beams (same scattering angle from different specimen points) converge at the back focal plane to form the diffraction pattern; both planes labeled with their distances from the lens; student should see how one lens produces two distinct outputs at two distinct planes] -->
 
-The objective lens is *the* central component of TEM optics. Its action has two distinct outputs at two different planes below the lens:
-
-- **Back focal plane.** Where parallel rays from infinity (here: parallel beams scattered at the same angle) come to focus. The back focal plane contains the **diffraction pattern** of the specimen — each scattered direction maps to a distinct point.
-- **Image plane.** Where rays from each point on the specimen converge after passing through the lens. The image plane contains the **primary image** of the specimen.
-
-The same lens produces both outputs simultaneously, at different planes. Operators select which plane to project onto the screen by adjusting the intermediate lens.
-
-**Stage B: magnification and final image.** The intermediate lens picks up either the image plane (giving an image of the specimen at the screen) or the back focal plane (giving a diffraction pattern at the screen) and projects it. Subsequent projector lenses magnify further. The final image at the camera or viewing screen is the result.
-
-### Object, image, and focal planes
-
-The week-11 source emphasizes the geometric relationships:
-
-- The **object plane** is where the specimen sits — always above the objective lens.
-- The **image plane** is where the primary image appears — always below the objective lens.
-- The **focal plane** (back focal plane in our context) is where parallel rays from the object plane focus.
-
-These three planes have a specific geometric relationship determined by the lens equation. For a thin lens of focal length $f$:
-
-$$
-\frac{1}{d_o} + \frac{1}{d_i} = \frac{1}{f}
-$$
-
-where $d_o$ is the object-to-lens distance and $d_i$ is the lens-to-image distance. The image plane shifts when the focal length shifts (i.e., when lens current changes), which is why focusing a TEM image is operationally a current adjustment.
-
-### Trade-off
-
-The two-stage architecture optimizes for **flexibility and high magnification at the cost of optical complexity**. Compared to a light microscope (which also has two stages), the TEM column is harder to align and the consequences of mis-alignment are more dramatic. The reward is the ability to switch between imaging mode and diffraction mode using the same lens stack.
-
-### What Goes Wrong Here
-
-- **Mode confusion: the operator believes they are in imaging mode but the screen shows diffraction.** Diagnostic: imaging mode shows specimen features (gray-level variations, organic morphology, etc.); diffraction mode shows discrete spots or rings on a dark background.
-- **Defocus moves the image plane off the camera.** Image is dim or absent. Diagnostic: scan the focus knob until image returns.
+The same lens produces both outputs — a diffraction pattern and an image — simultaneously, at different distances below it. The operator selects which output to project onto the camera by adjusting the strength of the intermediate lens. When the intermediate lens focuses on the back focal plane, you see the diffraction pattern. When it focuses on the image plane, you see the image. The ability to switch between these two modes at the press of a button — to go from an image of a grain to the diffraction pattern of the same grain and back — is one of the distinctive powers of the TEM.
 
 ---
 
-## 3. Bright-field imaging: the default
+Now the objective aperture enters, and this is where the choice that determines everything gets made.
 
-The question this section answers is: what does the most common TEM imaging mode actually do, and why is it the default?
+The objective aperture is a thin metal disk with a small hole, inserted at the back focal plane. Because the back focal plane is where the diffraction pattern forms, the aperture can selectively block specific beams. If you center the aperture's hole on the direct beam, only the direct beam passes through to form the image. All the scattered beams are physically blocked. This is **bright-field imaging**.
 
-### Mechanism — aperture passes only the direct beam
+What does a bright-field image show? The direct beam is the beam that was *not* scattered. Any part of the specimen that scatters electrons strongly will send fewer electrons into the direct beam — those electrons went sideways, into the diffracted directions, and got blocked by the aperture. So regions that scatter strongly appear dark in the image, because they depleted the direct beam. Regions that scatter weakly appear bright. Voids and holes in the specimen appear brightest of all, because nothing is there to scatter anything.
 
-In **bright-field (BF) imaging**, the operator inserts the objective aperture into the back focal plane and *centers it on the direct beam*. The aperture is small enough that it physically blocks the scattered beams (which appear at the back focal plane as off-axis spots in a discrete diffraction pattern, or as a halo for amorphous/biological specimens). Only the direct beam — the unscattered electrons — passes through to form the image.
+The practical consequences are worth spelling out. Thicker regions of the specimen appear darker in bright-field because the electron path through more material means more scattering events. Regions with higher atomic number appear darker because heavier atoms scatter electrons more strongly. Crystalline regions appear darker when they are oriented at an angle that produces strong diffraction — the Bragg condition — because diffraction is just organized, coherent scattering. And because all of these effects contribute simultaneously to the image, interpreting a bright-field image is not always straightforward: a dark region could be thick, or heavy, or crystalline in a particular orientation, or some combination.
 
-What does this image show? **Regions of the specimen that scatter strongly appear dark.** Because the aperture excludes scattered electrons, regions that scatter many electrons send fewer to the image plane, so they look dark. Regions that scatter weakly appear bright. The contrast is amplitude contrast: the image is built from variations in the *number* of electrons reaching the camera.
+<!-- → [DIAGRAM: schematic cross-section of a specimen with three labeled regions — a void, an amorphous light-element region, and a heavy-element crystalline region — with arrows showing how many electrons from each region reach the back focal plane's direct-beam spot vs. diffracted spots; below it, the corresponding bright-field image showing void bright, light region intermediate, heavy/crystalline region dark; student should see the direct mapping from scattering strength to image intensity] -->
 
-For a typical bright-field image:
-- **Thicker regions** appear darker (more scattering events, fewer electrons through).
-- **Higher-Z regions** appear darker (heavier atoms scatter more).
-- **Crystalline regions** appear darker when oriented to diffract strongly.
-- **Voids and holes** appear brightest (no scattering at all).
+The contrast in such an image is defined quantitatively as
 
-The week-11 source notes BF is "the most common imaging mode in TEM" and produces "images with a dark and light contrast between different parts of a structure."
+$$C = \frac{\Delta I}{I}$$
 
-### Defining contrast
-
-Contrast in TEM is defined quantitatively as the relative difference in intensity between adjacent regions:
-
-$$
-C = \frac{I_2 - I_1}{I_1} = \frac{\Delta I}{I_1}
-$$
-
-A 10% contrast means the brighter region is 1.10 times the intensity of the darker. The visibility threshold for a human observer in noisy data is typically 5–10% contrast.
-
-The source notes a critical operator-level trade-off: **as overall image intensity increases, contrast decreases** for a given specimen. Brighter illumination floods the dark regions with more electrons too, washing out the relative differences. The implication: for delicate features, dim illumination plus long acquisition gives better contrast than bright illumination plus short acquisition.
-
-### Aperture size and contrast
-
-The operator can choose objective aperture sizes (typically 20–60 μm physical diameter). The trade:
-
-- **Smaller aperture:** excludes more scattered electrons; greater contrast; less current; more diffraction-limited blurring.
-- **Larger aperture:** includes some scattered electrons; lower contrast; more current; less diffraction-limited blurring.
-
-For high-contrast imaging of biological specimens, smaller aperture. For high-current imaging where SNR matters, larger aperture. Typical default: 30–40 μm aperture.
-
-### Trade-off
-
-BF imaging optimizes for **simplicity and broad applicability at the cost of selective sensitivity**. BF works for almost all specimens but does not maximize any particular kind of contrast. If you want maximum sensitivity to crystalline orientation, dark-field is better. If you want to see lattice fringes, HRTEM. If you want light-element sensitivity, EELS. BF is the default; the others are specializations.
-
-### Worked example: contrast computation for a polymer
-
-**Problem.** A bright-field TEM image of a stained polymer at 80 kV shows two phases: phase A with 4,000 counts per pixel; phase B with 3,200 counts per pixel. Compute contrast. Predict the visual visibility.
-
-**Given.** $I_A = 4000$, $I_B = 3200$.
-
-**Reasoning.** Take the lower as $I_1$:
-
-$$
-C = \frac{I_A - I_B}{I_B} = \frac{4000 - 3200}{3200} = 0.25
-$$
-
-So 25% contrast.
-
-**Sanity check.** This is well above the 5–10% visibility threshold. The phase boundary will be clearly visible.
-
-**General lesson.** Contrast above 10–15% is comfortable to see; below 5% requires longer exposures, image processing, or a different imaging mode.
-
-### What Goes Wrong Here
-
-- **Objective aperture not centered on the direct beam.** Image dim or asymmetrically lit. Diagnostic: check aperture-centering routine. Fix: re-center.
-- **Aperture too large for high contrast.** Features barely visible. Fix: insert smaller aperture.
-- **Image too bright; contrast washed out.** Reduce illumination at C2; lengthen acquisition.
+the fractional difference in intensity between adjacent regions. A region that is 10% darker than its neighbor has a contrast of 0.10. Below about 5%, features become difficult to see by eye in noisy data; above 15%, boundaries are clear and unambiguous. The size of the aperture matters here. A smaller aperture excludes more of the scattered electrons, improving contrast. But a smaller aperture also admits fewer electrons through to the camera, which means the image is dimmer and requires either longer acquisition time or higher beam current. There is no free lunch: smaller aperture, more contrast, less current.
 
 ---
 
-## 4. Dark-field imaging: contrast inversion
+The inversion of bright-field imaging is immediate once you understand the mechanism. In **dark-field imaging**, the aperture is configured so that the direct beam is blocked and only one or more scattered beams pass through. The image is now formed by electrons that *were* scattered in a specific direction. The result is a perfect inversion of the bright-field logic: regions that scatter strongly into the chosen direction appear bright; regions that do not appear dark; the background — the matrix, the vacuum — is black.
 
-The question this section answers is: what happens when you swap the aperture's role and pass only scattered beams?
+There are two ways to achieve dark-field operationally. The simpler is to displace the aperture off-axis to surround a specific diffracted spot, while the illumination stays on-axis. This works but produces slightly degraded image quality because the selected beam is traveling off-axis through the lens, which means it experiences more of the lens's aberrations than a beam traveling straight down the optic axis. The better technique is **centered dark-field**: tilt the incident beam so that the diffracted beam of interest is now traveling down the optic axis, then center the aperture on that beam. The selected beam now travels straight through the center of the lens with minimum aberration, giving a sharper image at the cost of some setup time.
 
-### Mechanism — aperture excludes the direct beam, passes scattered
+<!-- → [DIAGRAM: side-by-side comparison of off-axis dark-field (aperture displaced, beam straight) vs. centered dark-field (beam tilted, aperture centered) — showing beam paths, aperture positions, and lens aberration zones in each case; student should see why the off-axis configuration passes the selected beam through the lens periphery where aberrations are larger, and why centered DF corrects this] -->
 
-In **dark-field (DF) imaging**, the objective aperture is configured so that the *direct beam is blocked*; only scattered beams contribute to the image. Two ways to achieve this:
+The power of dark-field comes from its selectivity. Suppose a polycrystalline specimen has grains of several different orientations, and a second-phase precipitate at the grain boundaries. In bright-field, all grains transmit the direct beam to varying degrees, and the precipitates are barely distinguishable from the matrix. But if you move the aperture to surround a diffracted spot that comes specifically from the precipitate's crystal structure — a spot that appears only when the precipitate diffracts, not when the matrix diffracts — then the dark-field image lights up only the precipitates. Everything else is dark. The population of precipitates, their size, their distribution, their density at grain boundaries: all of this becomes visible in a way that the bright-field image could not show.
 
-- **Off-axis aperture displacement.** The aperture sits to one side of the direct beam, allowing one diffracted beam (or a sector of scattered electrons) through. The image is formed by the scattered electrons in that direction.
-- **Centered dark-field with beam tilt.** The illumination is tilted so the diffracted beam of interest goes down the optic axis; the aperture sits centered on the optic axis but now passes the (formerly off-axis) diffracted beam.
-
-The result inverts the bright-field image:
-- **Strongly scattering regions appear bright.** (They sent lots of electrons toward the diffracted direction.)
-- **Weakly scattering regions appear dark.**
-- **Voids and holes appear black.** (No scattering.)
-- **Crystalline regions oriented to diffract toward the aperture appear bright.**
-
-DF imaging is particularly useful for crystallography and defect imaging. A dislocation appears as a thin dark line in BF and as a thin bright line in DF, but the DF image isolates *only* the regions of crystal oriented to scatter into the chosen direction — making specific defects much more visible against a dark background.
-
-### Operationally
-
-In practice, BF is the survey mode and DF is the targeted mode. An operator reaches for DF when:
-- Specific crystalline phases need to be highlighted against a darker matrix.
-- Defects need to be seen in isolation from the bright bulk.
-- Single-grain orientation work is the goal.
-
-### Trade-off
-
-DF optimizes for **sensitivity to specific scattering channels at the cost of overall image brightness**. The image is much dimmer than BF (most electrons are excluded), so longer acquisition times are needed.
-
-### Worked example: choosing BF or DF for grain-boundary work
-
-**Problem.** A graduate student wants to image grain boundaries in a polycrystalline metal foil. Boundaries are decorated with second-phase precipitates ~20 nm in size. Bright-field images show grains as different gray levels but precipitates are barely visible. Should the student switch to DF?
-
-**Reasoning.** In BF, all grains appear because they all transmit electrons; precipitates barely show because the contrast difference between the precipitate Z and the matrix Z is small and the precipitates are thin. In DF, an aperture around a single matrix-grain diffracted beam will show *only* that grain bright, with everything else dark — including precipitates. If the precipitates have different crystal structure (different scattering pattern) than the matrix, they will not appear in the matrix-DF image. Conversely, choosing an aperture around a precipitate-specific scattered beam (if it exists) lights only the precipitates against a dark matrix.
-
-**Answer.** Yes, switch to DF, with the aperture centered on a precipitate-specific scattered beam if available, or alternatively a matrix-specific beam to highlight grain boundaries by their lack of brightness.
-
-**General lesson.** BF is great for survey; DF is great for hunting specific features that have a distinctive scattering signature.
-
-### What Goes Wrong Here
-
-- **DF image too dim to see anything.** Long exposure and high beam current are routine for DF. Or: the chosen aperture is in a low-intensity scattered beam.
-- **Confusion about which features should appear in DF.** Operators sometimes expect DF to show "everything that scatters"; in fact, it shows only what scatters into the aperture's solid angle. Different aperture positions show different features.
+This is the reason experienced TEM operators think in terms of aperture configuration rather than "mode." The question is not "should I use BF or DF?" The question is "which beam — or which set of beams — contains the information I want?" The aperture is simply the hardware tool for answering that question.
 
 ---
 
-## 5. Synthesis: aperture choice and projection ambiguity
+There is a third aperture configuration that deserves its own discussion, though the full treatment belongs in Chapter 17. When you remove the objective aperture entirely — or use one so large that it lets all the beams through — something qualitatively different happens. The direct beam and multiple diffracted beams all arrive at the image plane simultaneously. They interfere. The image is no longer an amplitude image — a record of how many electrons passed through each region — but a **phase image**: a record of the interference pattern between all the waves that passed through the specimen. This is **high-resolution TEM**, or HRTEM, and it can show lattice fringes at atomic spacings. The interpretation is more complicated because the image depends on both the specimen's structure and the phase shifts introduced by the lens itself — but the reward is atomic-scale spatial information.
 
-The objective aperture is the operator's most consequential mode-selection lever. The configurations:
+The distinction between amplitude contrast and phase contrast is fundamental. Bright-field and dark-field images are amplitude contrast: they show intensity variations caused by differences in how many electrons reached each pixel. HRTEM images are phase contrast: they show intensity variations caused by differences in the phases of waves that interfered at the camera. A thin, light-element specimen that has almost no amplitude contrast — almost invisible in bright-field — can have strong phase contrast because the atoms shift the electron waves' phases even when they deflect relatively few of them.
 
-| Configuration | Aperture | What's selected | Mode | Image character |
-|---|---|---|---|---|
-| Aperture centered on direct beam | small | direct beam only | bright-field | scattering = dark |
-| Aperture off-axis on a scattered beam | small | one scattered beam | dark-field | diffracting = bright |
-| Aperture removed or very large | large/none | all beams | HRTEM/phase contrast | lattice fringes |
-| Beam tilted, aperture centered | small | one scattered beam | centered DF | same as off-axis DF |
-
-The trade between BF and DF is exclusive: same specimen, opposite image. A combined-mode approach takes a BF image, then a DF image of the same field, and uses both to interpret the structure. Some modern instruments allow simultaneous acquisition of BF and DF using detectors at different solid angles.
-
-### Projection ambiguity
-
-A TEM image is a projection through the specimen's full thickness. The week-10 source warned that "you cannot say that the particles are spheres. They could equally well be disks or cylinders." The 2D image cannot distinguish:
-
-- **Spheres versus disks.** A sphere viewed from any angle is a circle. A disk viewed face-on is also a circle.
-- **Hollow versus solid.** A particle with a low-density core and a high-density shell looks like a "doughnut" in BF (bright center with dark ring). But the same image could result from a solid particle made of a uniform material with curvature-dependent path length, depending on the specimen.
-- **Surface versus interior features.** Where a feature lies in the specimen's depth dimension is mostly invisible in a single image.
-
-Resolving projection ambiguity requires:
-
-- **Tomography** (Chapter 19) — tilt series produces a 3D reconstruction.
-- **Stereo pairs** — two images at different tilt angles allow stereo viewing.
-- **Mass-thickness modeling** — for known materials, contrast scales predictably with thickness.
-- **Complementary techniques** — SEM at the surface, AFM for topography, X-ray diffraction for crystal phase.
-
-### Putting it all together (worked synthesis)
-
-A graduate student needs to characterize 50 nm zeolite particles inside a polymer matrix. The plan:
-
-- **BF at 100 kV.** Survey the specimen, locate isolated zeolite particles. Mass-thickness contrast distinguishes zeolite (silicate) from polymer.
-- **BF at higher magnification.** Image individual zeolites for shape characterization.
-- **DF.** Aperture on a zeolite-specific diffracted beam. Highlights zeolite particles against dark polymer matrix; useful for population statistics.
-- **HRTEM** (Chapter 17). Aperture removed; lattice fringes of zeolite. Confirms crystal phase and orientation.
-- **SAED** (Chapter 15). Aperture configuration on a single zeolite. Diffraction pattern indexed to identify zeolite phase.
-
-Five aperture configurations on the same specimen. Each answers a different question. The full session demonstrates the operator's discipline of choosing apertures deliberately.
-
-### Scale shift
-
-Zoom in further than the operator usually goes: at the level of individual atoms, a TEM image is a coherent superposition of electron waves that have passed near and around individual atomic centers. The scattering and the interference are quantum-mechanical: each electron acts as a wave that interferes with itself between atoms. The image is the time-averaged probability distribution of where electrons land at the camera plane. A single TEM image with $10^9$ electrons per pixel is a statistical sampling of a wavefunction that, for a single electron, is purely probabilistic. The wonder is that this probabilistic individual-particle physics aggregates into an image that cleanly resolves features 0.1 nm apart. The wave nature of electrons, predicted by de Broglie in 1924, is not just an abstract idea — it is what makes the image possible.
+<!-- → [TABLE: comparison of the three aperture configurations — columns: mode name, aperture position, what reaches the image plane, contrast mechanism (amplitude vs. phase), appears bright, appears dark, best used for; rows: bright-field, dark-field (off-axis), centered dark-field, HRTEM (no aperture); student should use as a reference when reading published TEM figures] -->
 
 ---
 
-## 6. Pre-lab Checklist (Lab 14 — BF and DF imaging)
+There is a subtlety about TEM images that easy to miss and important to keep straight: every TEM image is a projection through the full thickness of the specimen. The electron beam does not scan across the surface of a specimen the way the SEM probe does. It passes through, and everything the beam encounters along its path — from the top surface to the bottom — contributes to the image simultaneously. The image is a two-dimensional shadow of a three-dimensional object.
 
-**By the end of this chapter, you should be able to:**
+The consequence is projection ambiguity. Suppose you see a circular feature with a bright center and a dark ring in a bright-field image. That looks like a hollow vesicle — a particle with low-density interior and high-density shell. But the same image would result from a solid sphere whose edges scatter more than its center because the electrons at the edges pass through more material. And it could result from a cylinder viewed end-on, or a disk viewed face-on. The 2D image is consistent with all of these interpretations, and a single image cannot distinguish among them.
 
-- Acquire a bright-field image with the objective aperture centered on the direct beam.
-- Acquire a dark-field image by tilting the beam onto a chosen scattered beam.
-- Recognize projection ambiguity and propose a tilt-series strategy if needed.
+<!-- → [INFOGRAPHIC: three 3D objects side by side — a hollow sphere, a solid sphere, a disk — each shown with its expected bright-field TEM image below it (all three projections look like a bright circle with a dark rim); label: "same image, three different objects"; student should immediately understand the projection ambiguity problem and why a single image is not sufficient to determine 3D geometry] -->
 
-**Bring to lab:**
-
-- This chapter, especially Sections 3 and 4.
-- A prepared TEM grid (provided by the lab).
-
-**Expect on the floor:**
-
-- A guided BF acquisition on a polycrystalline specimen.
-- A first attempt at DF imaging by aperture displacement.
-- Side-by-side comparison of BF and DF on the same field of view.
+Resolving projection ambiguity requires acquiring more information. A tilt series — images at many different specimen orientations — provides enough data for tomographic reconstruction of the 3D structure, and electron tomography is now a standard technique for exactly this purpose. Stereo pairs — two images at tilt angles of plus and minus 10° — give a sense of depth that the eye can interpret as three-dimensional. Modeling the expected contrast for specific geometries and comparing to the image is another approach when the material composition is known. None of these is needed for every specimen, but every TEM operator should have the habit of asking: what I see in this image is a 2D projection. What constraints does the 3D geometry have to satisfy for this projection to make sense?
 
 ---
 
-## 7. Quick-Reference Table
+The deeper reason TEM can achieve the resolution it does — sub-angstrom in modern aberration-corrected instruments — is quantum mechanical in a way that is worth appreciating directly.
 
-| Imaging mode | Aperture configuration | What appears bright | What appears dark | Best for |
-|---|---|---|---|---|
-| Bright-field (BF) | center on direct beam | regions that scatter weakly | regions that scatter strongly | survey, mass-thickness, defect imaging in BF |
-| Dark-field (DF) | center on scattered beam | regions that scatter strongly into chosen direction | other regions | crystalline phase / orientation work |
-| Centered DF (tilt) | beam tilted, aperture central | regions diffracting into selected direction | other regions | high-quality DF imaging |
-| HRTEM (phase) | very large or no aperture | lattice fringes from interference | interference dark | atomic-resolution lattice imaging |
+The image at the camera is built up from individual electron detection events. Each detection event — each electron that strikes the camera — is a quantum measurement: the electron's position is determined to be at that pixel, not somewhere else. The probability distribution for where the electron will land is determined by the squared magnitude of the electron wavefunction at the camera plane. For a single electron, that wavefunction is a coherent superposition of amplitudes from all the paths the electron could have taken through the specimen and the lens: paths near individual atoms, paths between atoms, paths through vacancies. The image is the time-averaged result of a large number of such measurements.
 
-| Operating choice | Effect |
-|---|---|
-| Smaller aperture | higher contrast, lower current, more diffraction blur |
-| Larger aperture | lower contrast, higher current |
-| Lower kV | more contrast, more beam damage |
-| Higher kV | lower contrast, less damage, sharper at thin parts |
-| Longer acquisition | better SNR, more drift exposure |
+This means that a TEM image of a crystal is, at the fundamental level, an interference pattern built up from single-electron quantum events. The lattice fringes visible in an HRTEM image are the constructive and destructive interference of electron waves that passed near individual atomic columns. The reason different atoms produce different image intensities is that different atoms shift the phases and amplitudes of the passing waves differently. The image is not a photograph of the atoms; it is a record of how the atoms influenced a quantum-mechanical wave field.
+
+This is not mysticism — it is the same de Broglie wave-particle duality that Chapter 2 invoked to explain why wavelength falls with accelerating voltage. But at the resolution scale of HRTEM, the quantum nature of the image is not a background fact; it is the mechanism. The sub-angstrom spatial information in the image comes from the coherence length of the electron wavefunction, which in a field-emission TEM is long enough to produce interference across features separated by fractions of a nanometer. Every bright spot in a lattice image is a location where electron waves interfered constructively. Every dark region is where they interfered destructively.
+
+The student at the aluminum foil who inserted the objective aperture and watched the grain boundaries sharpen was making a quantum-mechanical selection: choosing which components of the electron wavefunction at the back focal plane were allowed to interfere at the image plane. The physics is continuous from the aperture experiment to the atomic-resolution lattice image. The aperture is just the macroscopic handle on a quantum-mechanical degree of freedom.
 
 ---
 
-## 8. Exercises
+**What would change my mind:** evidence that single-image TEM acquisition can routinely resolve three-dimensional structure without tilt-series tomography. Recent algorithmic approaches — compressed sensing, deep-learning reconstruction — make progress on this, but the underlying projection ambiguity is an information-theoretic constraint, not an algorithmic one. A single 2D projection loses depth information irreversibly; recovering it requires either additional images at different orientations or strong prior assumptions about the specimen's geometry.
+
+**Still puzzling:** the decision of when enough complementary mode data has been acquired to unambiguously characterize a specimen is not well-formalized. Most operators rely on heuristics — image in BF, confirm in DF with multiple reflections, check with electron diffraction. Whether these heuristics are sufficient in any given case is a judgment that depends on what the operator already knows about the material system. A principled stopping criterion would be genuinely useful and, as far as I know, does not exist.
+
+---
+
+## Exercises
 
 ### Warm-up
 
-**Exercise 14.1 (LO: identify image planes).**
-For a TEM with a focal length of 5 mm and an object distance of 6 mm, where is the image plane? Difficulty: easy.
+**14.1** A TEM has a focal length of 5 mm. The specimen sits 6 mm above the objective lens. Using the thin-lens equation, calculate where the primary image forms below the lens. *(Tests: two-stage image formation geometry and the lens equation.)*
 
-**Exercise 14.2 (LO: BF/DF distinction).**
-In BF imaging, regions that scatter strongly appear ___, while in DF imaging they appear ___. Difficulty: easy.
+**14.2** In bright-field imaging, a region that scatters electrons strongly appears \_\_\_. In dark-field imaging of the same region using a diffracted beam from that region, it appears \_\_\_. Explain in one sentence why the two modes give opposite results for the same physical feature. *(Tests: BF/DF contrast inversion and its physical origin.)*
 
-**Exercise 14.3 (LO: define contrast).**
-A region of a TEM image has 5,000 counts per pixel; an adjacent region has 3,000 counts. Compute the contrast and predict whether the boundary is visible. Difficulty: easy.
+**14.3** A bright-field TEM image of a stained polymer blend shows phase A at 4,200 counts per pixel and phase B at 3,100 counts per pixel. Calculate the contrast between the phases and predict whether the phase boundary will be clearly visible. *(Tests: contrast calculation and visibility threshold.)*
 
 ### Application
 
-**Exercise 14.4 (LO: choose mode for question).**
-For each scenario, name the imaging mode you would acquire first: (a) survey image of a polycrystalline metal foil at low magnification; (b) imaging of a specific crystalline phase against a matrix; (c) atomic-resolution imaging of a silicon-germanium interface. Difficulty: medium.
+**14.4** For each of the following goals, state which aperture configuration you would use and explain why in one sentence: (a) survey imaging of an amorphous biological specimen; (b) mapping the distribution of a specific crystalline precipitate in a metal matrix; (c) atomic-resolution imaging of a semiconductor interface. *(Tests: mode selection logic across three specimen types.)*
 
-**Exercise 14.5 (LO: predict aperture-size effect).**
-A BF image at 80 kV using a 30-μm objective aperture has 12% contrast on a polymer phase. The operator switches to a 60-μm aperture at the same kV. Predict the new contrast. Justify in one sentence. Difficulty: medium.
+**14.5** A researcher is using a 30 μm objective aperture in bright-field and reports 8% contrast on a polymer phase boundary. They switch to a 60 μm aperture without changing anything else. Predict qualitatively what happens to contrast and explain why. *(Tests: aperture-size effect on contrast and current.)*
 
-**Exercise 14.6 (LO: identify projection ambiguity).**
-A TEM BF image shows what looks like a 50-nm spherical hollow vesicle (bright center, dark rim). What three alternative interpretations of the image exist, and what would you do to test among them? Difficulty: medium.
+**14.6** A bright-field TEM image shows a circular feature 80 nm in diameter with a bright center and a dark annular rim. List three physically distinct specimen geometries that would produce this image, and propose one additional measurement or imaging step that would distinguish between them. *(Tests: projection ambiguity identification and experimental strategy for resolving it.)*
 
-**Exercise 14.7 (LO: choose between BF and DF).**
-A graduate student wants to count tiny twin boundaries in a single grain of a copper foil. The grain is one of many in the field; the boundaries are subtle in BF. What mode-and-aperture strategy would isolate the twins? Difficulty: medium.
+**14.7** Explain why centered dark-field produces sharper images than off-axis dark-field on the same specimen with the same aperture. Your explanation should name which aberration is reduced and why the beam-tilt configuration reduces it. *(Tests: centered DF geometry and its aberration advantage.)*
 
 ### Synthesis
 
-**Exercise 14.8 (LO: integrate BF, DF, HRTEM).**
-A nanomedicine PI has 100 nm cobalt-iron oxide magnetic nanoparticles in a polymer matrix. The PI needs to (a) confirm particle size and dispersion, (b) verify the particles are crystalline, (c) determine the particle-matrix interface character. Specify a TEM acquisition strategy with at least three aperture configurations and explain what each reveals. Difficulty: hard.
+**14.8** A nanomaterials group has synthesized 80 nm iron oxide nanoparticles inside a carbon nanotube. They need to: (a) confirm the particles are present and measure their size distribution; (b) verify that the particles are crystalline iron oxide and not amorphous; (c) determine whether the particles are touching the nanotube wall or floating inside. Specify a TEM acquisition plan with at least three distinct aperture configurations, naming what each reveals and what ambiguity each resolves. *(Tests: multi-mode TEM planning and projection ambiguity strategy for a real nanostructure.)*
+
+**14.9** A published bright-field TEM image of a polymer vesicle shows a structure with a bright interior and a dark ring ~10 nm thick. The authors claim this proves the vesicle is hollow with a lipid bilayer wall. Identify the projection-ambiguity problem with this claim, propose an alternative structural interpretation consistent with the same image, and describe one experiment that would distinguish between the two interpretations. *(Tests: critical reading of published TEM figures, projection ambiguity, and experimental design.)*
 
 ### Challenge
 
-**Exercise 14.9 (open-ended).**
-Find a published paper that uses TEM bright-field and dark-field imaging on the same specimen. Explain in two paragraphs how the comparison answers a question that BF alone cannot answer. Difficulty: open-ended.
-
----
-
-## 9. Summary
-
-You walked into this chapter with a sense that TEM produces images. You walk out with the two-stage image-formation architecture, the objective aperture's role at the back focal plane, and the operator's choice of which beams contribute to the image. You can read BF and DF imagery critically, compute image contrast, and recognize projection ambiguity in 2D images of 3D specimens.
-
-The one idea that matters most: the same specimen produces different images in BF, DF, and HRTEM modes because the objective aperture selects different beams. The image you see is a deliberate selection from the post-specimen wave field.
-
-The common mistake to watch for is treating a single TEM image as a complete description of a specimen. Every image is a 2D projection through the thickness with a specific aperture configuration; it tells you what the aperture-passed beams reveal, not what the specimen actually is. Tilting, complementary modes, and tomography address this — but only by acquiring more data.
-
-The Feynman test: explain to a labmate, without using the word "aperture," why the same specimen looks bright in some regions in BF and dark in those same regions in DF.
-
----
-
-## 10. Connections Forward
-
-Chapter 15 takes the back focal plane and unpacks the diffraction pattern that lives there — selected-area electron diffraction, indexing, d-spacings, zone axes. Chapter 16 covers contrast mechanisms in detail: mass-thickness, diffraction, and phase contrast, including Fresnel fringes you've already met. Chapter 17 covers HRTEM, STEM, and HAADF — advanced modes where the aperture rules differ. Chapter 19 covers tomography, the answer to projection ambiguity.
-
-The question this chapter raised but did not answer: what *is* the diffraction pattern at the back focal plane, and how do you read it? Chapter 15 begins.
-
----
-
-**What would change my mind:** evidence that single-image TEM acquisition can routinely resolve 3D structure without tilt-series tomography. Recent algorithmic methods (compressed sensing, deep-learning reconstruction) make progress here but the underlying projection ambiguity remains an information-theoretic limit.
-
-**Still puzzling:** the practical decision of when "enough" diffraction-mode data to disambiguate a structure has been collected is not well-formalized. Most operators rely on heuristics (orient on multiple zone axes, get tilt series) rather than principled stopping criteria.
-
-**Tags:** `bright-field`, `dark-field`, `objective-aperture`, `image-formation`, `projection`
-
----
-
-### Note to the professor
-
-`[verify]` markers in this chapter:
-- Specific contrast-threshold values (5–10%) — operator-dependent.
-- Worked-example numerics — constructed plausible.
-
-Voice anchoring: anchored. Aluminum-foil chapter opening; capability ending; scale shift in synthesis (probabilistic individual-electron physics aggregating into a clean image). Length ~5300 words.
+**14.10** Find a published paper that uses both bright-field and dark-field TEM on the same specimen. In two paragraphs, explain what question the dark-field image answered that the bright-field image could not, and assess whether the authors' interpretation of the dark-field image is consistent with the aperture configuration they describe in their methods. *(Tests: critical literature reading, BF/DF complementarity, and methods-section evaluation.)*
