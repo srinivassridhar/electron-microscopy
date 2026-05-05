@@ -1,396 +1,133 @@
 # Chapter 26 — Designing, Reporting, and Critiquing Electron Microscopy Experiments
 
-## Title options
-
-1. **Closing the Loop: Methods, Figures, Critique**
-2. **Writing the Methods Section: How to Make Your EM Defensible**
-3. **From Image to Argument: Reporting and Reading EM**
-
-## TL;DR
-
-A defensible EM result requires a defensible methods section, defensible figures, and a habit of critiquing both your own and others' published work. This chapter is the final discipline: how to design experiments to produce reportable data, how to write methods sections that name every consequential parameter, and how to read others' figures with the skepticism the techniques demand.
+*The methods section is not paperwork. It is the argument. Without it, the image is a rumor.*
 
 ---
 
-## 1. Chapter Opening
+A reviewer reads a paper claiming that single iron atoms have been imaged on a graphene support by HAADF-STEM. The headline figure shows bright dots. The dots are labeled "Fe atoms." The EDS spectrum from one dot shows an iron peak. The histogram shows dot diameters consistent with single atoms.
 
-A reviewer reads a paper claiming a novel imaging technique that resolves single iron atoms on a graphene support. The paper has three figures. Figure 1 is the headline: a HAADF-STEM image showing bright dots labeled as Fe atoms. Figure 2 is an EDS spectrum from one of the dots. Figure 3 is a histogram of dot diameters.
+The methods section has one sentence on imaging: *"Imaging at 80 kV in STEM mode."*
 
-The reviewer reads the methods section. *"Imaging at 80 kV in STEM mode."* That's the entire methods sentence on imaging. No working distance, no aperture, no detector specifications, no convergence angle. The figure caption: *"Bright dots represent Fe atoms."* No scale bar referenced explicitly. The histogram methods: *"Diameters were measured manually using ImageJ."* No N stated.
+The reviewer puts down the paper and writes a list. What convergence angle? What inner-collection angle for the HAADF detector? What beam current? What dwell time? What is the point-to-point resolution under those conditions at 80 kV — is it even sufficient to distinguish a single iron atom from a small cluster? How many dots were measured for the histogram — three or three hundred? What is the standard deviation? What was the negative control — graphene without iron, imaged at the same conditions, to confirm the bright dots don't appear spontaneously from contamination?
 
-The reviewer flags every missing piece. The authors revise: methods section now four paragraphs, one per technique, with every parameter named. Caption now states scale, magnification, dose. Histogram methods: 152 atoms measured across 47 micrographs, mean ± SD reported.
+None of this is in the paper. The reviewer cannot reproduce the experiment. The reviewer cannot evaluate whether the bright dots are iron atoms, iron clusters, hydrocarbon contamination, or artifacts of the sample preparation. The result may be correct. But it is not defensible.
 
-The reviewer accepts the paper. The reader who picks it up six months later can reproduce the imaging conditions, reconstruct the analysis, and verify (or contest) the conclusions. The methods section is what made the paper defensible.
+The authors revise. The methods section becomes four paragraphs. The instrument is named with model number, operating voltage, detector geometry, convergence angle, beam current, dwell time, and frame count. The histogram now states N = 152 atoms measured across 47 micrographs from three independent grid preparations. A negative control is added. The reviewer accepts the paper. Six months later, a reader in a different country opens the paper, reads the methods, and can reproduce the imaging conditions to within measurement precision.
 
-This is what Chapter 26 does. By the end you can write a methods section that holds up to skeptical reading, prepare figures that document your work without overselling, and critique published EM critically.
+That is what a methods section is for. It is not prose wrapped around numbers the journal requires. It is the mechanism by which a result becomes a result — verifiable, reproducible, falsifiable.
 
-### Learning objectives
+<!-- → [INFOGRAPHIC: side-by-side comparison of the "bad" and "good" HAADF-STEM methods text from the opening — left panel: the single sentence "Imaging at 80 kV in STEM mode" with red callout arrows pointing to each missing parameter (convergence angle, detector angle, beam current, dwell time, N, negative control); right panel: the revised four-paragraph version with each parameter highlighted in green — shows viscerally what "complete methods section" means versus the common failure mode] -->
 
-By the end of this chapter you can:
+## The reporting contract
 
-- **Design** an EM experiment to produce reproducible, reportable data.
-- **Write** a complete methods section naming every consequential parameter.
-- **Prepare** figures with scale bars, captions, and quantitative measurements.
-- **Critique** a published EM figure for completeness and reproducibility.
-- **Avoid** common pitfalls: over-claimed resolution, cherry-picked images, missing controls.
+When you publish an EM figure, you are making an implicit contract with every future reader. The contract says: what I show is representative of the specimen, acquired under the conditions described, processed in the ways disclosed, and sufficient to support the conclusion drawn. The methods section is the written terms of that contract. A complete methods section is an honest methods section. An incomplete methods section is a contract with unwritten terms — and those are the terms that fail at peer review.
 
-### Prerequisites
+The standard is not "everything imaginable." It is "everything consequential." A parameter is consequential if changing it by a plausible amount would change the result or its interpretation. The accelerating voltage is consequential — 80 kV produces different radiation damage and different chromatic aberration than 300 kV. The HAADF detector's inner collection angle is consequential — a 50 mrad cutoff gives different Z-contrast sensitivity than an 80 mrad cutoff. The number of particles measured for a size distribution is consequential — N = 15 is an anecdote, N = 200 is a distribution. The software version is consequential — the same reconstruction algorithm can give different results in different versions, and the field has documented cases where this mattered.
 
-Chapters 4-25. This is the final chapter; the reader is assumed to know all the techniques and have practiced multi-technique workflows.
+What is not consequential varies by technique. The color of the lab walls is not in the methods section. The brand of lint-free gloves is not in the methods section. The time of day is usually not in the methods section, unless the experiment is measuring something temperature-dependent. The line is drawn by asking: if a competent person read only this methods section and tried to reproduce the result, what would they need to know?
 
-### Why this chapter matters
+## What a complete methods section names
 
-EM data is published in figures and methods sections. Reviewers and readers judge the work primarily through these. A weak methods section can sink a strong result; a strong methods section can vindicate a defensible result against tough critique.
+For SEM, a complete methods section names the instrument (make and model), the accelerating voltage, which detector produced which image (secondary electrons, backscattered, in-lens, EDS — these produce different images of the same specimen), the working distance, the aperture, the beam current or spot size, the magnification range, and the sample preparation in enough detail that someone else can reproduce it from scratch.
 
----
+For TEM, it names the instrument, the voltage, the mode (bright-field, dark-field, HRTEM, STEM), which detector, the camera length for diffraction, the dose in electrons per square angstrom for any beam-sensitive specimen, and — for any analytical mode — the acquisition parameters specific to that mode.
 
-## 2. Designing the experiment for reportable data
+For EDS, those specific parameters include the dead time percentage, the counting time per point or per pixel, whether the detector was fully extended or retracted, and the sample tilt if it differs from zero.
 
-The question this section answers is: what should you plan into an EM experiment to make sure the data is reportable later?
+For EELS, they include the energy dispersion, the energy resolution (zero-loss peak width), the exposure time, and whether a monochromator was used.
 
-### Mechanism — five planning principles
+For cryo-EM single-particle analysis, they include the total dose, the number of frames and the framing rate, the motion-correction algorithm and software version, the CTF-estimation software, the particle count used in the final reconstruction, the 3D classification scheme, and the FSC criterion at which resolution is claimed.
 
-**1. State the research question with a verb.** Without a clear question, the design drifts. Write the question as a sentence with a verb before the first session.
+For any population measurement — particle size distribution, grain size, film thickness — they include N, the software used, and the selection criteria (were particles excluded from the count, and if so, why).
 
-**2. Specify what the figure will show.** Before acquiring data, sketch the figure you want to publish. What needs to be in the image? At what magnification? What scale bar? What caption?
+This list is not exhaustive. The principle is: name every parameter that a competent reader would need to reproduce the experiment or to evaluate whether a specific artifact could explain the result. If you are not sure whether a parameter is consequential, include it. The supplementary materials section exists for exactly this purpose — it is a place to be comprehensive without taxing the main text.
 
-**3. Plan for replicates.** Single images are anecdotes. Quantitative measurements require population statistics: typically N≥30 for histograms, N≥100 for distributions, N≥1000 for SPA-style work.
+## The figure and the claim it makes
 
-**4. Plan controls.** What's the negative control (what should NOT be present)? What's the positive control (what's a known good result)? What's a complementary technique that would cross-check? Plan these into the session.
+Every EM figure makes a claim. The claim might be morphological ("these particles are spherical"), compositional ("the bright regions are iron-rich"), structural ("this material is crystalline"), or dimensional ("the mean diameter is 45 nm"). The figure's job is to make that claim visible. The caption's job is to make the claim explicit. The methods section's job is to make the claim defensible.
 
-**5. Document everything.** Take notes during the session, not after. Time-stamp each acquisition. Note the parameters that changed between images. Save raw data with metadata embedded.
+A scale bar is not decoration. It is the claim that the magnification is what is stated, and that the features visible in the image are the size the scale bar implies. A figure without a scale bar makes an unverifiable claim about every feature in it. This is why peer review routinely rejects figures without scale bars; it is not pedantry. It is the simplest possible test of whether the figure is making a verifiable claim.
 
-### Trade-off
+<!-- → [INFOGRAPHIC: two versions of the same SEM image — left: the image without a scale bar, annotated with "what is the particle size? unknown" and question marks on key features; right: the same image with a proper scale bar, caption naming detector and kV, and a callout showing how size is measured — makes immediately clear what information is lost without the scale bar and what the complete figure provides] -->
 
-Planning optimizes for **defensible reporting at the cost of session efficiency**. A 30-minute "exploratory" session producing one image is faster than a 4-hour systematic session producing replicate measurements. The reportable data justifies the longer session.
+A caption that says "representative image" is making a population claim — that this image represents the distribution of what was found. That claim requires that the operator imaged enough fields to know what was representative, and chose this image to show it. If the image was chosen because it looked the best, or showed the most interesting feature, without context about whether that feature was common or rare, the "representative" label is not honest. The honest caption says how many particles or fields were examined, and why this one was selected.
 
-### Worked example: planning for a nanoparticle paper
+The hardest discipline in figure preparation is restraint in image processing. Adjusting brightness and contrast uniformly across an entire image to make features visible is acceptable and conventional. Adjusting brightness and contrast selectively in different regions of the same image — brightening one part while leaving another dark — is manipulation. Gamma correction applied uniformly is conventional disclosure; gamma correction applied to push faint features above a threshold without documenting it is not. False color is fine if disclosed. Deletion of "artifact" features from an image is misconduct. The line is this: any processing that changes what a viewer concludes about the specimen, applied without disclosure, is falsification. When in doubt, disclose in the methods or caption and let the reader decide.
 
-**Problem.** A graduate student wants to publish characterization of new gold nanoparticles. Goals: confirm shape (assumed spherical), measure size distribution, show one HRTEM lattice image.
+<!-- → [INFOGRAPHIC: three-panel image processing spectrum — left panel: raw TEM image (acceptable, baseline); center panel: uniform brightness/contrast adjustment (acceptable, labeled "disclose if substantial"); right panel: selective regional brightening with the manipulated region outlined in red (not acceptable, labeled "changes what viewer concludes") — gives the student a visual standard for where the ethical line sits rather than just a verbal rule] -->
 
-**Plan.**
-- **Sample preparation:** drop-cast suspension on TEM grid. Three independent grid preps. Dry. No staining or coating.
-- **Imaging session:**
-  - Survey at 5,000× — confirm dispersion across multiple grid squares.
-  - Acquire at 50,000× — at least 200 particles for size measurement (manual or software).
-  - Acquire at 500,000× — HRTEM lattice fringes on representative particle.
-  - Save methods log: kV, current, detector, working distance, aperture, dwell, N particles, dates.
-- **Cross-checks:** SEM at 5 kV for surface morphology; SAED on a single particle for crystallinity confirmation.
-- **Population statistics:** 200+ particles across 47 random fields; histograms of equatorial diameter.
-- **Figures:** 3 figures planned — survey TEM, size distribution histogram, HRTEM lattice.
+## Reading someone else's figures critically
 
-This level of planning takes a few hours of preparation. The session is more efficient because the operator knows what to acquire. The published paper is defensible.
+The same framework that makes your methods section defensible is the framework for reading a published paper. Every figure in the literature is a claim. The reviewer's discipline is to ask whether the claim is supported by the evidence shown and documented in the methods.
 
-### What Goes Wrong Here
+The six questions to ask about any published EM figure:
 
-- **Reactive imaging.** Acquiring whatever looks interesting without a plan. Result: 50 images that don't combine into a publishable figure.
-- **Single-image evidence.** N=1 measurements presented as definitive. Result: reviewer rejection.
-- **Missing controls.** Result: claims unfalsifiable in print.
+Is the technique named, and does it match the question? A paper claiming surface morphology but using TEM (which images through-the-bulk) is mismatched. A paper using EDS to distinguish oxidation states cannot do it — EDS cannot resolve chemical bonding.
 
----
+Is the detector named? The same specimen imaged with an Everhart-Thornley detector and an in-lens TTL detector looks different, because they collect different signals. If the caption says "SEM image" without naming the detector, the reader cannot interpret what the image shows.
 
-## 3. Writing the methods section
+Are the operating conditions stated? kV, magnification, working distance. If they are not, the reader cannot evaluate whether the resolution claimed is consistent with the technique at those conditions.
 
-The question this section answers is: what must a methods section name for the paper to be defensible?
+What was the sample preparation? Many artifacts originate in preparation — dehydration artifacts in biological TEM, FIB-induced amorphization at the surface of a lamella, sputter-coating rippling on a soft polymer for SEM. If the preparation is not described, the artifacts it introduces cannot be evaluated.
 
-### Mechanism — the 12-element checklist
+How many observations support the claim? N = 1 is an anecdote. For any quantitative claim — size, composition, phase distribution — the reader should be able to find N in the methods or figure, and assess whether it is adequate for the precision claimed.
 
-A complete EM methods section names:
+What cross-check or control is reported? A complementary technique that confirms the result, or a negative control that would have appeared if the artifact hypothesis were true. In the iron-atom paper: what did the carbon-only graphene (no iron, same prep) look like under the same imaging conditions? If bright dots appeared there too, the dots are not iron atoms. The absence of that control is the absence of a critical piece of the argument.
 
-1. **Sample preparation.** Every step from acquisition to TEM grid: fixation, dehydration, embedding, staining, coating, polishing, FIB lift-out — whatever applies. Concentrations, times, temperatures.
+<!-- → [TABLE: the six critical-reading questions as a compact checklist — two columns: "Question to ask" and "Where to find the answer in the paper" — rows: technique-question match (methods), detector named (caption or methods), operating conditions (methods or supplement), sample prep (methods), N and replicates (results + methods), controls (methods or supplementary figures) — designed for a student to use as a literal checklist when reading a published paper] -->
 
-2. **Instrument identification.** Make and model (e.g., "JEOL JEM 1010" or "FEI Tecnai G2"). Software for acquisition.
+## The methods section as intellectual honesty
 
-3. **Operating voltage.** kV.
+There is a temptation to regard the methods section as a burden — the prose you write after the science is done, listing the parameters that the instrument software recorded automatically. Resisting that temptation is what distinguishes careful science from careless science.
 
-4. **Detector(s) used.** SE, BSE-scintillator, in-lens TTL, BSE-semiconductor (sum or difference mode), HAADF, EDS, EELS — name explicitly which one produced which image.
+The methods section is where you say: here is exactly what I did, and here is why the reader can trust that what I showed them is real. It is an act of intellectual honesty, not compliance. A weak methods section does not just inconvenience a reviewer — it makes the result weaker. The result depends on the methods. If the methods are ambiguous, the result is ambiguous. The image is not evidence of anything without the chain of documentation that connects the image to the specimen to the preparation to the imaging conditions to the analysis.
 
-5. **Working distance** (SEM) or **camera length** (TEM diffraction).
+This is not a new insight. Richard Feynman said something similar about experimental science generally: the first principle is that you must not fool yourself, and you are the easiest person to fool. The methods section is the mechanism by which you make it possible for others — and for yourself, when you return to this work in six months — to check whether you have fooled yourself.
 
-6. **Aperture size.** Both condenser and objective; physical diameter or selected setting.
+## Closing the book
 
-7. **Beam current** or spot size. For analytical work especially.
+Twenty-five chapters of this textbook have covered the physics, the instruments, the techniques, the artifacts, and the workflows of electron microscopy. This chapter is the last one, and its subject is what all the prior chapters were building toward: work that can be published, read, critiqued, reproduced, and built upon.
 
-8. **Magnification range.** "Images acquired at magnifications from 5,000× to 500,000×" or per-figure specifications.
+The microscopist who completes this training can operate SEM and TEM, choose techniques by question rather than habit, recognize artifacts and design around them, prepare specimens for both biological and inorganic work, run multi-technique workflows, and now — write the methods section that makes all of it defensible.
 
-9. **Acquisition parameters.** Frame integration, scan rate, dwell time, total exposure time. For DED: frames per second, total frames, motion correction algorithm.
+The field's standards have risen with its capabilities. A paper claiming a novel nanostructure in 1970 might have been accepted on one carefully captioned electron micrograph. A paper claiming the same in the 2020s requires multi-technique cross-checks, population statistics, FSC criteria or equivalent rigor, and a methods section that a competent laboratory on another continent could follow to reproduce the result. That elevation of standards is not bureaucracy. It is the field learning to trust itself.
 
-10. **Counting / statistics.** N particles measured, frame averages, classification scheme, software for analysis.
-
-11. **Software.** Acquisition software, image analysis software (ImageJ, Fiji, Gatan DigitalMicrograph, RELION, etc.), reconstruction software (IMOD, etc.).
-
-12. **Specific parameters for specific techniques.**
-    - **EDS:** dead time, counting time, detector solid angle, sample tilt.
-    - **EELS:** energy dispersion, exposure time, monochromator state.
-    - **Tomography:** tilt range, step size, alignment fiducials.
-    - **SPA:** particle count, classification scheme, FSC criterion, software pipeline.
-
-A typical published EM methods section runs 1-3 paragraphs per primary technique. Multi-technique workflows have 3-6 paragraph methods sections.
-
-### Trade-off
-
-Detailed methods sections optimize for **reproducibility at the cost of word count**. Some journals impose word limits that compress the methods. The supplementary materials section is now standard for the full version; main-text methods can summarize.
-
-### Worked example: a complete methods sentence for HAADF imaging
-
-**Bad:** "*Images acquired in HAADF mode at 200 kV.*"
-
-**Good:** "*HAADF-STEM images were acquired on an FEI Titan G2 (200 kV) using a 50 mrad inner-collection-angle annular detector. Probe current was 30 pA; convergence angle 22 mrad; pixel dwell 16 μs; scan rate 1024 × 1024 pixels per frame at 2 fps. Images shown represent single frames; no frame averaging applied. Drift correction was performed using the FEI software's built-in cross-correlation algorithm.*" [verify all numerics]
-
-The "Good" version has 8 specific parameters. Each one is consequential. Each one must be matched if a different lab wants to reproduce.
-
-### What Goes Wrong Here
-
-- **Voiced as if "obviously the standard."** Sentences like "imaged at standard conditions" tell the reader nothing. Standards vary by lab.
-- **Hidden in supplementary.** Critical parameters buried in supplements; reviewers don't always find them.
-- **Software versions unstated.** Same algorithm can produce different results with different software versions; the version matters.
+The lab work continues. The methods sections await. Write them completely.
 
 ---
 
-## 4. Preparing figures
-
-The question this section answers is: how should EM figures look in a publication?
-
-### Mechanism — five figure-quality requirements
-
-**1. Scale bars.** Every figure with quantitative spatial information has a scale bar. The scale bar is in the image, white-on-dark or black-on-light, sized appropriately.
-
-**2. Captions.** Each figure caption states what is shown, the technique used, the operating conditions, and the takeaway. Avoid "interesting" or "remarkable" — let the data speak.
-
-**3. Annotations.** Arrows, scale bars, region labels, but with restraint. The image should be readable without annotations; annotations should add information rather than clutter.
-
-**4. Multiple panels for cross-technique evidence.** A figure that shows the same specimen in BF, DF, and EDS makes the multi-technique discipline visible.
-
-**5. Image processing transparency.** Brightness, contrast, gamma, and any digital manipulation should be stated in the caption or supplementary materials. Especially: false color (yes or no?); cropping (specify); enhancement (specify and document).
-
-### Image processing ethics
-
-Some standards [verify all]:
-
-- **Linear adjustments** (brightness, contrast, gamma) applied uniformly to a whole image are conventionally allowed without disclosure.
-- **Cropping** is allowed but should be disclosed if it changes the represented field.
-- **Pseudo-coloring** or **false coloring** applied to a single channel is allowed if disclosed.
-- **Cherry-picking** (showing the best image without statistical context) is not.
-- **Deletion of features** (cleaning up "artifacts" without disclosure) is misconduct.
-- **Image splicing** (combining multiple images into one without disclosure) is misconduct.
-
-The line is: any change that could mislead a reader about what was actually present in the specimen requires disclosure. When in doubt, disclose.
-
-### Trade-off
-
-Figure preparation optimizes for **clarity and honesty at the cost of "polished" appearance**. A figure that looks slightly less impressive but is fully documented is more publishable than a polished figure missing critical context.
-
-### What Goes Wrong Here
-
-- **Missing scale bars.** Common in early-career work. Default fail at peer review.
-- **Cherry-picked images.** "Representative" images that don't represent.
-- **Over-processed images.** Uniformly enhanced contrast that artificially clarifies real data; gamma manipulation hiding noise; false colors distinguishing channels but obscuring real features.
-
----
-
-## 5. Critiquing published EM
-
-The question this section answers is: how do you read published EM figures critically?
-
-### Mechanism — six diagnostic questions
-
-For any published EM figure, ask:
-
-1. **What technique is named?** SEM, TEM, STEM, EELS, etc. Is the technique-question match plausible?
-
-2. **What detector is named?** This often determines what the image actually shows.
-
-3. **What operating conditions are stated?** kV, working distance, aperture, magnification.
-
-4. **What sample prep is described?** Many artifacts originate in prep; the prep description is half the credibility.
-
-5. **What controls and replicates are reported?** Single-image evidence vs. statistical evidence.
-
-6. **What artifact-resistance is documented?** Cross-checks, alternative techniques, reproducibility.
-
-### Worked example: reading a published cryo-EM paper
-
-**Excerpt of paper:** *"Cryo-EM single-particle reconstruction of [protein X] at 2.8 Å resolution from 250,000 particles using Relion 4.0. Vitrified using Vitrobot at 4°C. Images acquired on a Titan Krios at 300 kV equipped with a Falcon 4 detector. Total dose 50 e/Å² distributed across 40 frames at 0.05 s per frame. Motion correction: MotionCor2. CTF estimation: CTFFIND4. FSC criterion: 0.143."*
-
-**Diagnostic questions answered:** Technique, instrument, voltage, detector, dose, frame structure, motion correction, CTF estimation, FSC criterion all stated. The methods section is reproducible at the level of process. Resolution claim is FSC-0.143-based, the field's standard.
-
-**What's not stated:** Particle distribution (homogeneous? heterogeneous classes?); 3D classification scheme; preferred-orientation analysis. These would be in supplementary materials of a typical cryo-EM paper. Reading the supplements is essential.
-
-### Trade-off
-
-Critical reading optimizes for **interpretive integrity at the cost of time per paper**. Reading every paper at this level slows down literature review. A working researcher reads carefully when the paper's claims affect their own work, more skimming for context.
-
-### What Goes Wrong Here
-
-- **Accepting claims at face value.** The paper says "atomic resolution"; the FSC may say 4.5 Å, which is not atomic. Always check.
-- **Missing the supplements.** Many papers' real methods are in supplements. Read them.
-- **Lacking baseline knowledge.** A reader without grounding in the techniques may not know what's missing.
-
----
-
-## 6. Synthesis: a defensible EM publication
-
-A defensible EM publication has all the following:
-
-1. **Clear research question.** Stated in the introduction.
-2. **Multi-technique workflow.** Where appropriate, multiple techniques providing convergent evidence.
-3. **Reproducible methods section.** Every parameter named; every step documented; software and versions stated.
-4. **Honest figures.** Scale bars, captions naming techniques, no over-processing.
-5. **Statistical evidence.** Population data for measurements; replicates for claims.
-6. **Cross-checks.** Alternative techniques or controls that test artifact hypotheses.
-7. **Acknowledgment of limitations.** What the data cannot show; what alternative interpretations exist.
-8. **Available data.** Raw data and code where applicable; supplementary materials for full disclosure.
-
-The discipline applies equally to laboratory notebooks, theses, conference posters, and journal papers. The audience changes; the standards do not.
-
-The wonder. The same EM techniques that 50 years ago produced descriptive electron-microscopy papers now produce papers with quantitative cross-technique evidence at near-atomic resolution. The standards have risen because the techniques have risen. A 1970s paper claiming a novel ultrastructural feature might be accepted on the basis of one carefully captioned image; a 2020s paper requires multi-technique cross-checks, statistical replicates, FSC criteria, and DED-based motion correction. The discipline has tightened because the technology has matured. The microscopist who completes this textbook has been trained to the modern standard.
-
----
-
-## 7. Pre-lab Checklist (Lab 26 — methods-section practice)
-
-**By the end of this chapter, you should be able to:**
-
-- Write a complete methods section for an EM session.
-- Prepare publication-quality figures with scale bars and captions.
-- Critique a published EM paper for completeness and rigor.
-
-**Bring to lab:**
-
-- This chapter, especially Sections 3 and 4.
-- A draft methods section from your own work or from a peer's draft.
-
-**Expect on the floor:**
-
-- Peer review of methods sections — what's missing, what's underspecified.
-- Discussion of figure preparation and ethical reporting.
-- Critique of a published EM figure as a class exercise.
-
----
-
-## 8. Quick-Reference Table
-
-| Methods element | What to include |
-|---|---|
-| Sample prep | Every step; concentrations; times; temperatures |
-| Instrument | Make, model, software |
-| kV | Numerical |
-| Detector | SE / BSE / in-lens / HAADF / EDS / EELS |
-| Working distance | mm |
-| Aperture | Physical diameter (μm) |
-| Beam current | pA or nA |
-| Magnification | Range or per-figure |
-| Acquisition | Frame rate, integration, dose |
-| Statistics | N particles, software for analysis |
-| Software | Acquisition + analysis, with versions |
-| Specific to technique | EDS dead time; EELS dispersion; tomography tilt range; SPA particle count |
-
-| Figure element | Standard |
-|---|---|
-| Scale bar | Required, in image |
-| Caption | Technique, conditions, takeaway |
-| Annotations | Restrained; add information |
-| Multi-panel | For multi-technique evidence |
-| Image processing | Disclosed if more than uniform linear |
-
-| Critique question | Look for in paper |
-|---|---|
-| Technique-question match | Methods section first |
-| Detector identification | Caption or methods |
-| Operating conditions | Methods or supplement |
-| Sample prep | Methods + supplement |
-| Statistical replicates | Results figures + methods |
-| Artifact-resistance | Cross-checks or alternative techniques |
-
----
-
-## 9. Exercises
+## Exercises
 
 ### Warm-up
 
-**Exercise 26.1 (LO: identify methods gap).**
-A methods section reads: "Cryo-EM at 300 kV." List five additional pieces of information needed for reproducibility. Difficulty: easy.
+**26.1** A methods section reads: "Cryo-EM at 300 kV." List five specific parameters that are missing and that a competent reader would need to reproduce the experiment. For each, explain in one sentence why that parameter is consequential rather than merely desirable. *(Tests: identifying the "consequential" standard for methods completeness)*
 
-**Exercise 26.2 (LO: plan replicates).**
-For a particle-size measurement, what is the minimum N to claim a meaningful distribution? Justify in one sentence. Difficulty: easy.
+**26.2** An SEM figure shows particles with no scale bar. The caption says "representative image at high magnification." Name two distinct claims this figure is failing to support, and state what would need to be added to support each. *(Tests: scale bar as verifiable claim + "representative" as population claim)*
 
-**Exercise 26.3 (LO: identify figure problem).**
-A TEM figure shows a single highlighted feature with no scale bar. What's missing? Difficulty: easy.
+**26.3** A paper reports a HAADF-STEM image with "bright spots representing single Pt atoms" and an EDS spectrum showing a Pt peak from the same region. A reviewer asks for a negative control. Describe what the negative control would be and what it would demonstrate if it showed bright spots too. *(Tests: control logic — what a negative control must show and why its absence leaves the claim open)*
 
 ### Application
 
-**Exercise 26.4 (LO: write methods).**
-Write a complete methods section for the following imaginary session: SEM at 15 kV, FEI Quanta 650, BSE detector, working distance 10 mm, aperture 60 μm, 5,000× to 50,000× magnification, dwell 5 μs, 200 particles measured for size distribution, ImageJ for analysis. Difficulty: medium.
+**26.4** Write a complete methods paragraph for the following imaginary SEM session, using the "consequential parameter" standard: FEI Quanta 650 FE-SEM, 15 kV, backscattered electron detector (solid-state, sum mode), working distance 10 mm, 60 μm objective aperture, 50 pA beam current, imaging at 5,000× to 100,000×, 5 μs dwell time, 212 particles measured for size distribution using ImageJ 1.53, three independent sample preparations. *(Tests: writing complete methods — student must organize the parameters into coherent prose and add what's implied but not stated, e.g., sample mounting)*
 
-**Exercise 26.5 (LO: critique a published methods section).**
-A paper's methods section reads: "*All EM imaging was performed using a high-resolution TEM. Images acquired at standard conditions and processed in ImageJ.*" List six specific deficiencies. Difficulty: medium.
+**26.5** A colleague shows you a TEM figure with five bright-field images of "representative" polymer nanoparticles. The caption names the instrument and voltage but not the detector mode, preparation, or N. The paper claims the particles are "uniformly 80 nm and spherical." Apply the six critical-reading questions and identify which are answered and which are not. Then state what one additional piece of information would most improve the credibility of the size claim. *(Tests: applying the six questions systematically and identifying the single most consequential gap)*
 
-**Exercise 26.6 (LO: design statistics).**
-A research group claims that the mean nanoparticle diameter is 53.2 ± 4.1 nm. What information should accompany this claim for credibility? Difficulty: medium.
+**26.6** A paper reports that two phases in a polished alloy are "clearly distinguished" in a BSE image, with one phase appearing bright and one dark. The methods say only "SEM-BSE imaging at 20 kV." What operating condition is missing that would help the reader evaluate whether the contrast difference reflects Z-contrast or geometric/topographic effects? Describe a simple experiment the authors could have done to distinguish between the two explanations. *(Tests: connecting methods completeness to artifact interpretation — requires linking the Z-contrast vs. topographic BSE distinction from Chapter 6 to the documentation standard)*
 
-**Exercise 26.7 (LO: prepare figure).**
-You have an SEM image at 50,000× magnification, 256 mm wide, intended for publication. Specify: scale bar dimensions; caption format; magnification scale; whether to include annotations. Difficulty: medium.
+**26.7** You acquire a cryo-EM SPA dataset and your reconstruction reports 2.9 Å global FSC-0.143 resolution from 180,000 particles. Before submitting, you check the angular distribution plot and find that 75% of particles are in the same two orientations. Write two sentences that should appear in your methods or limitations section acknowledging this, and explain why the global FSC number alone is insufficient to characterize the reconstruction quality in this case. *(Tests: connecting preferred-orientation artifact from Chapter 21 to reporting standards — what the methods section must acknowledge even when the global metric looks good)*
 
 ### Synthesis
 
-**Exercise 26.8 (LO: critique end-to-end).**
-Find a published EM paper in your research field. Critique it on: (a) clarity of research question; (b) appropriateness of techniques; (c) completeness of methods; (d) figure quality; (e) acknowledgment of limitations. Identify one area where the paper could be improved. Difficulty: hard.
+**26.8** A nanomedicine lab publishes a paper claiming that their lipid nanoparticles (LNPs) encapsulate mRNA in the aqueous core and that the lipid bilayer is continuous. The evidence is: one cryo-TEM image showing a ring-like structure, one EDS spectrum showing phosphorus (lipid headgroup), and one DLS size measurement. Apply the full reporting framework to critique this evidence: identify which claims are supported, which are not, what techniques are missing, what the methods section likely omits, and what a defensible version of this paper would require. *(Tests: full-chapter synthesis — technique selection, multi-technique workflow, methods completeness, and the "one image is an anecdote" problem applied to a realistic nanomedicine case)*
+
+**26.9** Find a published EM paper in your research area. Apply all six critical-reading questions to one figure. Then check whether the methods section contains the parameters required for that figure's technique from the chapter's checklist. Write a one-paragraph reviewer comment that is specific, technically grounded, and constructive — not dismissive — naming exactly what is missing and why it matters for the paper's central claim. *(Tests: full critical-reading discipline applied to real literature — produces a reviewer-quality comment, not just a list of complaints)*
 
 ### Challenge
 
-**Exercise 26.9 (open-ended).**
-Take a draft methods section you have written for a lab report or thesis. Apply the 12-element checklist. Identify which elements are missing or underspecified. Revise to a fully complete methods section. Difficulty: open-ended.
+**26.10** A paper is retracted after the authors are found to have selectively enhanced contrast in one region of a HAADF-STEM image, making a cluster of atoms appear to be a single atom. Using the concepts in this chapter, explain: (a) why selective regional contrast enhancement crosses the line from acceptable processing to falsification, (b) what the reviewer could have asked during peer review that might have caught this, and (c) what structural feature of EM figure presentation makes this kind of manipulation both easy to perform and difficult to detect. Propose one change to publication practice that would reduce the risk of this class of error going undetected. *(Tests: integrating image processing ethics, reviewer diagnostic questions, and the systemic conditions that enable misconduct — requires the student to think beyond individual papers to the structure of the publication system)*
 
 ---
 
-## 10. Summary
+*What would change my mind:* evidence that publication standards for EM methods sections have uniformly improved across journals and disciplines over the past decade. The movement exists — journals like eLife and Nature journals have tightened reporting requirements — but enforcement is inconsistent, and the supplementary materials system, while intended to enable completeness, also enables burial of critical information. A uniform standard with mandatory structured methods reporting would help.
 
-You walked into this chapter with the techniques individually mastered, multi-technique workflows planned, and artifacts recognized. You walk out with the discipline to make all of that publishable: methods sections that reproduce, figures that document, claims that cross-check, statistics that support.
-
-The one idea that matters most: a defensible EM result requires defensible reporting. The methods section is the bridge between the operator's careful work and the reviewer's careful reading.
-
-The common mistake to watch for is undocumented work. Beautiful images without complete methods sections fail at peer review. Complete methods sections without beautiful images may still pass.
-
-The Feynman test: explain to a labmate, without using the word "reproducibility," why a methods section is the hardest part of an EM paper to write.
-
----
-
-## 11. Connections — Closing the Book
-
-You have now completed all 26 chapters. The textbook covered:
-
-- Foundations of electron microscopy (Chapters 1-3).
-- Scanning electron microscopy in depth (Chapters 4-11).
-- Transmission electron microscopy in depth (Chapters 12-19).
-- Sample preparation for both biological (Ch. 20-21) and inorganic (Ch. 22) specimens, plus cryo-EM (Ch. 21).
-- Synthesis: artifact recognition (Ch. 23), technique selection (Ch. 24), applications (Ch. 25), and reporting/critique (Ch. 26).
-
-Two appendices cover lab safety (A) and TEM supplies (B).
-
-You are now prepared to:
-- Operate SEM and TEM independently.
-- Choose appropriate techniques for research questions.
-- Plan and execute multi-technique workflows.
-- Recognize and mitigate artifacts.
-- Read and critique published EM literature.
-- Write defensible methods sections.
-
-The textbook closes here. The lab work continues. May your future microscopy be as careful as the methods sections you now write.
-
----
-
-**What would change my mind:** evidence that EM publication standards have universally fallen relative to the field's technical capability. The opposite seems true — standards have risen with technology — but the empirical record is mixed across journals and disciplines.
-
-**Still puzzling:** the practical question of how much information to put in a methods section vs. supplementary materials varies by journal and field. Some journals demand more in main text; others push everything to supplements. The convention is unstable.
-
-**Tags:** `methods-section`, `figure-preparation`, `critique`, `publication-standards`, `EM-reporting`
-
----
-
-### Note to the professor
-
-This chapter closes the book. The voice anchoring is consistent. The synthesis nature means few `[verify]` markers; specific examples (Falcon 4 detector, RELION versions, etc.) are publication conventions and should be checked against current practice.
-
-Voice anchoring: anchored. Reviewer chapter opening (one scene only). Capability ending. Wonder paragraph closing the synthesis section: the standards have risen with the technology. Length ~4500 words.
-
-The course chapter completes the book; the appendices follow.
+*Still puzzling:* the gap between what a methods section should contain and what peer review enforces varies significantly by journal, field, and reviewer. A reviewer who knows the technique reads the methods differently from one who does not. The incentive structure does not consistently reward methodological completeness.
