@@ -1,419 +1,195 @@
-> **Voice anchoring:** `voice-unanchored` — both `style/` folders are empty. Drafted from VOICE.md and SKILL.md defaults.
-
 # Chapter 2 — Electron Optics, Resolution, and Microscope Design
 
-## Title options
-
-1. **Bending Electrons: Lenses, Aberrations, and the Real Resolution Limit**
-2. **Why Wavelength Wins You Resolution Until Aberrations Take It Back**
-3. **The Optics Underneath: From de Broglie to a Sharp Image**
-
-## TL;DR
-
-Electron wavelength promises sub-angstrom resolution; magnetic lenses and their aberrations cap practical performance one to three orders of magnitude worse. This chapter is the physics that lives between the promise and the image — wavelength, lens action, the four aberrations, and why the operator's job is to negotiate them.
+*The wavelength of an electron at 30 kV is seven picometers. The best image you can make at 30 kV shows features no smaller than about a nanometer. This chapter is about why.*
 
 ---
 
-## 1. Chapter Opening
+There is a number that will bother you until you understand it. A 30 kV electron has a de Broglie wavelength of roughly 7 picometers — about one-twentieth the diameter of a hydrogen atom. Abbe's criterion says you can resolve two features separated by about half a wavelength. So in principle, an electron microscope at 30 kV ought to resolve features smaller than a single atom.
 
-A microscopist is sitting at a 30 kV SEM, trying to focus on a 10 nm gold nanoparticle. The display says the magnification is 500,000×. The image still looks soft. The microscopist tightens the focus knob, tries a smaller aperture, then a different working distance. The image is still soft. Frustration sets in — the gun is field-emission, the kV is high, the wavelength at 30 kV is around 7 picometers. Theoretically, this microscope should resolve a single atom.
+In practice, a good 30 kV SEM resolves about one nanometer on a well-prepared specimen with an experienced operator at the controls. That is not atoms. That is a hundred times worse than what the wavelength alone would allow.
 
-It does not, and the reason has nothing to do with electrons.
+Why?
 
-The reason is that every magnetic lens in the column is, by physics, imperfect. Off-axis electrons bend more than paraxial ones. Electrons of slightly different energies focus at slightly different planes. The lens is not perfectly cylindrical, so a point source produces two perpendicular line foci instead of a sharp dot. And if you respond to all of this by closing down the aperture, the wave nature of electrons produces a diffraction disk that fights you on the other side.
+The short answer is: because the lens is bad. Not bad by poor engineering — bad by fundamental physics. Every magnetic lens that has ever been built, and every magnetic lens that will ever be built unless you invoke some very clever tricks, focuses electrons imperfectly. Off-axis electrons bend more than paraxial ones. Electrons with slightly different energies focus at slightly different points. The lens isn't perfectly symmetric. And if you respond to all of this by narrowing the aperture to exclude the badly-focused electrons, you then run into diffraction — the wave nature of the electron — which smears the image in the other direction.
 
-The microscopist tweaks the stigmators, balances aperture against beam current, watches the practical resolution converge somewhere around 1 nm. Not the 7 picometers the wavelength alone allows. About 100× worse.
-
-This chapter is about that gap. By the end you can predict, given an instrument's specifications, roughly where its practical resolution sits — and you can name which sub-system would have to improve to push it lower. You will not yet be aligning the column yourself; that comes when we wire your hands to the controls in Chapters 4 and 13. Here, we build the optical model the operator's hands rely on.
-
-### Learning objectives
-
-By the end of this chapter you can:
-
-- **Calculate** the de Broglie wavelength of an electron at a given accelerating voltage.
-- **Explain** how a magnetic lens focuses a charged particle and why the focal length depends on lens current.
-- **Identify** the four aberrations that limit practical resolution: spherical, chromatic, astigmatism, and diffraction.
-- **Compute** the optimum aperture angle that balances aberrations against diffraction.
-- **Distinguish** theoretical from practical resolution and recognize empty magnification.
-
-### Prerequisites
-
-Chapter 1, especially the wavelength → resolution argument and the diffraction limit. Introductory electromagnetism: Lorentz force, magnetic field of a solenoid. Geometric optics: focal length, image plane, aperture angle.
-
-### Why this chapter matters
-
-Almost every operator decision in the rest of the book — kV, spot size, aperture, working distance, stigmator setting, focus — is some operating point on the trade-offs this chapter names. If you understand aberrations, you understand why you cannot just turn every knob to "more" and get a better image.
+The interesting thing about this problem is that it is not a failure of effort. The gap between 7 picometers and 1 nanometer is not a gap that better machining or higher-quality steel will close. It is a gap that comes from the same physics that makes a round lens converge a beam at all. To understand it, you have to understand how an electron is steered by a magnetic field, and then understand why that steering is inevitably imperfect.
 
 ---
 
-## 2. Electron wavelength and what it really gives you
+Start with the wavelength, because we need it.
 
-The question this section answers is: how does accelerating voltage convert into wavelength, and what kind of resolution would that wavelength alone allow?
+Louis de Broglie argued in 1924 that a particle with momentum $p$ behaves as a wave with wavelength
 
-### Mechanism — from kV to picometers
+$$\lambda = \frac{h}{p}$$
 
-Louis de Broglie proposed in 1924 that a particle with momentum $p$ has an associated wavelength
+where $h$ is Planck's constant. This isn't a classical statement — it says that the particle *is* the wave in some sense that quantum mechanics makes precise but we don't need here. What we need is the practical consequence: an electron accelerated through a voltage $V$ picks up kinetic energy $eV$, and its momentum can be read off from that:
 
-$$
-\lambda = \frac{h}{p}
-$$
+$$\lambda = \frac{h}{\sqrt{2 m_e e V}}.$$
 
-where $h = 6.626 \times 10^{-34}$ J·s is Planck's constant. The wavelength is a property of the particle's momentum, not of any wave it produces in flight; it is what determines how the particle interferes with itself in slits and crystals.
+Plug in the constants and you get a formula simple enough to remember:
 
-For an electron accelerated from rest through a potential difference $V$ (the **accelerating voltage**), kinetic energy equals work done by the field: $\tfrac{1}{2} m_e v^2 = eV$, where $m_e$ is the electron rest mass and $e$ is the electron charge. Solving for momentum and substituting,
+$$\lambda \approx \frac{1.226}{\sqrt{V}} \text{ nm}, \quad V \text{ in volts.}$$
 
-$$
-\lambda = \frac{h}{\sqrt{2 m_e e V}}.
-$$
+<!-- → [TABLE: electron wavelength vs. accelerating voltage — columns: voltage (kV), non-relativistic λ (pm), relativistic λ (pm), ratio λ/d_atom — rows spanning 1 kV to 300 kV; student should see the diminishing returns at high voltage and where the relativistic correction becomes non-negligible] -->
 
-Plug in constants and group:
+At 30,000 volts, $\sqrt{30000} \approx 173$, so $\lambda \approx 7.1 \times 10^{-3}$ nm = 7.1 pm. At 5 kV, it is about 17 pm. At 200 kV — a typical transmission electron microscope — it is closer to 2.5 pm, and there you need a relativistic correction:
 
-$$
-\lambda \approx \frac{1.226 \text{ nm}}{\sqrt{V}} \quad (V \text{ in volts; non-relativistic}).
-$$
+$$\lambda = \frac{h}{\sqrt{2 m_e e V \left(1 + \frac{eV}{2 m_e c^2}\right)}}.$$
 
-This is the formula you scribble on the back of your notebook in lab. It is good to within a few percent at SEM voltages and starts to deviate noticeably above ~50 kV, where you should switch to the relativistic correction:
+At 200 kV the correction factor is about 20%, which matters for accurate work. For SEM voltages, the simpler formula is fine.
 
-$$
-\lambda = \frac{h}{\sqrt{2 m_e e V \left(1 + \frac{eV}{2 m_e c^2}\right)}}.
-$$
+The striking thing about these numbers is how small they are. Visible light has wavelengths between 400 and 700 nanometers. An electron at 30 kV is fifty thousand times shorter. The promise of the electron microscope is in that ratio.
 
-For 200 kV TEM, $eV/(2m_e c^2) \approx 0.2$ — the relativistic factor matters. The non-relativistic formula gives 0.0274 Å; the relativistic gives 0.0251 Å. Several percent. [verify: the standard reported $\lambda$ at 200 kV is ~2.51 pm, consistent with the relativistic formula.]
-
-The week-1 source presents this directly as a table. Reproduced and extended:
-
-| Accelerating voltage | Wavelength | Theoretical resolution (α = 0.6°) |
-|---|---|---|
-| 1 kV | 38.9 pm | 4.55 nm |
-| 5 kV | 17.4 pm | 2.03 nm |
-| 10 kV | 12.3 pm | 1.44 nm |
-| 30 kV | 7.10 pm | 0.83 nm |
-| 100 kV | 3.89 pm | 0.46 nm |
-| 200 kV | ~2.5 pm (rel.) | ~0.30 nm |
-
-The "theoretical resolution" column comes from Abbe's equation $d = 0.61\lambda/(n \sin \alpha)$ with $n = 1$ (vacuum), $\alpha = 0.6°$, the small aperture angle typical of an electron lens. Notice: at every voltage, the theoretical resolution is roughly 100× the wavelength. That ratio is set by the small aperture angle — electron lenses cannot use the wide cone angles that oil-immersion optical lenses do.
-
-### Trade-off
-
-Higher kV gives you shorter wavelength, in principle better resolution. The costs:
-
-1. **Beam damage**, especially in soft materials. Higher-energy electrons deposit more energy per inelastic event and ionize more aggressively.
-2. **Lower contrast** for thin specimens. As kV rises, electrons interact less with matter, and especially in TEM the contrast falls.
-3. **Worse signal-to-noise from secondary electrons in SEM at high kV.** The interaction volume gets large and the surface sensitivity falls (Chapter 6).
-4. **Cost.** Higher-kV instruments are larger, more shielded, and more expensive.
-
-The choice of operating kV is one of the first ways the practical operator backs off from the wavelength-limited fantasy.
-
-### Worked example: wavelength at SEM voltages
-
-**Problem.** Compute the de Broglie wavelength at 5 kV and at 30 kV. Compare to the source-stated values.
-
-**Given.** $V_1 = 5$ kV, $V_2 = 30$ kV. Use the non-relativistic formula.
-
-**Reasoning.** $\lambda \approx 1.226/\sqrt{V}$ in nm with V in volts.
-
-$$
-\lambda_1 \approx \frac{1.226}{\sqrt{5000}} \approx \frac{1.226}{70.7} \approx 0.0173 \text{ nm} = 17.3 \text{ pm}.
-$$
-
-$$
-\lambda_2 \approx \frac{1.226}{\sqrt{30000}} \approx \frac{1.226}{173.2} \approx 0.00708 \text{ nm} = 7.08 \text{ pm}.
-$$
-
-**Sanity check.** Source table lists 17.4 pm at 5 kV and 7.10 pm at 30 kV. Match within rounding.
-
-**General lesson.** At SEM voltages, the non-relativistic formula gives wavelengths good to about a percent. At TEM voltages above 100 kV, switch to the relativistic form. The factor of 4 wavelength reduction from 5 to 30 kV does *not* translate to a factor of 4 resolution improvement, because aberrations and aperture angle do not scale proportionately. Section 4 will quantify this.
-
-### What Goes Wrong Here
-
-The interpretive trap is treating $\lambda$ as the resolution. It is not. Wavelength is the floor; aperture angle and aberrations decide what you actually get. A useful diagnostic: if a paper claims atomic resolution and the instrument is a 30 kV SEM, check the aperture and the aberration corrections. The numbers usually do not support the claim.
+Now. How do you focus something with a wavelength of seven picometers?
 
 ---
 
-## 3. Magnetic lenses: how a current focuses an electron
+Not with glass. Electrons don't refract at a glass surface the way photons do. What *does* steer an electron is a magnetic field, through the Lorentz force:
 
-The question this section answers is: how does a coil of wire act as a lens for charged particles, and what does that mean for the operator?
+$$\mathbf{F} = e(\mathbf{v} \times \mathbf{B}).$$
 
-### Mechanism — Lorentz force, paraxial approximation, focal length
+An electron moving along the optical axis of the microscope — call it the $z$-direction — doesn't feel much force from a field pointing along $z$. But if the field has radial and azimuthal components, and if the field is symmetric around the axis, something interesting happens. The radial component of $B$ kicks the electron into a circular orbit around the axis; the azimuthal velocity that creates in combination with the axial field component pulls the electron back toward the axis. The net result, for an electron that starts slightly off-axis, is that it spirals in toward the axis and crosses it at some point downstream. That crossing point is the focus.
 
-A particle of charge $q$ moving with velocity $\mathbf{v}$ in a magnetic field $\mathbf{B}$ experiences the Lorentz force
+<!-- → [DIAGRAM: cross-section of a magnetic lens showing coil, iron yoke, pole-piece gap, and three electron trajectories — one paraxial, one at moderate angle, one at steep angle — converging at different axial positions; student should see that steeper trajectories cross the axis closer to the lens, which is the geometric origin of spherical aberration] -->
 
-$$
-\mathbf{F} = q (\mathbf{E} + \mathbf{v} \times \mathbf{B}).
-$$
+The thing that makes this useful is that for electrons traveling close to the axis — *paraxial* electrons — the focal length is predictable from the field profile:
 
-Inside an electron microscope's lens, the relevant field is magnetic only ($\mathbf{E} = 0$), and the field has rotational symmetry around the optic axis. An electron moving down the axis with velocity $v_z$ encounters small radial and azimuthal field components $B_r$ and $B_\theta$ that cause a Lorentz force perpendicular to the motion. The geometry conspires to produce two effects: a rotation of the electron around the axis, and a focusing toward the axis. Both come from the same field. The net effect, for paraxial electrons, is exactly analogous to a converging lens for light, with a focal length
+$$\frac{1}{f} \approx \frac{e^2}{8 m_e E_k} \int B_z^2(z) \, dz$$
 
-$$
-\frac{1}{f} \approx \frac{e^2}{8 m_e E_k} \int B_z^2(z) \, dz
-$$
+where $B_z(z)$ is the on-axis field strength along the column and $E_k$ is the electron's kinetic energy. The integral runs over the length of the lens. This is the magnetic equivalent of the lensmaker's equation: stronger field, shorter focal length. Increase the lens current, strengthen the field, move the focal point closer to the lens. That is, physically, what the focus knob does — it changes a current.
 
-where $B_z(z)$ is the on-axis magnetic field profile and $E_k$ is the electron kinetic energy [verify: this is the standard textbook expression for a weak magnetic lens; the coefficient and exact form vary across references].
+The hardware that produces this field is an electromagnetic coil wrapped in soft iron. The iron serves as a flux-guiding structure, and where the iron has a gap — the *pole pieces*, two carefully machined iron faces with a narrow space between them — the field concentrates into the beam path. The geometry of the pole-piece gap is the dominant engineering variable for aberrations. A small gap concentrates the field more tightly, which is good for resolution. It also means the specimen has less room to maneuver, which is a practical constraint that lens designers spend careers navigating.
 
-The practical consequence: focal length depends on lens *current* (which sets $B_z$) and on electron *energy* (through $E_k$). Crank up the lens current, the field gets stronger, the focal length shortens, the image plane shifts. This is why the focus knob on a microscope is, mechanically, a current control. It is also why focus and accelerating voltage are not independent — change kV and you must refocus.
+A real microscope column has multiple lenses. In an SEM there are typically two condenser lenses and one objective lens. The condensers form a demagnified image of the electron source — the *crossover* — and relay it toward the specimen. The objective lens is the final lens in the chain, the one that determines the probe size and hence the resolution. In a TEM the geometry is different: the objective lens is strong, immersing the specimen in its field, and a series of projector lenses below the specimen magnify the transmitted image onto a detector. But in both cases the optical logic is the same: lenses focus by bending electrons toward the axis, and the bending is produced by a controlled magnetic field.
 
-A magnetic lens is built from a coil of copper wire enclosed in soft iron, with a small gap between *pole pieces* — high-permeability iron pieces that concentrate the field across the optic axis. Pole-piece design is the central engineering challenge of high-resolution lenses; the gap geometry largely sets the spherical aberration coefficient, which we will meet in Section 4.
-
-### Three lens roles in the column
-
-SEMs and TEMs both use multiple lenses with different roles:
-
-1. **Condenser lens(es).** Sits between the gun and the specimen. Demagnifies the source crossover (the small image of the gun's emission area, ~50 μm for a tungsten gun) onto the specimen plane (target spot ~1–10 nm). One or two condensers; when there are two, they are usually "ganged" under a single "spot size" or "C1" control. Increasing condenser excitation makes the probe smaller and the current lower — the same trade you will turn into a knob in lab.
-2. **Objective lens.** The strongest lens in the column. In SEM, it is the final lens above the specimen and largely determines resolution. In TEM, the objective lens immerses the specimen in a strong field and forms the first image; the rest of the column magnifies it. Objective lenses run high current and usually require water cooling.
-3. **Projector lens (TEM) or scan-coil deflectors (SEM).** TEM projector lenses cascade the objective image to higher magnification at the screen. SEM scan coils tilt the focused probe sequentially across a raster.
-
-### Trade-off
-
-Lens design optimizes for short focal length (better resolution) at the cost of small specimen volume near the pole pieces (less room for stages, detectors, large samples). The three SEM objective-lens designs the source names — pinhole, immersion, and snorkel — sit on different points along this trade:
-
-- **Pinhole lens.** Larger pole gap, holds bigger specimens, larger working distance. More room for tilt and detectors. Aberrations larger.
-- **Immersion lens.** Specimen sits inside the lens field. Smallest probe, lowest aberrations, highest resolution. Specimen size limited.
-- **Snorkel lens.** Hybrid — projects the strong field down to the specimen plane outside the pole-piece gap. Compromise between flexibility and resolution.
-
-You will see these labels on instrument specifications. They are decisions made by the manufacturer about where to live on the resolution-vs-flexibility curve.
-
-### Worked example: focal length scales with lens current
-
-**Problem.** A condenser lens at current $I_1$ has focal length $f_1 = 8$ mm. The operator increases the current by 25%. Estimate the new focal length, ignoring saturation and assuming the field scales linearly with current.
-
-**Given.** $f_1 = 8$ mm, $I_2 = 1.25 I_1$.
-
-**Reasoning.** From the weak-lens formula, $1/f \propto B^2$ and $B \propto I$, so $f \propto 1/I^2$. Thus
-
-$$
-f_2 = f_1 \left( \frac{I_1}{I_2} \right)^2 = 8 \text{ mm} \times \left( \frac{1}{1.25} \right)^2 = 8 \text{ mm} \times 0.64 = 5.12 \text{ mm}.
-$$
-
-**Sanity check.** Current up by 25%, focal length down by ~36%. The non-linearity matters — small current changes near saturation can shift focus dramatically.
-
-**General lesson.** Magnetic-lens focus is non-linear in current. Modern microscopes hide this from the operator by automating focus, but understanding the scaling matters when diagnosing erratic focus behavior or recalibrating after a maintenance event.
-
-### What Goes Wrong Here
-
-A lens that has saturated — pushed to the regime where increasing current no longer increases field — stops responding to focus changes. The image looks unfocusable. The corrective is to back off lens excitation and re-approach. Beginners sometimes drive the focus to extremes trying to compensate for a different problem (astigmatism, contamination, drift) and saturate the lens unintentionally.
+<!-- → [DIAGRAM: side-by-side schematic of SEM column vs. TEM column — gun at top, condenser(s), objective, specimen position, and detector(s) labeled; student should see how specimen position relative to objective differs between the two instruments and why that matters for lens design] -->
 
 ---
 
-## 4. The four aberrations and the optimum aperture
+Here is the problem. The formula above — the focal-length formula — is derived under the *paraxial approximation*: it assumes that the electrons are close to the axis and their angles are small. Real electrons are not perfectly paraxial. The electron gun doesn't emit a perfect pencil beam. And when electrons travel at any angle to the axis, even a small one, the lens doesn't treat them exactly as the paraxial formula predicts.
 
-The question this section answers is: why is practical resolution one to three orders of magnitude worse than the wavelength suggests, and what compromises hold the line?
+Four distinct effects follow from this, and they each deserve a name because they each demand a different response.
 
-### Mechanism — four named aberrations
+**Spherical aberration.** An electron traveling at a steeper angle to the axis passes through the stronger fringe field at larger radii, bends more strongly, and crosses the axis closer to the lens than a paraxial electron. Instead of all electrons converging to a point, they converge to a series of points spread along the axis, and the result at any given plane is a disk, not a point. The diameter of that disk scales as
 
-A perfect lens images every point as a point. A real magnetic lens images a point as a disk, and four distinct physical effects contribute to the disk's diameter.
+$$d_s = \frac{1}{2} C_s \alpha^3$$
 
-**1. Spherical aberration ($C_s$).** Electrons farther off-axis bend more strongly than paraxial electrons, so they cross the optic axis closer to the lens than paraxial rays. The result: a point object becomes a disk in the image plane whose diameter scales with the cube of the aperture half-angle:
+where $\alpha$ is the aperture half-angle — the angular range of electrons admitted to the lens — and $C_s$ is the *spherical aberration coefficient*, typically a few millimeters for an uncorrected SEM objective. Notice the cube: doubling the aperture angle makes the spherical aberration disk eight times bigger. This is the dominant aberration for conventional electron lenses.
 
-$$
-d_s = \frac{1}{2} C_s \alpha^3
-$$
+**Chromatic aberration.** The electron source doesn't emit electrons all at exactly the same energy. A tungsten filament produces electrons spread over about one to three electronvolts; a cold field-emission source narrows that to 0.2–0.3 eV. The lens's focal length depends on electron energy through the kinetic energy $E_k$ in the denominator of the focal-length formula. Electrons with slightly different energies therefore focus at slightly different planes, and the blur at any given plane has diameter
 
-where $C_s$ is the spherical-aberration coefficient (mm), and $\alpha$ is the aperture half-angle (radians) [verify: prefactor varies (½ vs. ¼) across textbook conventions; both are seen]. Spherical aberration is the dominant aberration of conventional electron lenses. $C_s$ values for an uncorrected SEM objective are typically a few mm; modern aberration-corrected TEM objectives can push $C_s$ to ~1 μm.
+$$d_c = C_c \alpha \frac{\Delta E}{E_0}$$
 
-**2. Chromatic aberration ($C_c$).** Electrons with slightly different energies — the energy spread $\Delta E$ of the gun — focus at slightly different planes. The blur diameter is
+where $C_c$ is the chromatic aberration coefficient and $\Delta E/E_0$ is the fractional energy spread. At low operating voltages — 1 to 2 kV — $E_0$ is small, so even a modest energy spread produces large fractional blur. This is why the choice of electron gun matters much more at low kV than at high kV, and why field-emission sources dramatically outperform tungsten hairpins for low-voltage imaging.
 
-$$
-d_c = C_c \alpha \frac{\Delta E}{E_0}
-$$
+**Astigmatism.** A perfect lens has perfect cylindrical symmetry around the optical axis. Real lenses don't. Pole pieces aren't machined to atomic perfection; the iron isn't perfectly uniform; a speck of contamination in the bore changes the field locally. The consequence is that electrons in one plane focus at a slightly different distance than electrons in a perpendicular plane. A point object produces two line foci, orthogonal to each other, at slightly different distances along the axis. Between the two focal planes the image of a point is an ellipse that rotates 90° as you change focus. You have surely seen this if you've ever defocused an electron microscope: the soft-focus image of a round particle elongates in one direction, then appears round briefly near focus, then elongates in the perpendicular direction on the other side. That rotation is astigmatism.
 
-with $C_c$ the chromatic coefficient, $E_0$ the nominal beam energy. The energy spread depends on the gun type: about 1–3 eV for tungsten, 0.5–2.5 eV for LaB₆, 0.3–1.0 eV for Schottky, 0.2–0.3 eV for cold field emission [source: week-2 source-comparison table]. Chromatic aberration is more important at low kV (where $E_0$ is small).
+<!-- → [IMAGE: through-focus series of a spherical nanoparticle showing three frames — underfocus (horizontal streak), focus (round), overfocus (vertical streak) — with 90° rotation labeled; student should be able to recognize this signature in the lab and diagnose astigmatism on sight] -->
 
-**3. Astigmatism.** Machining errors, inhomogeneities in the iron, asymmetry in the windings, and contamination all conspire to make the lens not perfectly cylindrical. A point object then images to two perpendicular line foci at slightly different planes. Between the two foci, the image of a point is an ellipse whose major axis rotates 90° as you sweep through focus. This is a *correctable* aberration — the **stigmator**, an octupole of small magnets, applies a tunable astigmatic field that cancels the lens's astigmatism. Stigmator correction is a manual procedure: x-stigmator, focus, y-stigmator, focus, repeat until the image is sharp. Beginners forget to redo it after changing kV or aperture, and report blurry images that are actually astigmatic.
+Unlike spherical and chromatic aberration, astigmatism can be corrected. An *octupole stigmator* — a ring of eight small electromagnets around the beam — applies a controlled astigmatic field that cancels the lens's intrinsic astigmatism. The stigmator needs retuning whenever you change operating voltage, aperture, or working distance, because all of those shift the electron trajectories that encounter the lens's imperfections. Forgetting to retune the stigmator after a parameter change is one of the commonest ways an experienced operator loses an afternoon.
 
-**4. Diffraction.** The smaller you make the aperture to suppress spherical and chromatic aberration, the more the wave nature of electrons asserts itself. A circular aperture of half-angle $\alpha$ produces an Airy disk in the image plane of diameter
+**Diffraction.** This one runs in the opposite direction from the other three. The aperture is a physical obstacle — a thin disk with a circular hole — and electrons passing its edge diffract. The smaller the aperture, the more the wave nature of the electron smears the image into an Airy disk:
 
-$$
-d_d = \frac{0.61 \lambda}{\alpha}.
-$$
+$$d_d = \frac{0.61 \lambda}{\alpha}.$$
 
-Yes — this is Abbe's equation again. Diffraction is the wavelength-limited contribution.
+This is Abbe's equation applied to electrons. Notice that it rewards *larger* $\alpha$: open the aperture, reduce diffraction blur. But opening the aperture makes spherical and chromatic aberration worse. The two effects oppose each other, which means there is an optimum somewhere in the middle.
 
-### The optimum aperture
-
-The total blur diameter (added in quadrature for independent contributions, or sometimes just summed in textbooks) is dominated by spherical aberration at large $\alpha$ and by diffraction at small $\alpha$. The optimum is where the two cross, found by minimizing
-
-$$
-d_{\text{total}}(\alpha) \approx \sqrt{ \left(\frac{1}{2} C_s \alpha^3\right)^2 + \left( \frac{0.61 \lambda}{\alpha} \right)^2 }
-$$
-
-against $\alpha$. The minimum sits at
-
-$$
-\alpha_{\text{opt}} \approx \left( \frac{1.22 \lambda}{C_s} \right)^{1/4}, \quad d_{\min} \approx 0.91 (C_s \lambda^3)^{1/4}.
-$$
-
-[verify: prefactors depend on which aberrations you include and how you sum them; the scaling $d_{\min} \propto (C_s \lambda^3)^{1/4}$ is robust across conventions.]
-
-That last result is the practical resolution limit of an uncorrected lens. Read it slowly: the resolution scales as $\lambda^{3/4}$, not as $\lambda$. Cutting wavelength in half (going from 30 kV to 120 kV) improves resolution by only $2^{3/4} \approx 1.68$, not by 2. And $d_{\min}$ scales with the fourth root of $C_s$ — to halve resolution you need to drop $C_s$ by a factor of 16. This is why aberration correction (since the late 1990s) was such a big deal.
-
-### Trade-off
-
-The aperture is the operator's primary lever for navigating the spherical-vs-diffraction trade. A small aperture: better aberration suppression, but lower current and more diffraction. A large aperture: more current, deeper image (high depth of focus is set by aperture too), but worse aberrations. The aperture also controls *depth of focus* — the axial range over which the image stays acceptably sharp. Smaller aperture, larger depth of focus. SEM operators routinely close the aperture down to image rough specimens at high depth of focus; TEM operators open it up to gain current for sharp imaging of thin specimens.
-
-### Worked example: optimum aperture for a 100 kV TEM
-
-**Problem.** A 100 kV TEM has $C_s = 1.0$ mm. Compute the optimum aperture half-angle and the corresponding minimum resolvable distance.
-
-**Given.** $V = 100$ kV, $\lambda = 3.89$ pm = $3.89 \times 10^{-3}$ nm $= 3.89 \times 10^{-12}$ m. $C_s = 1.0$ mm $= 10^{-3}$ m.
-
-**Reasoning.**
-
-$$
-\alpha_{\text{opt}} \approx \left( \frac{1.22 \lambda}{C_s} \right)^{1/4} = \left( \frac{1.22 \times 3.89 \times 10^{-12}}{10^{-3}} \right)^{1/4} = (4.75 \times 10^{-9})^{1/4}.
-$$
-
-Take the fourth root: $\log_{10}(4.75 \times 10^{-9}) = -8.32$, divide by 4 = $-2.08$, so $\alpha_{\text{opt}} \approx 8.3 \times 10^{-3}$ rad $\approx 0.48°$.
-
-$$
-d_{\min} \approx 0.91 (C_s \lambda^3)^{1/4} = 0.91 \times (10^{-3} \times (3.89 \times 10^{-12})^3)^{1/4}.
-$$
-
-$(3.89 \times 10^{-12})^3 = 5.89 \times 10^{-35}$. Multiplied by $10^{-3}$: $5.89 \times 10^{-38}$. Fourth root: $\log_{10} \approx -37.23$, divide by 4 $\approx -9.31$, so $\approx 4.9 \times 10^{-10}$ m. Times 0.91: $\approx 4.5 \times 10^{-10}$ m = 0.45 nm = 4.5 Å.
-
-**Sanity check.** Conventional 100 kV TEM resolution is widely quoted at 0.2–0.3 nm. We got 0.45 nm. The discrepancy comes from chromatic aberration and other effects we left out, plus modern instruments routinely have $C_s$ smaller than 1.0 mm for the objective. The number is in the right ballpark.
-
-**General lesson.** Practical resolution at 100 kV is around half a nanometer for conventional optics, dropping toward 0.1 nm for aberration-corrected. The wavelength alone (4 pm) is a hundred times finer than what the lens can deliver.
-
-### What Goes Wrong Here
-
-The operator-level failures around aberrations:
-
-- **Astigmatism left uncorrected.** Image looks soft *or* shows directional smearing. The recognition cue: as you defocus through, the streak rotates 90°. Diagnosis: stigmator out of tune. Fix: stigmator alignment cycle.
-- **Aperture chosen by habit, not by physics.** Beginners pick "the medium one" and never revisit. The aperture should be chosen for the imaging goal — high resolution wants the diffraction-vs-spherical optimum; high depth of focus wants the smallest practical aperture; high current wants the largest.
-- **Ignoring chromatic aberration at low kV.** At 1–2 kV, chromatic aberration dominates; FE-SEMs win here over thermionic guns because their energy spread is 5–10× smaller. A tungsten gun at 1 kV is *not* a high-resolution instrument no matter what knob you turn.
+<!-- → [CHART: log-log plot of blur disk diameter vs. aperture half-angle showing three curves — d_s (rises steeply, slope 3), d_d (falls, slope -1), and d_total (U-shaped with minimum labeled α_opt and d_min) — at fixed λ and C_s; student should see why the optimum exists and how its position shifts with C_s] -->
 
 ---
 
-## 5. Synthesis: practical resolution and the empty-magnification cliff
+Finding that optimum is the key calculation of this chapter, and it is worth doing explicitly.
 
-Resolution is the joint output of wavelength, aperture, lens aberrations, gun energy spread, and a handful of stability terms (vibration, thermal drift, electrical noise) we have not detailed. The wavelength is set by kV; the aberrations are set by lens design; the energy spread is set by the gun. The operator controls aperture, kV, working distance, and focus, plus gun saturation if it is a thermionic gun.
+The total blur (combining the dominant terms) is roughly
 
-The practical-resolution number on an instrument's spec sheet is not what every image will achieve. It is the best the system can do under specific test conditions — particular kV, particular aperture, particular specimen, no contamination, no drift. Daily operation lives some factor of 1.5–3× worse, depending on specimen, technique, and operator skill.
+$$d_{\text{total}}(\alpha) \approx \sqrt{\left(\frac{1}{2} C_s \alpha^3\right)^2 + \left(\frac{0.61\lambda}{\alpha}\right)^2}.$$
 
-**Empty magnification** is the regime where the displayed magnification is finer than the instrument's resolving power. The image just gets blurrier. The rule of thumb: the maximum useful magnification, in lines per mm of display, should not exceed the resolution divided into the display size. If your monitor shows 1000 lines per mm and your instrument resolves 1 nm, the maximum useful magnification is around $10^6$. Push beyond it and you are zooming into a smeared blob, not finding new structure. The rule is physical, not aesthetic.
+Minimize this with respect to $\alpha$, take the derivative, set it to zero. The algebra gives
 
-**Putting it together (worked scenario).** A graduate student wants to image 5 nm gold nanoparticles on a carbon support and is choosing between a 25 kV LaB₆ SEM ($C_s = 4$ mm, $\Delta E = 1.5$ eV) and a 5 kV Schottky FE-SEM ($C_s = 5$ mm, $\Delta E = 0.5$ eV).
+$$\alpha_{\text{opt}} \approx \left(\frac{1.22\,\lambda}{C_s}\right)^{1/4}$$
 
-- LaB₆ at 25 kV: $\lambda \approx 7.7$ pm. From $d_{\min} \approx 0.91 (C_s \lambda^3)^{1/4}$ with $C_s = 4$ mm: roughly 0.7 nm, plus chromatic blur $\sim C_c \alpha \Delta E/E_0$. At $\Delta E/E_0 = 6 \times 10^{-5}$, chromatic blur is small. Practical: $\sim$1.5 nm. Resolves 5 nm particles cleanly.
-- Schottky at 5 kV: $\lambda \approx 17.4$ pm. $d_{\min} \approx 0.91 (5 \times 10^{-3} \times (17.4 \times 10^{-12})^3)^{1/4} \approx 1.0$ nm. Chromatic blur at $\Delta E/E_0 = 10^{-4}$ is comparable. Practical: $\sim$1.5–2 nm. Also resolves 5 nm particles.
+and at that optimal aperture angle, the minimum resolvable distance is
 
-Either works. The LaB₆ at 25 kV gives more current and thus better signal-to-noise; the FE-SEM at 5 kV gives better surface sensitivity and less beam damage on the carbon support. The trade-off is signal vs. surface fidelity.
+$$d_{\min} \approx 0.91\,(C_s\,\lambda^3)^{1/4}.$$
 
-This is the kind of judgment Chapter 5 develops at length and Chapter 11 makes the SEM half of the book hang on. For now, notice that you are already reading the trade-off space.
+Read that last formula carefully. Resolution scales as $\lambda^{3/4}$, not $\lambda$. Halving the wavelength — which means going to four times the voltage — improves resolution by only $2^{3/4} \approx 1.68$, not by 2. The lever is weaker than it looks.
 
----
+And resolution scales as $C_s^{1/4}$. To halve the minimum resolvable distance by reducing spherical aberration alone, you need to reduce $C_s$ by a factor of sixteen. This is extraordinarily hard with a round magnetic lens — $C_s$ is determined by the pole-piece geometry, and the geometry is constrained by the need to leave room for the specimen. The fourth-root scaling is actually the reason aberration correctors were worth building: they attack $C_s$ directly, rather than trying to squeeze more from wavelength.
 
-## 6. Pre-lab Checklist (Lab 2 — column orientation)
+Let's put numbers on this for a 100 kV TEM with $C_s = 1.0$ mm. The relativistic wavelength at 100 kV is $\lambda \approx 3.89$ pm.
 
-**By the end of this chapter, you should be able to:**
+$$\alpha_{\text{opt}} \approx \left(\frac{1.22 \times 3.89 \times 10^{-12}}{1.0 \times 10^{-3}}\right)^{1/4} = \left(4.75 \times 10^{-9}\right)^{1/4} \approx 8.3 \times 10^{-3} \text{ rad} \approx 0.48°.$$
 
-- Compute electron wavelength at any SEM or TEM operating voltage to a percent.
-- Identify spherical, chromatic, astigmatic, and diffraction contributions in a soft image.
-- Predict the qualitative effect of changing kV, aperture, or working distance on resolution.
+$$d_{\min} \approx 0.91\,(10^{-3} \times (3.89 \times 10^{-12})^3)^{1/4} \approx 0.45 \text{ nm}.$$
 
-**Bring to lab:**
-
-- This chapter, especially Section 4.
-- A scientific calculator (or laptop) for wavelength and resolution computations.
-
-**Expect on the floor:**
-
-- The instructor will defocus the SEM column past sharp focus and ask you to recognize through-focus astigmatism as a directional streak rotating 90° on either side of focus.
-- A demonstration of how aperture choice changes depth of focus on a tilted specimen.
-- A first attempt at running the stigmator alignment cycle yourself.
+Modern uncorrected TEMs at 100 kV are typically quoted at 0.2–0.3 nm point resolution. We got 0.45 nm. The gap comes partly from chromatic aberration, which we dropped, and partly from the fact that careful instrument design pushes $C_s$ below 1.0 mm. But the order of magnitude is right, and the contrast with the raw wavelength (3.89 pm) is stark: practical resolution is more than a hundred times worse than what the wavelength alone would permit.
 
 ---
 
-## 7. Quick-Reference Table
+There is a consequence of all this that operators encounter even without doing the calculation: *empty magnification*.
 
-| Quantity | Symbol / formula | Notes |
-|---|---|---|
-| Electron wavelength (non-rel.) | $\lambda \approx 1.226/\sqrt{V}$ nm | V in volts; good to ~1% below 50 kV |
-| Electron wavelength (rel.) | $\lambda = h / \sqrt{2m_e e V (1 + eV/2 m_e c^2)}$ | use above 50 kV |
-| Spherical-aberration disk | $d_s = (1/2) C_s \alpha^3$ | $C_s$ ~ a few mm uncorrected |
-| Chromatic-aberration disk | $d_c = C_c \alpha (\Delta E/E_0)$ | matters at low kV |
-| Diffraction disk | $d_d = 0.61 \lambda / \alpha$ | wavelength-limited |
-| Optimum aperture half-angle | $\alpha_{\text{opt}} \approx (1.22 \lambda / C_s)^{1/4}$ | balance spherical vs. diffraction |
-| Minimum resolvable distance | $d_{\min} \approx 0.91 (C_s \lambda^3)^{1/4}$ | uncorrected lens, low chromatic |
-| Source energy spreads | W: 1–3 eV; LaB₆: 0.5–2.5 eV; Schottky: 0.3–1.0 eV; CFE: 0.2–0.3 eV | source: week-2 |
+Every microscope image is displayed at some magnification — the ratio of the image size on screen to the corresponding size on the specimen. Push the magnification beyond the instrument's resolving power and you aren't discovering new detail; you are zooming into a blur. The pixels get bigger; the structure does not. The maximum useful magnification is set by the resolving power, not by the electronics. An SEM resolving 2 nm has no business being operated at a magnification that maps individual pixels to sub-nanometer specimen features. The image will look like a watercolor of a micrograph.
+
+The test is simple: if the image looks the same at 500,000× and at 300,000×, you are above the useful magnification. Back off until structure appears that wasn't visible at lower magnification. If it never appears, either the specimen doesn't have finer structure, or the microscope is running at the edge of its capability and needs better conditions to cross it.
 
 ---
 
-## 8. Exercises
+There is one more trade-off encoded in the aperture that doesn't appear in the resolution formula: depth of focus.
+
+A small aperture means electrons from the specimen arrive at the lens within a narrow cone angle. A narrow cone angle means the beam converges and diverges slowly on either side of the focal plane. The axial range over which the image stays acceptably sharp is the *depth of focus*, and it scales inversely with aperture. Close down the aperture, extend the depth of focus.
+
+For imaging a flat, polished specimen, depth of focus is irrelevant — everything is in the same plane. For imaging a rough fracture surface, a porous material, a particle sitting atop a substrate, depth of focus is everything. The SEM's celebrated ability to image highly three-dimensional surfaces with apparent sharpness throughout — the thing that makes SEM images look so different from light microscopy images of the same objects — comes largely from the small aperture angles used in SEM, which happen to produce exceptional depth of focus as a side effect.
+
+<!-- → [INFOGRAPHIC: triangle or three-axis diagram showing aperture size on one axis with arrows pointing to: resolution (optimum at intermediate aperture), beam current (increases with larger aperture), and depth of focus (increases with smaller aperture) — student should see that the three desiderata do not all point the same direction and that the operator must choose a priority] -->
+
+This means the choice of aperture in practice involves three simultaneous considerations: resolution (wants the diffraction-spherical optimum), beam current (larger aperture admits more electrons, giving better signal-to-noise), and depth of focus (smaller aperture gives more depth). These don't all point in the same direction. The operator's judgment about which matters most for a given specimen is one of the core skills the rest of this book is trying to develop.
+
+---
+
+Now you can see why the graduate student at the beginning of this chapter couldn't focus their way to atomic resolution. The wavelength of 7 pm is real. The lens that produces a probe from that beam is not perfect, and cannot be. Spherical aberration, chromatic aberration, and the diffraction limit imposed by the aperture conspire to put the practical floor near 1 nm. The stigmator corrects astigmatism, but astigmatism is already the correctable one. The other aberrations are built into the round-lens geometry and can only be balanced against each other, not eliminated.
+
+The modern escape from this constraint is aberration correction. Since the late 1990s it has become practical to add multipole lens elements — hexapoles and octupoles with specific orientations — that introduce precisely controlled aberrations of opposite sign to those of the round objective lens. The combined system achieves a $C_s$ that can be pushed below one micron, orders of magnitude smaller than an uncorrected objective. With $C_s \sim 1$ μm at 200 kV, the minimum resolution formula gives $d_{\min}$ in the range of tens of picometers — genuine sub-angstrom imaging. TEM images of individual atomic columns, now routine in aberration-corrected instruments, are a direct consequence of this.
+
+But the design philosophy of aberration correction is one for a more advanced course. What matters here is that the problem it solves is exactly the one this chapter named: the fourth-root scaling of resolution with $C_s$ means that only a drastic intervention — not just better machining, not just higher voltage — could break through the conventional barrier. It took multipole correctors, decades of engineering, and the mathematical framework laid down by Otto Scherzer in 1936 (who also proved, in the same paper, that round magnetic lenses *must* have positive spherical aberration — which is why correction required multipoles rather than a cleverer round lens).
+
+The gap between the wavelength and the image is not an accident. It is the physics of bending charged particles with a field that must, by its symmetry, bend them imperfectly. Understanding that gap is what makes the rest of the decisions in this book legible.
+
+<!-- → [TABLE: summary of the four aberrations — columns: name, physical cause, blur diameter formula, scales with aperture how, correctable? — rows: spherical, chromatic, astigmatism, diffraction; student should use this as a diagnostic reference when troubleshooting soft images in the lab] -->
+
+---
+
+**What would change my mind:** evidence that uncorrected round magnetic lenses can routinely achieve $C_s$ values below current best (~0.5 mm for production SEM objectives). This would narrow the wavelength-to-resolution gap without requiring multipole correctors. Nothing in the current literature suggests this is achievable; Scherzer's theorem sets a theoretical floor for rotationally symmetric lenses that hasn't been found to have exceptions.
+
+**Still puzzling:** the prefactors in the optimum-aperture and minimum-resolution formulas vary across textbooks — 0.61 versus 0.91 versus 1.22, depending on what you include and how you sum the aberration disks. The scaling laws are robust. The constants depend on convention.
+
+---
+
+## Exercises
 
 ### Warm-up
 
-**Exercise 2.1 (LO: calculate wavelength).**
-Compute the de Broglie wavelength of an electron at 15 kV. Verify against the source table to within rounding. Difficulty: easy.
+**2.1** Compute the de Broglie wavelength of an electron at 15 kV using the non-relativistic formula. Then compute it at 120 kV using both the non-relativistic and relativistic formulas. By what percentage do they differ at 120 kV? *(Tests: wavelength calculation and when the relativistic correction matters.)*
 
-**Exercise 2.2 (LO: identify aberrations).**
-A defocused SEM image shows a point on the specimen as a horizontal streak that becomes a vertical streak as you turn the focus knob through the optimum. Which aberration is dominant and what is the corrective action? Difficulty: easy.
+**2.2** A student is focusing an SEM image of gold nanoparticles. At slight underfocus the particles appear elongated left-to-right; at slight overfocus they appear elongated top-to-bottom; at nominal focus they appear nearly round but still soft. What aberration is responsible, what is the diagnostic signature they observed, and what is the corrective action? *(Tests: astigmatism identification and stigmator response.)*
 
-**Exercise 2.3 (LO: explain lens action).**
-Why does increasing the condenser lens current decrease the spot size on the specimen? Difficulty: easy.
+**2.3** Explain in one paragraph why the focus knob on a scanning electron microscope is, at a physical level, a current control rather than a mechanical adjustment. *(Tests: magnetic-lens focusing mechanism.)* Difficulty: easy.
 
 ### Application
 
-**Exercise 2.4 (LO: compute optimum aperture).**
-A 200 kV TEM with $C_s = 0.5$ mm. Compute the optimum aperture half-angle and minimum resolvable distance. Compare with a manufacturer-quoted point resolution of 0.2 nm. What does the gap suggest about contributions other than spherical and diffraction? Difficulty: medium.
+**2.4** A 200 kV TEM has $C_s = 0.7$ mm. Compute the optimum aperture half-angle and the minimum resolvable distance. The manufacturer quotes a point resolution of 0.19 nm. Identify at least one physical contribution that the simplified formula omits and that could account for the remaining discrepancy. *(Tests: optimum aperture calculation and limits of the two-term model.)* Difficulty: medium.
 
-**Exercise 2.5 (LO: apply trade-off).**
-You are imaging biological tissue at low kV (2 kV) on an SEM. The image looks soft. List three plausible aberration-related causes and the diagnostic for each. (One bonus point: which aberration is *most* likely the culprit at 2 kV, and why?) Difficulty: medium.
+**2.5** You are imaging a carbon-coated biological specimen on an SEM at 2 kV. The image is soft and you have already corrected astigmatism. List three distinct aberration-related causes that could still limit resolution at this voltage, ranked by which is most likely dominant, and give one diagnostic observation for each. *(Tests: low-kV aberration hierarchy and chromatic aberration dependence on $E_0$.)* Difficulty: medium.
 
-**Exercise 2.6 (LO: recognize empty magnification).**
-On an SEM whose practical resolution is 2 nm, you are imaging at displayed magnification 500,000× on a monitor 30 cm wide. Compute the displayed pixel size on the specimen. Are you in empty-magnification territory? What is the maximum useful magnification on this instrument? Difficulty: medium.
+**2.6** An SEM has a practical resolution of 3 nm. The monitor is 30 cm wide and displays 1024 pixels across. At what displayed magnification does each pixel correspond to exactly 3 nm on the specimen? What happens to image quality if you double that magnification, and what name applies to this regime? *(Tests: empty magnification concept and the relationship between resolving power and displayed scale.)* Difficulty: medium.
 
-**Exercise 2.7 (LO: choose aperture).**
-You are imaging a fractured surface with extreme topography (deep pits and tall ridges) at low magnification. You want maximum depth of focus, accepting some loss of resolution. Should you choose a smaller or larger aperture? Justify in one sentence. Difficulty: medium.
+**2.7** You are imaging a fractured ceramic surface with topographic relief of roughly 50 μm. Rank the following aperture choices — 10 μm, 30 μm, 120 μm — in order of preference for this specimen, and justify each step by naming which aperture-dependent quantity you are prioritizing or sacrificing. *(Tests: depth-of-focus vs. resolution vs. beam-current trade-off.)* Difficulty: medium.
 
 ### Synthesis
 
-**Exercise 2.8 (LO: integrate aberrations and gun choice).**
-A lab needs to image a Schottky-emitter SEM image of 2 nm features on a carbon support at low kV (1 kV) — for surface sensitivity — without losing resolution to chromatic aberration. The available guns are tungsten thermionic and Schottky. The available beam currents are 0.1 nA and 1 nA. The available apertures are 30 μm and 60 μm. Give your full set of choices and justify each in one sentence, naming the dominant aberration you are managing. Difficulty: hard.
+**2.8** A lab is choosing between two instruments for imaging 3 nm catalyst particles on a thin carbon support at low voltage (3 kV): a tungsten-gun SEM ($\Delta E \approx 2$ eV, $C_s = 5$ mm) and a cold field-emission SEM ($\Delta E \approx 0.3$ eV, $C_s = 5$ mm). Using the chromatic blur formula, estimate the chromatic contribution to resolution for each at 3 kV with $\alpha = 5$ mrad and $C_c = 5$ mm. Explain why the gun choice matters far more at 3 kV than it would at 30 kV. *(Tests: chromatic aberration calculation and low-kV gun-choice logic.)* Difficulty: hard.
+
+**2.9** The minimum resolution formula gives $d_{\min} \propto (C_s \lambda^3)^{1/4}$. A colleague argues that switching from 100 kV to 300 kV is a cheap way to double resolution. Use the scaling law to compute the actual improvement factor, then explain why they are wrong — and name what intervention would actually double resolution. *(Tests: $\lambda^{3/4}$ scaling, voltage lever weakness, and motivation for aberration correction.)* Difficulty: hard.
 
 ### Challenge
 
-**Exercise 2.9 (open-ended).**
-Look up the spherical-aberration coefficient $C_s$ of an aberration-corrected TEM objective and compare to an uncorrected one. Predict, using the $d_{\min} \propto (C_s \lambda^3)^{1/4}$ scaling, what factor of improvement in resolution you would expect. Compare to manufacturer-published numbers and reconcile any discrepancies. Difficulty: open-ended.
-
----
-
-## 9. Summary
-
-You walked into this chapter expecting that wavelength alone sets resolution. You walk out understanding that aberrations dominate practical resolution by one to three orders of magnitude, that the operator's job is to navigate the four named aberrations using a small set of knobs, and that the choice of aperture is the most consequential single optical decision. You can compute wavelength, optimum aperture, and minimum resolvable distance for an uncorrected lens. You can name astigmatism on sight from its through-focus signature.
-
-The one idea that matters most: practical resolution scales as $\lambda^{3/4}$, not $\lambda$. Cutting wavelength does less for you than the textbooks suggest until aberrations are corrected. Aberration correction is the modern technique that breaks this scaling.
-
-The common mistake to watch for is forgetting to retune the stigmator after changing kV, aperture, or working distance. The image goes soft, the operator chases focus, the chase fails, and time burns. The corrective is the stigmator-focus cycle, in that order, every time.
-
-The Feynman test: explain to a labmate, without using equations, why an SEM at 30 kV resolves only ~1 nm despite electrons having a 7 picometer wavelength.
-
----
-
-## 10. Connections Forward
-
-Chapter 3 walks the column from gun to detector at the engineering level, returning to the spherical-vs-diffraction-vs-chromatic frame to evaluate gun choices. Chapter 5 turns this chapter's optical theory into operator decisions on a real SEM — kV, working distance, probe current, spot size, aperture, magnification, depth of field. Chapter 13 returns to lens design for TEM, where objective-lens engineering is the central battle.
-
-The question this chapter raised but did not answer: how do aberration correctors work? They use multipole lenses with negative aberration to cancel the positive aberration of the round lens. The full treatment belongs in a more specialized text; Chapter 17 names where they are routinely used.
-
----
-
-**What would change my mind:** evidence that uncorrected magnetic lenses can routinely achieve $C_s$ values an order of magnitude below current best (~1 mm), which would close the gap between wavelength-limited and aberration-limited resolution. Aberration correctors work around this rather than reducing $C_s$ of the round lens itself.
-
-**Still puzzling:** the prefactors in the optimum-aperture and minimum-resolution formulas vary across textbooks (0.61 vs. 0.91 vs. 1.22). Different conventions about how to sum aberration disks; the scaling laws are robust, the constants are not.
-
-**Tags:** `electron-optics`, `aberrations`, `magnetic-lens`, `aperture`, `resolution`
-
----
-
-### Note to the professor
-
-`[verify]` markers in this chapter:
-- The weak-lens focal-length formula (Section 3) — the prefactor and exact form vary across references; the scaling is correct.
-- The relativistic wavelength at 200 kV (~2.51 pm) — standard textbook number; worth confirming against Williams & Carter.
-- The prefactor on the spherical-aberration disk (½ vs. ¼) — different conventions. The scaling $\propto C_s \alpha^3$ is robust.
-- The optimum-aperture and minimum-resolution prefactors — vary by source.
-
-Worked examples are Claude-developed and plausible; the resolution numbers should be checked against your usual instrument specs.
-
-Voice anchoring is `voice-unanchored`.
+**2.10** Look up the $C_s$ value of an aberration-corrected TEM objective (any commercial instrument) and compare it to an uncorrected objective at the same nominal voltage. Using $d_{\min} \approx 0.91\,(C_s \lambda^3)^{1/4}$, predict the resolution improvement factor. Then find the manufacturer's quoted point resolution for both instruments and compute the actual improvement factor. If the two factors disagree, propose a physical reason — what does the formula leave out that matters more at very small $C_s$? *(Tests: aberration-correction payoff, limits of the scaling formula, and independent literature search.)* Difficulty: open-ended.
