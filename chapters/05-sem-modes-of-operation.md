@@ -1,396 +1,131 @@
-> **Voice anchoring:** `voice-unanchored` — both `style/` folders are empty.
-
 # Chapter 5 — SEM Modes of Operation
 
-## Title options
-
-1. **Driving the SEM: How Operating Conditions Shape the Image**
-2. **The Operator's Trade-offs: kV, Working Distance, Spot Size, and Aperture**
-3. **From Knobs to Image: Choosing SEM Conditions for Your Specimen**
-
-## TL;DR
-
-The SEM has perhaps a dozen settings the operator chooses for every image, and each setting interacts with the others through the physics of Chapters 2 and 3. This chapter turns the knobs into rules: when to push kV up, when to back working distance off, when to open the aperture, and how to recognize which setting is wrong when the image is wrong.
+*Every knob on a scanning electron microscope is an argument about physics — and the image tells you whether your argument was right.*
 
 ---
 
-## 1. Chapter Opening
+Here is a scene that repeats itself in electron microscopy labs around the world. A graduate student is trying to image gold nanoparticles on a thin carbon film. The image is noisy. The student raises the accelerating voltage from 5 kV to 25 kV, reasoning that higher voltage means shorter wavelength and shorter wavelength means better resolution. The graininess gets worse. A halo appears around each particle. The student cranks the spot size up for more signal. The image goes soft. Forty minutes later, the lab manager walks by, looks at the screen, and says: wrong kV, probe too big, dwell time too long. Drop to 5 kV, tighten the spot, scan fast and average frames. The student does it. The next image shows individual 5 nm particles cleanly.
 
-A second-year graduate student is at the SEM trying to image gold nanoparticles dispersed on a thin carbon film. The image is grainy. The student raises the accelerating voltage from 5 kV to 25 kV, hoping for better resolution. The graininess gets worse, and now there is a strange bright halo around each particle. The student lowers the magnification, raises the spot size for "more signal," and the image goes soft. Frustration sets in. The lab manager walks by, looks at the screen, and says: *the spot is too big, the kV is too high for these particles, and the dwell time is too long. Drop kV to 5 keV, drop spot size, increase scan rate, average frames. Try again.* The student does. The next image shows individual 5 nm particles cleanly.
+What the student was doing was treating "more" as a universal optimization. More voltage, more signal, more dwell time — each change in the direction of what seemed like improvement. What the lab manager understood was that each of those knobs acts on a specific piece of physics, and the physics of a 5 nm gold nanoparticle on a thin carbon film is not the physics that rewards high voltage or a large probe.
 
-What happened? The student treated the SEM as if every "more" knob would improve the image. The lab manager knew the physics: at 25 kV the beam penetrates well past 5 nm particles into the carbon below, the signal-to-noise from a too-big probe is dominated by noise, and a long dwell time on a thin carbon film just means more time for charging and contamination to grow. Lower kV, smaller probe, faster scan with averaging — that is the operating point for surface-sensitive nanoparticle imaging.
-
-This chapter is the operator's discipline. By the end, you can pick reasonable starting values for kV, working distance, probe current, spot size, aperture, and scan rate for a given specimen, then iterate from there. You can also recognize five common image artifacts as functions of operating conditions and know which knob to turn.
-
-### Learning objectives
-
-By the end of this chapter you can:
-
-- **Choose** accelerating voltage, working distance, and spot size for a specimen given its features and conductivity.
-- **Recognize** charging, drift, astigmatism, and focus errors as artifacts of operating conditions.
-- **Predict** how changes in kV, aperture, and probe current will shift the image's resolution, signal-to-noise, and depth of focus.
-- **Apply** the standard charging mitigations: lower kV, faster scan with averaging, conductive coating, lower temperature.
-
-### Prerequisites
-
-Chapter 2 (aberrations and the optimum aperture), Chapter 3 (gun, lens, and aperture roles), Chapter 4 (the SEM as an integrated instrument). Some familiarity with the working-distance concept will help.
-
-### Why this chapter matters
-
-Almost every operator decision in real SEM work happens in this chapter's parameter space. Most "the image looks bad" sessions end with a parameter change, not a hardware change. Knowing which parameter to change is the difference between a 30-minute session and a 3-hour one.
+This chapter is about learning to read that physics before the image goes wrong. When you can set reasonable starting values from first principles — and more importantly, when you can look at a bad image and identify which parameter caused it — the microscope becomes a precision instrument rather than a frustration machine.
 
 ---
 
-## 2. The big three: accelerating voltage, working distance, spot size
+Start with the most consequential choice the operator makes: accelerating voltage.
 
-The question this section answers is: how do the three most-used SEM controls interact, and how do you set them?
+The argument for higher voltage seems airtight. Chapter 2 established that electron wavelength falls with voltage as $\lambda \approx 1.226/\sqrt{V}$ nm, and that practical resolution scales roughly as $\lambda^{3/4}$. More voltage, shorter wavelength, better resolution. The argument is correct as far as it goes. The trouble is that it stops too early.
 
-### Mechanism — what each parameter physically does
+A 30 kV electron carries thirty kiloelectronvolts of kinetic energy into the specimen. The electron doesn't stop at the surface. It penetrates, loses energy gradually through inelastic scattering events, and ultimately comes to rest inside the material. The depth and shape of this interaction volume — the region inside the specimen where the beam deposits its energy — scales roughly as $V^{1.7}$ by the Kanaya-Okayama relation that Chapter 6 will derive properly. At 30 kV, in a material of moderate density, the interaction volume extends several micrometers below the surface. At 5 kV, a few hundred nanometers. At 1 kV, a few tens of nanometers.
 
-**Accelerating voltage (kV).** Sets the electron wavelength (Chapter 2) and the kinetic energy of the beam at the specimen. Three consequences cascade:
+<!-- → [DIAGRAM: cross-section schematic showing interaction volume pear-shapes at three voltages (1 kV, 5 kV, 30 kV) inside a generic specimen — volumes drawn to scale relative to a 5 nm surface feature; student should see how at 30 kV the interaction volume dwarfs the surface nanoparticle, while at 1–5 kV it is comparable] -->
 
-- **Wavelength → resolution floor.** Higher kV means shorter λ; in principle, finer resolution. From Chapter 2, $d_{\min} \propto (C_s \lambda^3)^{1/4}$, so doubling kV improves the floor by only $\sim 2^{3/8} \approx 1.3\times$. The wavelength advantage of high kV is real but modest.
-- **Penetration depth → interaction volume.** Higher kV electrons go deeper into the specimen before stopping. The interaction volume — the pear- or teardrop-shaped region inside the specimen where the beam loses its energy — grows roughly as $V^{1.7}$ (the Kanaya-Okayama relation; Chapter 6 develops it). At 30 kV the interaction volume can be several micrometers deep; at 1 kV, a few tens of nanometers.
-- **Surface sensitivity.** SE escape depth is roughly the same at all kV (a few nanometers), but at low kV the entire interaction volume sits within the SE-escape region, so SE yield per beam electron is highest at low kV. At high kV, most of the beam energy is deposited deeper than SEs can escape from. Low kV is where surface morphology lives.
+Secondary electrons, the signal that forms most SEM images, escape only from the top few nanometers of the specimen regardless of what voltage the beam carries in. They are low-energy electrons knocked loose by the beam, and they cannot travel far through matter before being reabsorbed. This means that at 30 kV, the secondary electron signal comes from a surface layer of fixed depth — a few nanometers — but it is excited by a beam whose energy is being deposited across several micrometers. The bulk of the beam's interaction is invisible to the SE detector. The only thing that changes is that more energy is going into the specimen, more into the substrate below your feature of interest, and the interaction volume extends well past the boundaries of a 5 nm nanoparticle into the carbon film below and the silicon substrate below that.
 
-**Working distance (WD).** Distance from the bottom of the objective lens to the specimen surface.
+Now the gold nanoparticle is not being imaged; the carbon film is being imaged with a 5 nm perturbation. The contrast is from the wrong thing. And if the specimen is an insulator, more beam energy means more charge deposited per unit time and fewer secondary electrons escaping to neutralize it. The specimen charges, the image distorts, the bright haloes appear.
 
-- **Short WD → smaller aperture angle and lower aberrations.** The objective focuses tightest just below the lens. Short WD gives the highest resolution.
-- **Long WD → larger depth of focus.** Aperture angle decreases as the specimen moves away, increasing the axial range over which the image stays in focus. Useful for rough specimens.
-- **WD constraints from detector geometry.** Some detectors (in-lens, BSE annulus) only work at specific WDs. Some specimens can only fit at long WD due to physical clearance.
+The right mental model for choosing kV is this: put the interaction volume where the information lives. Surface morphology on a bulk metal — a few hundred nanometers of interesting texture — can tolerate moderate voltage, say 10–15 kV. A 5 nm nanoparticle on a thin support requires the interaction volume to be comparable to or smaller than the particle, which means 1–5 kV. A biological specimen coated with a few nanometers of platinum needs the beam to stay within the platinum rather than punching through it into the insulating tissue below, which means 2–5 kV. EDS analysis — detecting characteristic X-rays from elements in the specimen — requires the beam energy to exceed the ionization threshold for the element of interest, typically with a factor of 1.5–2 overhead, which sometimes forces you to higher voltages even at the cost of other image quality.
 
-Modern SEMs typically operate at WD = 4–10 mm for high-resolution work, 10–20 mm for detector flexibility, and 20–50 mm for large or rough specimens.
+The kV decision, then, is not a resolution decision. It is an information-depth decision. Resolution follows from it, but resolution is not the primary axis.
 
-**Spot size (probe current via C1 condenser).** Strongest condenser lens excitation gives smallest probe and lowest current; weakest excitation gives biggest probe and highest current. Source physics: brightness is conserved through the column, so
-
-$$
-i_b \propto d^2 \alpha^2 \beta
-$$
-
-where $\beta$ is gun brightness and $d$ is probe diameter. At fixed aperture, current scales as $d^2$. Halve the probe size, quarter the current.
-
-The trade-off is direct:
-
-- **Small spot, low current:** high resolution, noisy image, long dwell to compensate, more drift and contamination.
-- **Big spot, high current:** lower resolution, clean signal, short dwell, less drift sensitivity. Standard for EDS mapping.
-
-### Trade-off (the joint surface)
-
-The three parameters live on a coupled trade surface. Some illustrative pairings:
-
-- **Surface morphology of a beam-sensitive specimen at high resolution:** low kV (1–5 kV), short WD (4–6 mm), small spot. Use FE-SEM if available — chromatic aberration at low kV is the killer, and Schottky/CFE energy spreads suppress it.
-- **EDS mapping of a polished alloy:** moderate kV (15–20 kV, well above the heaviest characteristic line of interest), moderate WD (10–15 mm — the EDS detector likes a specific takeoff), larger spot for current.
-- **Topographic imaging of a rough fracture surface:** moderate kV (10–15 kV), long WD (20–30 mm) for depth of focus, small aperture for the same.
-- **Imaging a 50 nm particle on a heavy substrate:** low kV (1–3 kV) so the interaction volume does not overwhelm the particle, short WD, smallest spot.
-
-This table is the operator's first-pass heuristic. The detailed adjustment comes from looking at the image and turning the right knob.
-
-### Worked example: choosing kV for a biological cell on a glass coverslip
-
-**Problem.** A graduate student wants to image fibroblasts that have been chemically fixed, dehydrated, critical-point-dried, and sputter-coated with 5 nm of platinum on a glass coverslip. The features of interest are the cell membrane projections (filopodia), ~100 nm diameter, on the 20 μm cell body. Choose kV.
-
-**Reasoning.** The features of interest are surface-morphological. The substrate (glass) is insulating but covered by ~5 nm Pt. The Pt layer is conductive but thin: too high a kV and the beam will penetrate through it into the underlying glass and charge.
-
-- 25 kV: penetrates ~3–5 μm in glass, well below Pt layer. Charging risk high.
-- 15 kV: penetrates ~1–2 μm, still well below Pt. Charging risk moderate.
-- 5 kV: penetrates ~50–100 nm in glass. The Pt absorbs much of the beam. Charging much reduced.
-- 1 kV: penetrates ~10–20 nm. Almost entirely within the Pt. Surface sensitivity highest. Resolution lower because of chromatic aberration unless on FE-SEM.
-
-**Answer.** Start at 5 kV. If charging is still visible, drop to 2–3 kV. If the FE-SEM is available, 1 kV may give the cleanest filopodia images. Increase Pt coating from 5 nm to 8 nm if charging persists.
-
-**Sanity check.** Standard biological-SEM practice on coated specimens is 5–10 kV. We landed in that range.
-
-**General lesson.** kV is chosen primarily by interaction depth relative to feature depth and substrate conductivity. Once you can answer "what depth of specimen does the beam see," you can answer "what kV."
-
-### What Goes Wrong Here
-
-- **kV too high for thin specimens or coatings:** beam penetrates through, samples substrate or interior, contrast falls and charging rises.
-- **kV too low for FE-SEM-incapable instruments:** chromatic aberration dominates; image looks soft regardless of focus.
-- **WD set short by habit, on a rough specimen:** image goes in and out of focus across the field of view because depth of focus is too small.
-- **Spot size cranked up for "better signal" on a small feature:** probe diameter exceeds the feature, resolution lost.
+<!-- → [TABLE: kV selection guide — columns: specimen type, feature of interest, recommended kV range, primary constraint; rows covering: bulk metal surface, nanoparticle on thin support, insulating polymer (coated), insulating polymer (uncoated), biological tissue (Pt-coated), EDS mapping — student should use as first-pass heuristic before consulting interaction-volume calculations] -->
 
 ---
 
-## 3. Aperture, magnification, and depth of focus
+Once kV is set, the next critical variable is working distance — the gap between the bottom of the objective lens and the specimen surface.
 
-The question this section answers is: what does the aperture knob actually buy you, and how do you choose magnification beyond just the visible feature size?
+The reason working distance matters is subtler than it first appears. The objective lens focuses the electron probe to its smallest point at a specific plane below the lens. If the specimen sits at that plane, the probe is as small as the lens can make it: maximum resolution. But as the specimen moves farther from the lens — longer working distance — the probe has diverged by the time it reaches the specimen surface. You might think this simply means worse resolution, and at first order that is right. But there is a second effect that often matters more: as working distance increases, the aperture half-angle $\alpha$ decreases, because the same physical aperture subtends a smaller angle when it is farther from the specimen plane. And from Chapter 2, depth of focus scales as $d_0/\alpha$ — the acceptable disk diameter divided by the aperture half-angle. Smaller $\alpha$ means more depth of focus.
 
-### Mechanism — three effects of one aperture
+This is the deep logic behind a characteristic of SEM images that everyone notices but not everyone explains: SEM images of rough, three-dimensional surfaces look sharp throughout, in a way that optical microscope images never do. A fractured surface, an insect's compound eye, a porous scaffold — the whole thing is in focus simultaneously. This isn't an accident of detector sensitivity or beam geometry; it is a direct consequence of the small aperture angles used in SEM, which produce exceptional depth of focus as a side effect of suppressing aberrations. A typical SEM operates at aperture half-angles of 5–15 milliradians, compared to the tens of degrees that an oil-immersion optical objective uses. The depth of focus scales inversely with aperture angle, so the SEM has orders of magnitude more axial range than an optical instrument at comparable lateral resolution.
 
-The week-2 source listed three effects of the final beam-limiting aperture:
+The practical rule is simple: if the specimen is flat and polished, use short working distance (4–8 mm) for maximum resolution. If the specimen has substantial topography, trade some resolution for depth of focus by moving to longer working distance (15–30 mm). The calculus can be done explicitly: if peak-to-valley topography is $\Delta z$ and the minimum acceptable feature size at the displayed magnification is $d_0$, then you need a depth of focus $D > \Delta z$, which means an aperture half-angle $\alpha < d_0 / \Delta z$.
 
-1. **Aberration optimization** (Chapter 2): there is an optimum aperture angle for resolution.
-2. **Depth of focus**: smaller aperture → larger axial range of focus.
-3. **Beam current limiting**: smaller aperture → less current, because only a fraction of the cone passes.
-
-The physical aperture is a fixed-diameter hole — typically 30, 60, or 100 μm — mounted in the objective. Smaller physical aperture means smaller half-angle $\alpha$ at the specimen for a given working distance. The half-angle is approximately $\alpha \approx (r_{\text{ap}}) / (\text{WD effective})$, where $r_{\text{ap}}$ is the aperture radius. (More precisely, the lens action modifies this, but the geometric estimate is in the right neighborhood.)
-
-**Depth of focus** $D$ is the axial range over which the image stays acceptably sharp. For an aperture half-angle $\alpha$ and an acceptable disk diameter $d_0$ on the specimen,
-
-$$
-D \approx \frac{d_0}{\alpha}.
-$$
-
-A small aperture (say $\alpha = 5$ mrad) and a 100 nm acceptable circle gives $D = 20$ μm — enough to image a fracture surface with substantial topography. A large aperture (15 mrad) gives only 7 μm, which is fine for a polished flat surface but inadequate for a fracture.
-
-**Magnification** is electronic, but bounded by physics. Chapter 2 named the empty-magnification cliff. The rule of thumb in many texts: maximum useful magnification = display dimension (in mm) × 1000 / resolution (in nm) [verify: standard convention but exact factor varies]. A 256 mm wide monitor with an instrument resolving 1 nm gives a maximum useful magnification around $10^6$.
-
-### Trade-off
-
-Aperture choice on every image:
-
-- **Large aperture (60–100 μm):** more current, smaller depth of focus, more aberrations, dimmer corners on misaligned columns. For EDS mapping or low-magnification imaging of flat specimens.
-- **Medium aperture (30–60 μm):** the everyday default. Balance of resolution and current.
-- **Small aperture (10–30 μm):** maximum depth of focus, lowest aberration, least current. For high-resolution at low magnification of rough surfaces, and for the highest-resolution work where every aberration matters.
-
-Magnification is what you set; *useful* magnification is what physics allows.
-
-### Worked example: depth of focus for a fracture surface
-
-**Problem.** You are imaging a rough fracture surface with peak-to-valley topography of 12 μm. You want the whole surface in focus. The aperture half-angle is 5 mrad, and the resolution criterion is 200 nm (50 μm beam width on a 25,000× displayed image).
-
-**Given.** Topography $\Delta z = 12$ μm. Required $d_0 = 200$ nm. $\alpha = 5$ mrad.
-
-**Reasoning.** Available depth of focus:
-$$
-D = d_0 / \alpha = 200 \text{ nm} / 5 \times 10^{-3} = 40 \text{ μm}.
-$$
-Required depth of focus: 12 μm.
-
-**Answer.** $D > \Delta z$, so the chosen aperture works. To verify, what if the aperture were 15 mrad?
-$$
-D = 200 \text{ nm} / 15 \times 10^{-3} = 13 \text{ μm}.
-$$
-Borderline; the deepest valley would be marginally out of focus.
-
-**General lesson.** Depth of focus is calculated, not eyeballed. For rough specimens, smaller aperture wins almost every time. The cost is current, but for topographic imaging that is rarely the binding constraint.
-
-### What Goes Wrong Here
-
-- **Aperture mounted but mis-positioned:** the beam is partially clipped, image is dim and asymmetric. Diagnostic: aperture-alignment check.
-- **Aperture chosen by habit:** "I always use the medium one." Sometimes wrong. The aperture should match the imaging goal.
-- **Magnification past the empty-magnification cliff:** monitor pixels get larger than instrument resolution times display size. Image just gets blurrier. Diagnostic: zoom out, see if features remain identifiable; if yes, the previous zoom was empty.
+Suppose a fracture surface has 8 μm of topography and the imaging requires 100 nm resolution. Then $\alpha < 100 \text{ nm} / 8 \text{ μm} = 12.5$ mrad. Any aperture giving a half-angle below 12.5 mrad will keep the surface in focus throughout the field. Whether the resulting resolution is adequate is a separate question — but the physics at least tells you what the constraint is.
 
 ---
 
-## 4. Charging, drift, astigmatism, and focus errors as functions of conditions
+The third control is probe size, which the operator adjusts through the condenser lens current and which physically determines how much current the probe carries.
 
-The question this section answers is: which image artifacts come from operating-condition choices, and how do you fix each one at the console?
+The connection between probe size and current is not optional — it is forced by the conservation of beam brightness. The electron gun has a certain brightness $\beta$, defined as current per unit area per unit solid angle. Lenses can demagnify the source to make a smaller probe, but they cannot increase the brightness; they can only accept a smaller solid angle of electrons as the probe shrinks. The result is that current scales as $i_b \propto d^2 \alpha^2 \beta$ — proportional to the square of the probe diameter at fixed aperture angle. Halve the probe size, quarter the current.
 
-### Charging
+<!-- → [INFOGRAPHIC: two-axis diagram showing probe diameter on x-axis and beam current on y-axis, with a curve illustrating the i ∝ d² relationship; annotated regions labeled "high-resolution morphology" (small d, low i) and "EDS mapping" (large d, high i) — student should see the trade-off is a physics constraint, not a design choice] -->
 
-**Mechanism.** When the beam deposits more electrons into the specimen than the specimen can drain to ground, the surface accumulates negative charge. The resulting field deflects subsequent beam electrons, distorts SEs at emission, and produces image regions that go bright, dark, or both, with extreme distortions in non-conductors.
+This coupling is the source of the central tension in SEM operation. A small probe gives high spatial resolution but low current, which means the signal from each pixel is small. You can compensate by spending more time on each pixel — longer dwell — but longer dwell means more time for specimen drift, contamination growth, and charging to accumulate. Or you can compensate by averaging many fast scans, which helps with drift but not with fundamental Poisson noise. High current gives better signal-to-noise and faster acquisition, but at the cost of a larger probe, which means lower resolution.
 
-The week-4 source gives the operating-condition dependencies directly:
-
-1. **Beam energy effect.** A specimen that is charge-free at 1 keV may charge at 2 keV and above. The mechanism: at low kV the SE yield often exceeds 1 (more electrons leave than arrive), so the specimen actually charges *positively* — and a small positive charge is harmless. At higher kV, SE yield drops below 1; the specimen charges negatively; bad things happen.
-2. **Dwell-time effect.** An image at 1.6 μs pixel dwell appeared free of charging artifacts; longer dwells let bright regions grow as charge accumulates. Solution: faster scans and frame averaging instead of single slow scans.
-3. **Detector sensitivity.** The E-T SE detector is especially sensitive to charging because its operation relies on attracting low-energy SEs whose trajectories are easy to deflect. The same specimen often shows much milder charging in a BSE image, because high-energy BSEs are not significantly perturbed by surface fields.
-
-**Solutions.**
-- **Conductive coating.** Sputter-coat the specimen with 2–10 nm of Au, Au-Pd, Pt, Cr, or carbon (Chapter 8). The coating drains charge to the stub and then to ground.
-- **Lower kV.** Drop to or below the **crossover energy** (usually 1–3 kV) where SE yield ≈ 1 and net charge stays near zero.
-- **Faster scanning with averaging.** Avoid slow scans; sum many fast frames.
-- **Variable-pressure SEM (Chapter 10).** Introduce a small partial pressure of gas in the chamber; gas ions drift to the specimen and neutralize charge.
-
-### Drift
-
-**Mechanism.** The specimen, the stage, and the column move slowly relative to the imaging position over seconds-to-minutes timescales. Sources include thermal expansion (after kV change or specimen insertion), stage mechanical creep, and stage piezo creep. At 100,000× magnification, 1 nm/s drift moves features by a noticeable fraction of the display per second.
-
-**Solutions.**
-- **Thermal equilibration.** Wait 5–15 minutes after specimen insertion or major kV change before high-magnification work.
-- **Drift compensation.** Some software auto-corrects between frames.
-- **Faster acquisition.** A 1-second frame at 1 nm/s drift moves features 1 nm; at 100,000× this is invisible.
-
-### Astigmatism
-
-**Mechanism.** Lens not perfectly cylindrical (Chapter 2); a point on the specimen images to two perpendicular line foci at slightly different planes. Recognition cue: as you defocus through, a horizontal streak rotates to a vertical streak.
-
-**Solution.** The stigmator alignment cycle: x-stigmator → focus → y-stigmator → focus, repeated until the image is sharp. Re-run after every kV, aperture, or working-distance change.
-
-### Focus errors
-
-**Mechanism.** Operator focused on a wrong feature (e.g., the carbon support film instead of the particle). Or the focus search exceeded the depth of focus and missed.
-
-**Solutions.**
-- **Focus on a high-contrast feature.** Edges, particles, sharp corners. Defocus shows up as edge softness; zoom in to see it clearly.
-- **Use auto-focus carefully.** Auto-focus algorithms can be fooled by repetitive textures or charging artifacts.
-
-### Trade-off
-
-Most artifact-fix strategies cost something. Lower kV reduces charging but increases chromatic aberration and may lose deep-feature visibility. Conductive coating prevents charging but obscures fine surface features below the coating thickness. Faster scans reduce drift sensitivity but require more frames to reach the same SNR. Each fix is a trade.
-
-### What Goes Wrong Here (recognition cues)
-
-| Image symptom | Likely cause | First fix |
-|---|---|---|
-| Bright regions that grow during scan | Charging (build-up) | Drop kV; coat; or faster scan |
-| Whole image scrolls slowly | Drift | Wait for equilibrium; or speed up scan |
-| Streak rotates 90° through focus | Astigmatism | Stigmator cycle |
-| Features blurred uniformly across field | Defocus | Refocus on high-contrast edge |
-| Edges sharp but interior soft | Defocus across rough specimen | Smaller aperture for depth of focus |
-| Image dim, no signal in some directions | Detector geometry / aperture mis-position | Check detector and aperture |
-| Bright haloes around small features | Charging at edges | Coat; lower kV; switch to BSE |
+For imaging surface morphology at the highest resolution, the choice is usually a small probe with fast frame averaging: accept the low current per pixel, but add up enough frames to beat the noise down. For EDS elemental mapping — where you need to collect enough X-rays to get statistical significance from each pixel — the choice is usually a large probe with high current and a slow acquisition: accept the lower spatial resolution because the signal requirement is binding. The probe size choice is inseparable from the question of what you are trying to measure.
 
 ---
 
-## 5. Synthesis: a parameter-choice protocol
+Now the aperture. Three things happen simultaneously when you change the aperture.
 
-When you sit at a new specimen, run the protocol once before reaching for any clever maneuver:
+First, aberrations change. From Chapter 2, spherical aberration disk diameter scales as $C_s \alpha^3$. Smaller aperture, dramatically smaller spherical aberration — cubic scaling means halving the aperture angle reduces the spherical aberration disk by a factor of eight. Diffraction disk goes the other way: $0.61\lambda/\alpha$, so smaller aperture means more diffraction blur. The optimum is where the two cross, and it corresponds to a specific physical aperture size at a given working distance and kV. Modern SEMs have two or three aperture disks — typically 30, 60, and 100 μm — and the choice between them is an implicit choice of where to land on the aberration-diffraction trade.
 
-1. **Specify the question.** What feature, what scale, what information depth? (Section 4 of Chapter 4.)
-2. **Specify the specimen.** Conductive or insulating? Bulk or thin? Beam-sensitive or robust? What is the substrate?
-3. **Pick kV.** Surface morphology of a beam-sensitive insulator: 1–5 kV. Bulk metallic surface: 10–20 kV. EDS work: ≥ 1.5–2× the highest characteristic-line energy of interest. Adjust upward if the specimen is robust and depth of penetration is acceptable.
-4. **Pick spot size and aperture.** High-resolution surface morphology: small spot, medium-to-small aperture. EDS mapping: large spot, large aperture. Rough topography: medium spot, small aperture for depth of focus.
-5. **Pick working distance.** Highest resolution: shortest practical (4–6 mm). Detector-flexible: 8–12 mm. Rough or large specimens: 15+ mm.
-6. **Set magnification.** Pick to fit your feature, with at least 100 pixels across the smallest feature of interest.
-7. **Acquire fast.** Get a quick image. Adjust focus and stigmator on a high-contrast region. Sanity-check the image for charging, drift, and detector mode.
-8. **Acquire slow or averaged.** Higher SNR for the publication shot.
-9. **Iterate.** If something's wrong, identify which parameter and turn that one knob. The diagnosis table in Section 4 above is the recipe.
+Second, depth of focus changes, as described above. Smaller aperture, more depth of focus.
 
-This protocol is the SEM working hours of a working researcher distilled. Internalizing it cuts session time in half.
+Third, current changes. Smaller aperture intercepts a smaller solid angle of the beam cone, so less current reaches the specimen. The signal falls.
 
-### Putting it all together (worked scenario)
-
-A graduate student wants to image a section through a polymer scaffold (epoxy-embedded, microtome-sectioned, 1 μm thick, mounted on a silicon stub). The features of interest are surface texture from the original scaffold pores, ~50 nm scale. The polymer is insulating; the silicon stub is conductive.
-
-- **kV.** 5 kV — penetration ~80 nm, well within the polymer surface region; charging manageable on most polymers at this kV with thin coating.
-- **Coat.** 5 nm Au-Pd by sputter (Chapter 8).
-- **WD.** 6 mm, short for resolution.
-- **Spot size.** Small — the features are 50 nm and we want at least 5–10 pixel sampling, so we need probe ~10 nm.
-- **Aperture.** 30 μm, medium.
-- **Magnification.** Start at 5,000× for context; zoom to 50,000× for feature-level imaging.
-- **Detector.** SE for surface morphology; consider BSE if the polymer has phase contrast.
-- **Scan rate.** Fast for navigation; integrate 8 frames at slow scan for the publication.
-
-Run the protocol and the image quality follows.
+All three effects are present simultaneously for every aperture choice. The practical heuristic is: for high-resolution imaging of flat specimens, use the medium aperture and let the optimization calculation from Chapter 2 do its job. For rough topographic specimens, use the smallest available aperture to maximize depth of focus, and compensate the lower current with more frames. For EDS or other high-current applications on flat specimens, use the largest aperture. The aperture should be a deliberate choice, not a default.
 
 ---
 
-## 6. Pre-lab Checklist (Lab 5 — first hands-on session)
+Setting these three controls — kV, working distance, probe size — in a principled way still leaves one important variable: what happens when the image is wrong. The most useful single skill in SEM operation is artifact diagnosis, because the image will be wrong sometimes, and the correct response is a specific change to a specific parameter rather than a general retreat to "try different settings."
 
-**By the end of this chapter, you should be able to:**
+Charging is the most common artifact on non-conductive specimens. The visual signature is immediate and distinctive: bright regions that grow during the scan, sudden reversals of contrast, or streaks and distortions that propagate across the image as if a static electricity discharge is happening inside the frame. The mechanism is straightforward — more electrons arriving at the surface than leaving, net negative charge accumulating, the resulting electric field deflecting subsequent beam electrons and perturbing SE trajectories. The fix depends on the mechanism. The secondary electron yield — the number of SEs emitted per incoming beam electron — exceeds 1 at low kV for many materials, which means the specimen actually loses charge to the detector faster than the beam deposits it. At higher kV, the yield falls below 1. So for an insulating specimen, there is a crossover energy, typically 1–3 kV depending on material, below which the specimen charges positively by a small amount (harmless) rather than negatively (destructive). Imaging at or below the crossover energy eliminates charging without coating. If the feature of interest requires higher kV, a thin conductive coating — 3–10 nm of gold-palladium or platinum — drains charge to ground and restores the image. If coating is undesirable because it obscures fine surface features, fast scanning with frame averaging is the remaining option: reduce dwell time per pixel so charge has less time to accumulate per frame, and sum enough frames for adequate SNR.
 
-- Name an appropriate kV, WD, and spot size for a given specimen and question.
-- Diagnose charging, drift, astigmatism, and focus errors from image symptoms.
-- Apply at least two charging mitigations on a real specimen.
+Drift is more insidious because it can look like poor resolution. The signature is directional blurring — features are sharp in one direction and smeared in another, and the smear direction is consistent across the field. The cause is usually thermal: the specimen or stage has not reached thermal equilibrium after insertion or after a large kV change, and the slow mechanical motion of a thermally expanding column or stub shifts the image. The fix is patience — five to fifteen minutes after any major thermal perturbation before high-magnification work — and fast acquisition with frame averaging, which distributes the drift's effect over many frames rather than integrating it into one.
 
-**Bring to lab:**
+Astigmatism produces a different directional signature: features are elongated, but the elongation direction rotates 90° as you pass through focus. Underfocus elongates in one direction; overfocus elongates perpendicularly; at nominal focus the image briefly looks sharp but soft at the same time, and there is a narrow range of focus where the elongation is minimized rather than a single sharp optimum. This is the through-focus astigmatism rotation that Chapter 2 described geometrically. The fix is the stigmator cycle: adjust the x-stigmator, refocus, adjust the y-stigmator, refocus, iterate. The stigmator needs to be repeated every time kV, aperture, or working distance changes, because each of those shifts the electron trajectories that intersect the lens's mechanical imperfections.
 
-- This chapter, especially Sections 2 and 4.
-- Your specimen, mounted and (if appropriate) coated.
-- A research question stated as a sentence with a verb.
-
-**Expect on the floor:**
-
-- Setting up an image from scratch on a real specimen with the lab manager watching the parameter choices.
-- A controlled charging demonstration: imaging the same uncoated insulator at 25 kV (charging visible) and 1.5 kV (charging suppressed).
-- A focus-stigmator-aperture cycle on a feature you brought in.
-
-### Hazards and Safe Practice
-
-The hazards of running an SEM at the operator console are primarily:
-
-- **High voltage** at the column and gun. Modern instruments are interlocked; do not defeat interlocks. Service work — including any opening of the gun chamber — is for trained personnel only.
-- **Vacuum implosion** at viewports if compromised. Inspect seals; do not lean on the chamber.
-- **X-ray emission** during routine imaging is shielded to negligible levels at the console on commercial instruments. Older or research instruments may not be; if your specimen contains heavy elements and the instrument is not certified for routine use, ask the lab manager.
-- **Specimen handling.** Carbon tape leaves residues; wear gloves to avoid skin contact with sputter targets and stub adhesives.
-
-Cross-reference: **Appendix A** for the comprehensive treatment.
+<!-- → [TABLE: artifact diagnosis reference — columns: image symptom, most likely cause, first parameter to change, diagnostic confirmation; rows: bright regions growing during scan (charging / kV), directional smear consistent across field (drift / thermal), streak rotates 90° through focus (astigmatism / stigmator), uniform softness across flat specimen (defocus), edges sharp but interior blurred (depth of focus / aperture), dim image with asymmetry (aperture misalignment) — student should use as bedside reference during lab sessions] -->
 
 ---
 
-## 7. Quick-Reference Table
+The patterns across all of these — charging, drift, astigmatism, depth-of-focus errors — point to a discipline that distinguishes experienced operators from novices.
 
-| Goal | kV | WD (mm) | Spot | Aperture | Detector | Scan |
-|---|---|---|---|---|---|---|
-| Surface morphology, conductive | 5–15 | 4–8 | small | 30 μm | SE | fast + avg |
-| Surface morphology, insulating | 1–5 | 4–8 | small | 30 μm | SE | fast + avg |
-| Compositional contrast | 15–30 | 8–12 | medium | 60 μm | BSE | slow |
-| EDS mapping | 15–25 | 10–15 | large | 60–100 μm | EDS | slow, long acquire |
-| Rough topography, depth of focus | 10–15 | 20–30 | medium | 30 μm | SE | medium |
-| High-resolution metal | 5–10 | 4–6 | smallest | 30 μm | in-lens SE | slow |
-| Beam-sensitive (polymer/biology) | 1–3 | 4–8 | small | 30 μm | SE / TTL | fast + avg |
-| Nanoparticle on substrate | 1–5 | 4–6 | smallest | 30 μm | SE / TTL | fast + avg |
+The novice turns multiple knobs simultaneously when something is wrong. Each change modifies the image, but in a correlated way that makes it impossible to isolate cause from effect. After four simultaneous changes, the image may have improved, but no understanding has been gained. The next session starts from scratch.
 
-[verify: starting points; tune to specimen.]
+The experienced operator identifies the artifact, names the most likely single cause, changes exactly that parameter, and observes the result. If the change helps, the diagnosis was right. If the change makes things worse or has no effect, the diagnosis was wrong, and a different parameter gets tried. This is experimental method applied to instrument operation. It is slower in the short run and dramatically faster across many sessions, because the mental model of the instrument accumulates.
+
+The discipline also applies to parameter choices before the image is acquired. What is the feature of interest? What depth does it live at? What is the specimen's conductivity? What is the required lateral resolution? What is the required depth of focus? Each of these questions has a physics-based answer that constrains a parameter. kV is not arbitrary; working distance is not arbitrary; aperture is not arbitrary. They are arguments about where information lives in the specimen and what the beam must do to extract it.
+
+When the image comes out right on the first try, it is because the operator thought through the physics before touching the knobs. When it doesn't — and sometimes it won't, because real specimens are complicated and the heuristics are starting points, not guaranteed solutions — the operator who understands the physics can reason toward the fix in minutes rather than hours.
+
+The graduate student from the beginning of this chapter eventually became that operator. It took time at the instrument, but more than that it took the habit of asking why before asking what. Why is the image grainy? Because current per pixel is too low. Why is current low? Because the probe is small and the dwell is short. What is the fix? More frames or a larger probe, depending on which matters more. Why are there haloes? Because the kV is putting the interaction volume well below the particle. What is the fix? Drop the kV until the interaction volume is comparable to the particle size. Each fix follows from the physics. The knobs are just where the physics lives.
 
 ---
 
-## 8. Exercises
+**What would change my mind:** evidence from a systematic study that image quality in SEM is primarily determined by a single dominant parameter — say, kV alone — independent of the specimen type. Every account of SEM practice I have encountered, including the materials in this course, confirms the coupling: kV, probe size, working distance, and aperture interact through the physics of the interaction volume and the lens. A specimen regime where one parameter genuinely dominated all others would require physics that doesn't appear in the standard model of beam-specimen interaction.
+
+**Still puzzling:** the gap between physics-based prescription and working practice in most research labs. The protocol described in this chapter is derivable from Chapters 2 and 3; yet most working scientists learn operating conditions by imitation and tribal knowledge rather than calculation. The chapter is an attempt at one bridge across that gap. Whether it is the right bridge is an empirical question.
+
+---
+
+## Exercises
 
 ### Warm-up
 
-**Exercise 5.1 (LO: predict effect of kV).**
-A specimen images cleanly at 5 kV. The operator changes to 25 kV and the image now shows a strong bright-dark structure that was not visible before. List two physical changes the kV jump caused. Difficulty: easy.
+**5.1** A student images a polished copper surface cleanly at 10 kV, then switches to 30 kV without changing any other parameter. Describe two distinct physical changes the higher voltage causes inside the specimen, and predict qualitatively how each would affect the image. *(Tests: interaction volume scaling with kV and its consequences for signal origin.)*
 
-**Exercise 5.2 (LO: identify artifact).**
-The image's left side is sharp; the right side is blurred. The specimen is rough, with topography across the field. Most likely cause? Difficulty: easy.
+**5.2** You are imaging a rough fracture surface and notice that the left side of the image is sharp while the right side is blurred. The specimen has about 15 μm of topographic relief across the field. What is the most likely cause, and which single parameter should you change first? *(Tests: depth-of-focus limitation and aperture as the corrective lever.)*
 
-**Exercise 5.3 (LO: choose WD).**
-For maximum resolution on a flat polished metal sample, do you choose short or long WD? Why? Difficulty: easy.
+**5.3** Explain in one paragraph why the focus knob and the kV control are not independent — that is, why changing accelerating voltage requires refocusing even if nothing else changes. *(Tests: focal-length dependence on electron energy from Chapter 2.)*
 
 ### Application
 
-**Exercise 5.4 (LO: choose conditions for biology).**
-Lung tissue, chemically fixed, dehydrated, critical-point-dried, sputter-coated with 5 nm of Pt. Features: alveolar surface texture at 200 nm. Choose kV, WD, spot size, aperture, detector. Justify each in one sentence. Difficulty: medium.
+**5.4** A student is imaging chemically fixed, Pt-coated lung tissue (5 nm Pt) at 20 kV. The image shows bright haloes at cell edges and regions of extreme contrast reversal. Identify the artifact, explain its mechanism at 20 kV on this specimen, and give three mitigations in priority order with a one-sentence trade-off for each. *(Tests: charging diagnosis, crossover-energy concept, and mitigation hierarchy.)*
 
-**Exercise 5.5 (LO: diagnose charging).**
-You are imaging an uncoated polymer at 15 kV with the E-T detector. The image shows extreme bright/dark distortion at the polymer surface. Three solutions, in priority order, and one sentence each on the trade-off. Difficulty: medium.
+**5.5** You need to image a fractured ceramic with 12 μm of peak-to-valley topography. The displayed magnification requires a resolution of 150 nm. Calculate the maximum aperture half-angle that keeps the entire surface in focus. If the available aperture choices give half-angles of 5, 10, and 18 mrad at your working distance, which do you choose and why? *(Tests: depth-of-focus calculation and aperture selection.)*
 
-**Exercise 5.6 (LO: depth-of-focus calculation).**
-You are imaging a fractured ceramic with peak-to-valley topography of 8 μm. Required resolution at the displayed magnification is 100 nm. What is the maximum aperture half-angle you can use? Difficulty: medium.
+**5.6** A beam-sensitive polymer specimen shows visible contamination growth within 20 seconds of imaging at 10 kV with a slow single-frame scan. You need a high-SNR image at 80,000×. Describe a complete acquisition strategy — kV, scan rate, number of frames — and explain the physical rationale for each choice. *(Tests: beam-sensitivity mitigation through scan strategy and SNR accumulation.)*
 
-**Exercise 5.7 (LO: scan-rate choice).**
-A specimen is beam-sensitive — within 30 seconds of high-kV exposure, contamination grows visibly. You need a publication-quality image at 50,000×. Describe the acquisition strategy (kV, scan rate, frame averaging). Difficulty: medium.
+**5.7** An EDS measurement requires characteristic X-rays from titanium (Ti K$\alpha$ edge at 4.51 keV). What is the minimum acceptable accelerating voltage, and what voltage would you actually use in practice? What resolution penalty do you accept by operating at this voltage compared to 5 kV? *(Tests: EDS overvoltage rule and the resolution cost of high-kV EDS work.)*
 
 ### Synthesis
 
-**Exercise 5.8 (LO: integrate parameter choices for a hard specimen).**
-A research group has gold nanoparticles, average diameter 5 nm, dispersed on a 20 nm thick carbon support film over a copper TEM grid. They want to image the gold nanoparticles in SEM (not TEM) for a comparison experiment. The SEM is an FE-SEM with cold-FE source. Choose all parameters: kV, WD, spot size, aperture, detector, scan rate. Predict at least two artifacts the chosen parameters might still produce, and note how to recognize them. Difficulty: hard.
+**5.8** A research group wants to image 5 nm gold nanoparticles dispersed on a 20 nm amorphous carbon support film mounted on a silicon stub, using a cold field-emission SEM. Specify all operating parameters: kV, working distance, probe size (qualitative), aperture choice, detector, and scan strategy. Then predict two artifacts the chosen parameters might still produce at these conditions and describe how to recognize each from the image alone. *(Tests: integrated parameter selection for a demanding specimen and prospective artifact diagnosis.)*
+
+**5.9** Two images of the same uncoated polymer are acquired: one at 25 kV and one at 1.5 kV. The 25 kV image shows severe charging artifacts; the 1.5 kV image is clean. Explain the physical mechanism behind the difference using the concept of secondary electron yield, without using the word "yield." Then explain why the same approach would fail on a metallic specimen. *(Tests: charging mechanism, crossover energy, and material-dependence of the fix.)*
 
 ### Challenge
 
-**Exercise 5.9 (open-ended).**
-The crossover energy at which SE yield equals 1 varies by material — typically 1–3 kV for insulators, lower for some polymers. Look up the SE yield curve for a polymer you have used (PMMA, polystyrene, or epoxy). Identify the crossover energy. Predict the kV at which uncoated imaging would be charge-free. Compare to standard practice in published papers using that polymer. Difficulty: open-ended.
-
----
-
-## 9. Summary
-
-You walked into this chapter with a vague sense that "SEM has settings." You walk out knowing which settings to start with for which specimen, why the settings interact (kV controls penetration, which controls charging and contrast and depth of feature visibility; aperture controls aberration and depth of focus and current; spot size controls resolution and current), and how to recognize the four most common image artifacts and fix each at the console.
-
-The one idea that matters most: kV is chosen by interaction depth relative to feature depth, not by "more is better." Higher kV is not always sharper; lower kV is not always cleaner. The right kV is the one whose interaction volume sits where your information lives.
-
-The common mistake to watch for: turning multiple knobs simultaneously when something is wrong. The diagnostic discipline is one knob at a time. Identify the artifact, identify the most likely parameter, change only that, observe the result. This is the operator's discipline.
-
-The Feynman test: explain to a labmate why dropping kV from 25 to 1 will eliminate charging on an insulating polymer, without using the word "yield."
-
----
-
-## 10. Connections Forward
-
-Chapter 6 develops the beam-specimen interactions that underlie the choices in this chapter — what actually happens inside the interaction volume, and why kV controls the depth and shape of it. Chapter 7 returns to detectors with the operating-condition context now in hand. Chapter 8 covers sample preparation, which is the other half of charging mitigation: the conductive coating and the conductive mount.
-
-The question this chapter raised but did not answer: why does SE yield exceed 1 at low kV? That depends on how energetic an SE has to be to escape, and how many of them get generated per beam-energy unit. Chapter 6 names the physics.
-
----
-
-**What would change my mind:** evidence that a single parameter (e.g., kV alone) determines image quality independent of all others on a real specimen. The trade-off structure described here is repeatedly demonstrated; counterexamples would require a different operating regime (perhaps very-low-voltage instruments below 1 kV) where the rules genuinely change.
-
-**Still puzzling:** the operator-experience literature on SEM is largely tribal. Most working scientists know "what works" without a clean theoretical justification, and the gap between best practice and physics-based prescription is real. This chapter's protocol is one bridge across it.
-
-**Tags:** `SEM-operation`, `accelerating-voltage`, `working-distance`, `charging`, `parameter-choice`
-
----
-
-### Note to the professor
-
-`[verify]` markers in this chapter:
-- Empty-magnification factor (display × 1000 / resolution) — exact prefactor varies by source.
-- Quick-Reference Table starting points — these are heuristics for first-pass setup; tune to your instruments.
-- Penetration depths in the Section 2 worked example are order-of-magnitude estimates from Kanaya-Okayama scaling (Chapter 6 will derive properly).
-- Crossover energy claim ("usually 1–3 kV"). Material-dependent; the range is conventional.
-- The geometric aperture-angle relation $\alpha \approx r_{\text{ap}} / \text{WD}$ is approximate.
-
-Voice anchoring is `voice-unanchored`.
+**5.10** The Kanaya-Okayama penetration depth scales as $R \propto V^{1.7} / \rho Z^{0.89}$ (where $\rho$ is density and $Z$ is atomic number). A research group claims their uncoated 10 nm polymer nanoparticles on a silicon substrate can be imaged charge-free at 5 kV. Use the scaling relation to estimate whether 5 kV puts the interaction volume primarily within the particle, within the substrate, or spanning both. Then look up or estimate a crossover energy for a typical polymer and assess whether their claim is physically plausible. *(Tests: interaction-volume estimation, crossover-energy reasoning, and critical reading of experimental claims.)*
