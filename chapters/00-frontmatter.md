@@ -13,7 +13,7 @@
 
 # Electron Microscopy
 
-**EM Professor, Srinivas Sridhar & Nik Bear Brown**
+**Shirin Kaboli, Srinivas Sridhar & Nik Bear Brown**
 
 ---
 
